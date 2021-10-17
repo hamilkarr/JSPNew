@@ -1,0 +1,13 @@
+0. 구성
+  ServletContext
+    getContextPath()
+
+1. 게시글 작성(+ 에디터 + 이미지 업로드)
+2. 게사굴 보기(버튼- 게시글 삭제, 게시글 수정, 게시글 목록)
+3. 게시글 목록
+4. 게시글 수정
+(CRUD) 미니게시판
+
+CKEditor4
+
+URL - /MiniBoard/board/view?idx4

@@ -1,0 +1,40 @@
+필터
+
+전
+서블릿 출력
+후
+
+filter 인터페이스를 구현하면 filter가 된다.
+javax.servlet.Filter
+  - void init(FilterConfig filterconfig) -> 필터 초기화시 호출
+  - void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    : 출력 전, 후의 필터 기능 정의
+      -> FilterChain
+          - doFilter(ServletRequest request,ServletResponse response)
+                    - 추가 필터 -> 다음 필터로 넘어가거나
+                    - 추가 필터 X -> 서블릿 출력
+  - void destroy() - 필터 종료
+
+WEB-INF/web.xml
+<filter>
+  <filter-name>필터 이름</filter-name>
+  <filter-class>패키지명 포함 클래스명</filter-class>  
+  [<init-param>
+    <param-name>속성명</param-name>
+    <param-value>속성값</param-value>
+  </init-param>]
+</filter>
+<filter-mapping>
+  <filter-name>필터 이름</filter-name>
+  <url-pattern>필터를 적용할 요청 URL 패턴</url-pattern>
+</filter-mapping>
+
+/board/list
+
+/board/view - 서블릿 클래스 ViewController
+            - 필터(SiteMain2) 상/하단 -> header2.jsp, footer.jsp
+
+jbcrypt.jar
+  - static hashpw -> 암호화 해스
+  - static gensalt
+  - static checkpw -> 해시의 일치 여부

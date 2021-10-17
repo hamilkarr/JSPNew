@@ -1,0 +1,41 @@
+1. javax.servlet.http.HttpServlet 클래스 상속받으면 -> 서블릿 클래스
+doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+
+2. 라우팅 -> Controller 
+  사용자의 요청 URL을 처리하는 용도
+  적절한 Model을 가지고 처리하여
+  jsp(View) 파일로 출력을 해주는 역할
+
+3. 라우팅 경로
+  web.xml
+  <web-app>
+    <servlet>
+      <servlet-name>서블릿 명칭</servlet-name>
+      <servlet-class>서블릿 클래스 명(패키지명 포함 클래스명)</servlet-class>
+      [<init-param>
+        <param-name>속성명</param-name>
+        <param-name>속성값</param-name>
+      </init-param>
+      <init-param>
+        <param-name>속성명</param-name>
+        <param-name>속성값</param-name>      
+      </init-param>]
+    </servlet>
+    <servlet-mappin>
+      <servlet-name>서블릿 명칭</servlet-name>
+      <url-pattern>URL 패턴</url-pattern>
+    </servlet-mappin>
+  </web-app>
+
+  init-param에 정의된 속성을 가져오는 방법
+  getServletConfig()
+    -getInitParameter(String name);
+
+4. 액션태그
+  <jsp:forward page="..."/>
+  <jsp:include pate="..."/>
+
+  javax.servlet.REquestDispatcher
+    .forward(request,response)
+    .include(request,response)

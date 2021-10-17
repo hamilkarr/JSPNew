@@ -1,0 +1,66 @@
+JSP 페이를 어덯게 처리할 것인지 설정하는 태그
+
+1. 종류
+  1) page - JSP 페이지에 대한 정보
+  2) include - JSP 페이지의 특정 영역에 다른 문서를 포함(JSP,HTML,텍스트...)
+  3) taglib - JSP 페이지에 사용할 태그 라이브러리를 설정
+
+  <%@ page|include|taglib ..... %>
+  <%@ page|include|taglib 속성="값" 속성="값2" ..... %>
+
+2. page 디렉티브 태그
+  - contentType -> 문서의 종류(text/html; text/xml, application/json ....)
+  - pageEncoding -> "UTF-8"
+
+  - import -> 자바 패키지의 클래스를 import
+  - errorPage -> 페이지의 에러가 있으면 이동할 URL을 설정
+  - isErrorPage -> 내장객체 exception 인스턴스 사용 가능
+            -> printStackTrace();
+  - isELIgnored = ${...}
+  - is Scriptingenabled ->스크립트 태그 활성화 여부
+  - language
+  - session - true(기본값), false
+  - buffer - 8kb, none -> 버퍼없이 그대로 출력
+  
+  <%@ page buffer="none" %>
+  - autoFlush - true
+  - isThreadSafe="true"
+  - info - 페이지에 대한 설명
+    -> 서블릿으로 번역 
+    -> public String getServletInfo() {
+        return "추가한 설명";
+    }
+
+3. include 태그
+  <%@ include file="파일 경로(JSP,HTML,텍스트...)" %>
+
+  1) 번역이 될때 include 설정 파일의 내용이 추가
+
+4. taglib 태그(JSTL - JSP Standard Tag library)
+  JSP -> 자바 코드 사용 지양
+      -> 태그 형식의 추가 편의 기능
+         core-> 변수 설정, 제거, 제어문, 반복문.....
+         fmf-> 날짜,시간,숫자,다국어... 형식의 변환과 관련된 편의 기능
+         sql -> SQL 실행을 도와주는 편의 기능. 태그 형태로 제공
+         functions -> 문자열 가공의 편의 기능을 제공
+  <%@ taglib uri="경로" prefix="태그 식별자" %>
+
+  JSTL(taglib)은 별도의 라이브러리를 설치
+
+  <c:set /> 값 지정
+  <c:out /> 값 출력
+  <c:choose>
+    <c:when ...></c:when>
+    <c:ohterwise></c:ohterwise>
+  </c:choose>
+  <c:if ...></c:if>
+  <c:forEach ..>
+  
+  </c:forEach>
+
+P101 요약
+  page
+  include
+  taglib
+
+  

@@ -1,0 +1,52 @@
+0. 필터(공통 필터) - 12장
+  - 헤더, 푸터 -5장 내장객체
+    getAttribute 13장 세션.
+
+1. 서블릿
+  - 작성
+  - 글보기
+  - 글목록
+  - 글삭제
+
+2. DB 연결 클래스
+  - 공통 필터에 DB연결 설정 값을 지정
+
+3. 작성 관련 model
+  model.dto.Board -> 자바빈클래스
+  model.dao.BoardDAO -> 작성,조회,삭제
+
+
+   $.ajax({
+     url:"요청 URL",
+     type:"요청 메서드(get,post)",
+     data: 요청 URL로 전송할 데이터(json,쿼리스트링(k=1&t=2)
+     dataType: "반환될 데이터 타입 htlm|test|json",
+     sucess :function(res) { // 요청이 성공했을때 반환 출력 값
+       $("#blog_content").append(res);
+     }
+     error : function(err) { // 요청이 실패했을때 반환되는 에러 객체
+
+     }
+     )} 
+     
+
+     URI - /MiniBoard/board/view
+
+sql LIMIT 
+
+jQuery 
+$.ajax({
+	url : "요청 URL", 
+	type : "요청 메서드 (GET, POST)",
+	data : 요청 URL로 전송할 데이터(json, 쿼리스트링(k=1&t=2)),
+	dataType : "반환될 데이터 타입 html|text|json",
+	success : function (res) { // 요청이 성공했을때 반환 출력값
+		$("#blog_content").append(res);
+	},
+	error : function (err) { // 요청이 실패 했을때 반환되는 에러 객체
+
+	}
+});
+
+
+axios 

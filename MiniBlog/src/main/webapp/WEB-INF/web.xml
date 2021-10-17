@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app>
+<!-- 서블릿 S -->
+	<!-- 블로그 작성 -->
+	<servlet>
+		<servlet-name>Blog_post</servlet-name>
+		<servlet-class>com.controller.PostController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Blog_post</servlet-name>
+		<url-pattern>/blog/post</url-pattern>
+	</servlet-mapping>
+	<!-- 블로그 조회 -->
+	<servlet>
+		<servlet-name>Blog_View</servlet-name>
+		<servlet-class>com.controller.ViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Blog_View</servlet-name>
+		<url-pattern>/blog/view</url-pattern>
+	</servlet-mapping>
+	<!-- 블로그 목록 -->
+	<servlet>
+		<servlet-name>Blog_list</servlet-name>
+		<servlet-class>com.controller.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Blog_list</servlet-name>
+		<url-pattern>/blog/</url-pattern>
+	</servlet-mapping>
+	<!-- 블로그 수정 -->
+	<servlet>
+		<servlet-name>Blog_edit</servlet-name>
+		<servlet-class>com.controller.EditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Blog_edit</servlet-name>
+		<url-pattern>/blog/edit</url-pattern>
+	</servlet-mapping>
+	<!-- 블로그 삭제 -->
+	<servlet>
+		<servlet-name>Blog_delete</servlet-name>
+		<servlet-class>com.controller.DeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Blog_delete</servlet-name>
+		<url-pattern>/blog/delete</url-pattern>
+	</servlet-mapping>
+	<!--  파일 업로드  -->
+	<servlet>
+		<servlet-name>File_Upload</servlet-name>
+		<servlet-class>com.controller.FileUploadController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>File_Upload</servlet-name>
+		<url-pattern>/popup/upload</url-pattern>
+	</servlet-mapping>	
+<!-- 서블릿 E -->
+	
+<!-- 필터 -->
+	<filter>
+		<filter-name>Blog_main</filter-name>
+		<filter-class>com.filter.BlogMainFilter</filter-class>
+		<init-param>
+			<param-name>DBDriver</param-name>
+			<param-value>com.mysql.cj.jdbc.Driver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBUrl</param-name>
+			<param-value>jdbc:mysql://localhost:3306/miniblog</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBUser</param-name>
+			<param-value>root</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBPass</param-name>
+			<param-value>aA!12345</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Blog_main</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>

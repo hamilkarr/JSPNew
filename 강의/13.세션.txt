@@ -1,0 +1,65 @@
+세션
+  브라우저별 개인화된 데이터
+  
+  쿠키와 세션의 차이점
+    쿠키 
+      - 브라우저에 값이 저장, 만약 서버에서 데이터 조회가 필요하다면 
+        ->> 브라우저에서 ->> 서버로 전송
+          (request Header - cookie 항목을 전송)
+      - 쿠키 정보가 네트워크 상에서 전달이 된다.
+      - 정보 노출이 쉽다(보안에 취약하다.)
+      - 개인화된 서비스를 제공하려면 반드시 쿠키는 필요.
+
+    세션
+      - 노츨되는 데이터를 노출시키지 않으면 해결됨.
+      - 데이터를 브라우저가 아니라, 서버에서 저장하고, 서버 내에서 조회
+      - 데이터가 헤더를 통해서 전달되지 않음( 패킷을 통한 정보노출이 불가능 )
+      - Request 헤더에 정보가 없음.
+      - 서버에서 개인화된 데이터를 찾기 위한 쿠키 키값이 필요하다.
+        (세션은 반드시 쿠키가 필요하다. 자동으로 생성되는 쿠키 ->> JSESSIONID : 브라우저마다 다른 값)
+        -> 세션의 유효기간은 브라우저 창이 닫힐때까지
+
+  javax.servlet.http.HttpSession
+
+  HttpSession HttpSession
+  1) JPS 내의 내장객체 session 인스턴스
+
+  2) HttpServletRequest - HttpSession getSession()
+
+    request,pageContext, session, application - 속성을 관리하는 내장 객체
+
+  세션 설정
+    HttpSession
+      .setAttribute(String name, Object value);
+  
+  세션 조회
+    HttpSession
+      Object getAttribute(String name)
+        - 반환 자료형 Object -> 형 변환
+
+      Enumeration getAttributeNames() - 세션 이름들...
+  
+  세션 삭제
+    HttpSession 
+      void removeAttribute(String name)
+  
+  세션 전체삭제(세션 비우기)
+    HttpSession
+      invalidate()
+
+  기타
+    .setMaxInactiveInterval(int interval) 
+      - 세션 유지 시간(초단위) - 기본값 1800 ->> 30분간 유지
+    
+    .getMaxInactiveInterval() 
+      - 이미 설정되어 있는 세션 유지시간 조회
+
+    .long getCreationTime()
+      - 세션이 생성된 시간 (밀리세컨드 단위)
+
+    .getId() -> JSESSIONID
+    .long getLastAccessedTime() -> 마지막으로 클라이언트가 접속한 시간
+
+P433
+예제 16행
+request.isRequestedSessionIdValid()

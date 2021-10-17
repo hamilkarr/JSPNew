@@ -1,0 +1,39 @@
+쿠키
+  사용자 브라우저마다 다르게 유지되는 개인화된 데이터
+  -> 데이터가 브라우저에 저장
+
+저장할 쿠키 데이터 
+  서버에 데이터를 요청 ->> 서버가 응답 ->> 브라우저가 쿠키를 저장 -> 서버에 전송(request)
+                  (response.addCookie)                                    (request.getCookie())
+
+  서버가 브라우저에 있는 쿠키를 사용하려면
+  브라우저가 서버로 데이터를 전송(Request)
+  (요청을 할때마다 서버로 Request Header에 담아서 전송)
+
+javax.servlet.http.Cookie
+Cookie 클래스
+  Cookie(String name,String value) -> 인스턴스 만들어서 등록
+
+  .getName() - 쿠키의 이름(키)
+  .setName(String) - 쿠키의 이름 설정  
+  .getValue() - 쿠키의 값
+  .setValue(String name) -> 쿠키의 값을 설정
+  .getMaxAge() - 만료시간 (초단위 정수)
+  .setMaxAge(int time) -> 만료시간을 초단위 정수
+    만료시간 기준은 GMT 0.
+    우리나라는 GMT 9.
+  .setDomain(String) -> 쿠키가 유효한 도메인
+  .getDomain()
+  .setPath(String path) - 쿠키가 유효한 경로
+  .getPath()
+
+javax.servlet.http.HttpServletResponse
+  .addCookie(Cookie ...) -> 쿠키를 등록
+
+javax.servelt.http.HttpServletRequest
+  Cookie[] getCookies() -> 쿠키를 조회 
+
+쿠키 삭제 
+  쿠키의 삭제는 만료시간을 가지고 통제한다(만료시간이 지나면 삭제)
+  쿠키 인스턴스를 .setMaxAge(0)로 설정
+  쿠키를 response.addCookie 로 새로 등록 -> 삭제

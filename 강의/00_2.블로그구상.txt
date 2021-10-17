@@ -1,0 +1,93 @@
+블로그
+1. URL - 서블릿으로 만들고 -> web.xml
+  1) 작성
+    /blog/post
+  2) 목록(블로그 게시글 + 목록)
+    /blog
+  3) 수정
+    /blog/edit?게시글번호(name)=번호
+    /blog/post/* -> *가 번호
+  4) 게시글 삭제
+    /blog/delete?게시글번호(name)=번호
+    /blog/delete/* <- * -> 게시글 번호
+  5) + 댓글???
+
+2. UI
+
+
+4. 공통 헤더,푸터
+  
+  public void doFilter(.....) {
+
+    헤더 출력 메서드(ServletRequest 매개변수)
+
+    chain.doFilter(request,response);
+
+    푸터 출력 메서드(ServletRequest 매개변수)
+  }
+
+헤더 출력 메서드 (ServletRequest 매개변수)
+
+푸터 출력 메서드 (ServletRequest 매개변수)
+
+
+webapp/ 적절한 폴더 생성 -> 헤더.jsp, 푸터.jsp
+
+5. 정적 자원 -> 헤더,푸터,text/html -> 다른 타입의 자료는 동작 xml
+  헤더 출력 가능 여부 체크 메서드
+  - URI (HttpServletRequest) -> 다운캐스팅 (ServletRequest->HttpServletRequest)
+ 
+  http://www.naver.com/sport/football?t1&t2=2 - URL
+    HttpServletRequest StringBuffer getRequestURL()
+  
+  http://www.naver.com/sport/football - URI
+    HttpServletRequest -> String getRequestURL()
+
+    헤더 출력의 기준 -> 정적 디렉토리의 URI가 아닌 경우만 출력
+
+    1. 멤버 변수 선언
+      private String[] 정적 디렉토리 = {"디렉토리명1","디렉토리명2"}
+
+    2. boolean 헤더출력할지 말지 결정하는 메서드(ServletRequest request)
+      - (HttpServletRequest) getRequestURI
+
+      if(request instanceof HttpServletRequest) {
+        HttpServletRequest req = (HttpServletRequest)request;
+        1. 메서드(GET이 아닐때) false -> 헤더 출력 X
+            getMethod() -> GET X -> false
+
+        2.
+        String requestURI = req.getRequestURI();
+
+        정적 디렉토리가 URI에 포함되어 있는지 여부 체크
+        포함되어 있으면 -> false -> 헤더출력 X
+        for...
+        indexOF .... != -1
+      }
+
+      정적디렉토리 -> css,js,images ....
+
+      public void header(ServletRequest req, ServletResponse resp) throws... {
+        if(헤더출력?(request)){
+          response.setContentType(....)
+          RequestDispatcher ....
+        }
+      }
+
+블로그 남은 부분
+
+  Css 가다듬기
+  
+  layer.js 파일 정리
+
+  특징점 문서파일로 정리
+    - 리스트 화.
+
+  게시판 글 갯수및 내용 추가후 SQL 추출
+    - 우선 테이블 내용 초기화
+    - 추가할 이미지 검색    
+    - 추출법 홈페이지 확인
+
+
+  답안지 작성
+

@@ -1,0 +1,48 @@
+개발환경 구축
+톰캣 9 버전
+이클립스 EE
+  WorkSpace 설정 -> New server -> tomcat 설정 -> new Dynamic Wep Project 
+    
+
+
+웹브라우저 --> 요청(request) --> 서버 
+            (요청에 대한 정보, 요청 URL,IP,쿠키,양식 데이터 ... 웹브라우저 정보 ...)
+            (전송 메서드 Get, Post ...)
+            응답(response) <----
+
+JSP
+  -> Servlet 
+
+  -> hello.jsp ->(번역)-> hello_jsp.java(Servlet 코드) -> 컴파일 -> hello_jsp.class
+                                                          1) _jspInit() - 로딩 및 초기화
+                                                          2) _jspService() - 실행
+                                                          3) _jspDestroy() - 소멸
+
+스크립트 태그(P50)
+
+JSP 태그
+1) 스크립트 태그
+2) 디렉티브 태그
+3) 액션 태그
+
+  스크립트 태그
+    ㄱ) 선언문
+      <%! 자바 코드 %>      
+      1. 클래스명 바로 아래 정의
+      2. 전역변수
+      3. 메서드 정의 가능
+
+    ㄴ) 스크립틀릿
+      <% 자바 코드 %>
+      1. _jspService() 메서드 안에 정의
+      2. 지역 변수
+      3. 메서드 정의 X
+    
+    ㄷ) 표현문
+      <%= 출력하기 위한 변수 %>
+      <%
+        out.print("변수")
+      %>
+
+주석
+<%-- 문구 --%>

@@ -1,0 +1,114 @@
+jsp               -> 번역          ->   컴파일
+hello.jsp -> hello_jsp.java -> hello_jsp.class  -> 실행 
+														-> _jspInit() -> 초기화
+														-> _jspService() -> 실행 
+														-> _jspDestroy() -> 소멸 
+														
+
+_jspService() 메서드 정의 되어 있는 내장객체
+request  - javax.servlet.http.HttpServletRequest 
+response - javax.servlet.http.HttpServletResponse 
+out         - javax.servlet.jsp.jspWriter 
+session    - javax.servlet.http.HttpSession
+application - javax.servlet.ServletContext 
+pageContext - javax.servlet.jsp.PageContext 
+page -  this
+config - javax.servlet.ServletConfig -> web.xml -> 서블릿 설정
+exception - java.lang.Throwable   -> page 디렉티브 태그 -> isErrorPage="true"
+
+
+속성을 관리할 수 있는 내장 객체 
+request, session, application, pageContext 
+- setAttribute(String name, Object value)
+- Object getAttribute(String name)  -> 반드시 형변환 
+- removeAttrbute(String name) -> 속성 제거 
+- Enumeration getAttributeNames() -> 전체 속성명을 가져올때 
+  (Iterator와 용도가 거의 동일 
+	- hasMoreElements() ( Iterator - hasNext()와 거의 동일) 
+	- nextElement() ( Iterator - next()와 거의 동일)
+	
+	(pageContext에는 getAttributeNames 메서드는 X)
+   
+
+
+
+request 내장객체
+ - 웹브라우저에서 서버의 JSP 페이지로 전달하는 정보를 저장
+   (사용자가 넘겨준 데이터(양식), 사용자가 요청한 환경에 대한 정보(아이피, 요청한 URL .... ))
+   
+ - javax.servlet.http.HttpServletRequest 
+ 
+ 요청 파라미터 관련 메서드
+	- getParameter(String name) 
+	- getParameterValues(String name) -> String[] 
+	- getParamerNames() -> 모든 요청 파라미터의 이름 값을(Enumeration)
+	- getParameterMap() -> 모든 요청 파리미터(매개변수) 이름과 값 Map 형태(키, 값)'
+	
+
+요청 HTTP 헤더 관련 메서드
+	getHeader(String name)  -> String
+	getHeaders(String name) -> 하나의 헤더에 여러 데이터(Enumeration)
+	getHeaderNames() -> Enumeration -> 모든 헤더의 이름(키)을 
+	getIntHeader(String name) -> 헤더 값 중에서 숫자(정수)로 되어 있는 값 int 
+	getDateHeader(String name) -> long값 형태로 Date 헤더 값(timestamp -> 1970.1.1. 0 -> 천분의 1초씩 카운팅한 숫자)
+	getCookies() -> 모든 쿠키 값
+
+
+웹브라우저/서버 관련 메서드
+	
+ 
+ 속성을 공유할 수 있는 유효범위
+ page
+ request 
+ session 
+ application 
+ 
+ 
+ 
+ 
+response 객체
+사용자 요청 데이터 -> 서버 -> 가공 -> 브라우저 전송(출력)
+
+1) 페이지 이동 관련 메서드
+	- sendRedirect(String url);
+	
+2) 응답 HTTP 헤더 관련 메서드
+-  addCookie(Cookie cookie) 
+		javax.servlet.http.Cookie;
+	addCooklie(new Cookie("쿠키 키", "쿠키 값"));
+	
+-  addHeader(String name, String value) -> 출력 헤더 추가 
+-  addIntHeader(String name, int value) 
+- addDateHeader(String name, long date);
+- setHeader(String name, String value);
+- setIntHeader(String name, int value);
+- setDateHeader(String name, long date);
+- containsHeader(String name)
+- getHeader(String name);
+
+
+
+쿠키 저장 요청 -> 서버 -> 출력 -> 브라우저에서 쿠키 -> 저장
+-> 저장된 쿠키 -> 요청 헤더 -> 서버에서 접근
+
+
+응답 콘텐츠 관련 메서드
+setContentType(String type); // text/html; .. text/xml,, image/png... application/json
+getContentType()
+setCharacterEncoding(String charset);  
+getCharacterEncoding();
+sendError(int statucode, String message);
+setStatus(int statuscode)
+
+
+
+out 내장객체
+	.print
+	.println ---> \r\n -> 줄바꿈 문자가 추가 
+	.newLine() -> \r\n
+	.getBufferSize()
+	.getRemaing()
+	.clear() -> 출력 X -> 버퍼 비우기 -> (이미 비워진 상태에서 clear() -> IOException 발생)
+	.clearBuffer() -> 출력 X -> 버퍼 비우기 (이미 비워진 상태에서 clearBuffer() -> IOException 발생 X)
+	.flush() -> 출력 -> 버퍼를 비운다
+	.autoFlush()
