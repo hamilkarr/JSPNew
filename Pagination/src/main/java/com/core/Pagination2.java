@@ -14,7 +14,7 @@ public class Pagination2 {
 		page = (page <= 0)?1:page;
 		int pageLinks = 5; // 구간별 페이지 개수
 		int num = (int)floor((page - 1) / pageLinks); // 페이지 구간 번호 
-		System.out.printf("num = %d", num);
+		// System.out.printf("num = %d", num);
 		
 		/**
 		 * 구간별 시작 페이지 번호 
