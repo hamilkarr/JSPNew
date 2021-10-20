@@ -1,0 +1,32 @@
+web.xml
+
+<security-role>
+  <role-name> role1 </role-name>
+</security-role>
+<security-constrain>
+  <web-resource-collection> : 접근할 수 있는 웹 자원에 대한 설정
+    <web-resource-name></web-resource-name> : 웹 자원의 이름을 설정
+    <url-pattern> /admin/* </url-pattern>
+    <http-method> GET/POST </http-method>
+  </web-resource-collection>
+
+  <auth-constraint>
+    <description>설명</description>
+    <role-name> role1 </role-name>
+  </auth-constraint>
+</security-constrain>
+
+<login-config>
+  <auth-method>BASIC>FORM</auth-method>
+  <realm-name></realm-name>
+  <form-login-config>
+    <form-login-page>/login.jsp</form-login-page>
+    <form-error-page>/error.jsp</form-error-page>
+  </form-login-config>
+</login-config>
+
+Form 인증
+<form action="j_security_check" method="post">
+  아이디 : <input type="text" name="j_username">
+  비밀번호 : <input type="password" name="j_password">
+</form>

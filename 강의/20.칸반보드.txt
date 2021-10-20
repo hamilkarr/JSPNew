@@ -1,0 +1,5 @@
+URL
+1. /kanban/work - 작업 목록(준비중,진행중,완료)
+2. /kanban/add - 작업 등록
+3. /kanban/edit - 작업 수정
+4. /kanban/remove - 작업 삭제

@@ -1,0 +1,44 @@
+1.
+
+2. web.xml  
+  에러 코드
+  에러 타입
+
+  <error-page>
+    <error-code></error-code>
+    <location>에러 발생시 이동 URL</location>
+  </error-page>
+
+  <error-page>
+    <exception-type>java.lang.NullPointerException</exception-type>
+    <location>....</location>
+  </error-page>
+
+3. try ~ catch
+try {
+  예외가 발생할지도 모르는 구간
+  throw 예외 인스턴스;
+} catch (Exception ... 인스턴스) {
+  예외가 발생하면 유입되는 구간
+} finally {
+  예외가 발생하든 안하든 항상 실행되는 구간
+}
+
+p 374 Note
+RequestDispatcher
+  - forward
+  - include
+
+  <jsp:forward page=".."/>
+  <jsp:include page="..."/>
+
+  <jsp:forward page="..." >
+    <jsp:param name="" value="" />
+  </jsp:forward>
+
+  request.getParameter("...");
+
+p 358 예외처리 우선순위
+  1. try ~ catch
+  2. page 디렉티브 태그 errorPage
+  3. web.xml

@@ -1,7 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page import="com.core.Logger" %>
 <%
-	Logger.log("로거 테스트1");
-	Logger.log("로거 테스트2");
-	Logger.log("로거 테스트3");
+	//Logger.init("dev", "D:\\logs");
+	//Logger.log("테스트 로그1");
+	//Logger.log("테스트 로그2");
+	//Logger.log("테스트 로그3");
+	Logger.setWriter(out);
+	Logger.setPreventClosed(true);
+	
+	try {
+		throw new Exception("에러 발생!!!");
+	} catch (Exception e) {
+		Logger.log(e);
+	}
 %>

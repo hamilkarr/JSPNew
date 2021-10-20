@@ -56,11 +56,11 @@ public class Pagination {
 	}
 
 	public Pagination(int page, int total, int pageLinks) {
-		this(page, total, pageLinks, 15);
+		this(page, total, pageLinks, 3);
 	}
 
 	public Pagination(int page, int total) {
-		this(page, total, 5, 15);
+		this(page, total, 5, 3);
 	}
 
 	public Pagination(String page, int total) {

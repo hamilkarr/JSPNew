@@ -56,7 +56,7 @@ public class BoardDao {
 	}
 	
 	public ArrayList<Board> getList(int page){
-		return getList(page,15);
+		return getList(page,3);
 	}
 	
 	public ArrayList<Board> getList(HttpServletRequest request) {

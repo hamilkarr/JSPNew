@@ -48,4 +48,59 @@
 		<url-pattern>/board/view</url-pattern>
 	</filter-mapping>	
 	<!-- 필터 E -->	
+	<!-- 시큐리티 -->
+	<!-- 
+	<security-role>
+		<role-name>manager</role-name>
+	</security-role>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Admin page</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>관리자 접속 사용자</description>
+			<role-name>manager</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-config>FORM</auth-config>
+		<form-login-config>
+			<form-login-page>/ch10/login.jsp</form-login-page>
+			<form-error-page>/ch10/login_failed.jsp</form-error-page>
+		</form-login-config>
+	 
+	</login-config>
+	 -->
+	 <security-role>
+		<role-name>manager</role-name>		
+	</security-role>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Admin page</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<description>관리자 접속 사용자</description>
+			<role-name>manager</role-name>			
+		</auth-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/ch10/login.jsp</form-login-page>
+			<form-error-page>/ch10/login_failed.jsp</form-error-page>
+		</form-login-config>
+	</login-config>	
+	<!-- 에러 -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/ch11/not_found.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.NullPointerException</exception-type>
+		<location>/ch11/ex01_error.jsp</location>
+	</error-page>
 </web-app>
