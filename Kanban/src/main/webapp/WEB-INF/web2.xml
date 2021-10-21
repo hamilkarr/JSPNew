@@ -12,13 +12,14 @@
 <!-- 서블릿 -->
 	<!-- 메인페이지 /index.jsp  -->
 	<servlet>
-		<servlet-name>Main</servlet-name>
+		<servlet-name>main</servlet-name>
 		<servlet-class>com.controller.MainController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Main</servlet-name>
+		<servlet-name>main</servlet-name>
 		<url-pattern>/index.jsp</url-pattern>
 	</servlet-mapping>
+	<!-- /kanban -->	
 	<servlet>
 		<servlet-name>Kanban</servlet-name>
 		<servlet-class>com.controller.KanbanController</servlet-class>
