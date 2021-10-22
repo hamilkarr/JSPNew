@@ -1,24 +1,27 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <web-app>
-<!-- 필터 -->
+	<!-- 필터 S  -->
 	<filter>
 		<filter-name>Common Filter</filter-name>
-		<filter-class>com.filter.CommonFilter</filter-class>	
+		<filter-class>com.filter.CommonFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>Common Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-<!-- 서블릿 -->
-	<!-- 메인페이지 /index.jsp  -->
+	<!-- 필터 E -->
+	<!-- 서블릿 S -->
+	<!-- 메인페이지 /index.jsp -->
 	<servlet>
-		<servlet-name>Main</servlet-name>
+		<servlet-name>main</servlet-name>
 		<servlet-class>com.controller.MainController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Main</servlet-name>
+		<servlet-name>main</servlet-name>
 		<url-pattern>/index.jsp</url-pattern>
 	</servlet-mapping>
+	<!-- 메인페이지 E  -->
+	<!-- /kanban S  -->
 	<servlet>
 		<servlet-name>Kanban</servlet-name>
 		<servlet-class>com.controller.KanbanController</servlet-class>
@@ -27,4 +30,9 @@
 		<servlet-name>Kanban</servlet-name>
 		<url-pattern>/kanban/*</url-pattern>
 	</servlet-mapping>
+	<!-- /kanban E -->
+	<!-- 서블릿 E  -->
 </web-app>
+
+
+

@@ -1,2 +1,2 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
-등록/수정 양식...
+<%@ page contentType="text/html; charset=utf-8" %>
+등록/수정 양식

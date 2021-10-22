@@ -1,15 +1,16 @@
 { 
-	"Environment" : "production",
+	"Environment" : "development",
+	"PageTitle" : "사이트 기본 제목",
 	"DB":  { 
 		"Driver": "com.mysql.cj.jdbc.Driver",
 		"Url" : "jdbc:mysql://localhost:3306/JSPBookDB",
 		"user" : "root", 
 		"password" : "aA!12345"
 	},
-	"LogDir" : "C:\\logs",
+	"LogDir" : "D:\\logs",
 	"css": {
-		"/kanban": "kanban/test||kanban/test2"
-		},
+		"/kanban":"kanban/test||kanban/test2"
+	},
 	"js" : {
 		"/kanban":"kanban/test||kanban/test2"
 	}
