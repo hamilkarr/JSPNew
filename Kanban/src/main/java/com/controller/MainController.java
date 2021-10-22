@@ -1,12 +1,11 @@
 package com.controller;
 
-import java.io.IOException;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.io.IOException;
 
 /**
- * 메인 페이지 -  index.jsp 
+ * 메인 페이지 - index.jsp 
  *
  */
 public class MainController extends HttpServlet {
@@ -16,3 +15,7 @@ public class MainController extends HttpServlet {
 		rd.include(request, response);
 	}
 }
+
+
+
+

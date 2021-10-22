@@ -13,19 +13,20 @@ import javax.servlet.http.*;
  */
 public class Logger {
 	
-	// 로그 레벨 상수
+	/** 로그 레벨 상수 */
 	private static final int DEBUG = 0;
 	private static final int INFO = 1;
 	private static final int NOTICE = 2;
-	private static final int WARNING =3;
+	private static final int WARNING = 3;
 	private static final int ERROR = 4;
 	private static final int CRITICAL = 5;
 	private static final int ALERT = 6;
 	private static final int EMERGENCY = 7;
-	private static final String[] errorLevels = {"debug","info","notice","warning","error","critical","alert","emergency"};
+	private static final String[] errorLevels = {"debug", "info", "notice", "warning", "error", "critical", "alert", "emergency" };
+
 	
 	private static String status; // dev - 개발중(콘솔), service - 서비스 중(파일)
-	private static Writer writer; // 로그 출력패널 종류 : 파일, 콘솔, jsp 등등...	
+	private static Writer writer; 
 	private static String logDir; // 로그 디렉토리
 	private static String logPath;// 디렉토리포함 로그 파일명(날짜)
 	
@@ -52,21 +53,23 @@ public class Logger {
 		);
 	}
 	
-	public static void init( ) {
+	public static void init() {
 		Config config = Config.getInstance();
-		String logDir = (String) config.get("LogDir");
-		String status = ((String) config.get("Environment")).equals("production")?"service":"dev";
-		init(status,logDir);
+		logDir = (String)config.get("LogDir");
+		status = ((String)config.get("Environment")).equals("production")?"service":"dev";
+		init(status, logDir);
 	}
 	
-	/**
-	 * 리소스를 로그 기록 후에 닫기 여부
+	
+	/** 
+	 * 리소스를 로그 기록 후에 닫기 여부 
+	 * 
 	 * @param preventClosed
-	 */	
+	 */
 	public static void setPreventClosed(boolean preventClosed) {
 		Logger.preventClosed = preventClosed;
 	}
-	
+	 
 	/**
 	 * Writer(출력 스트림) 설정 
 	 * 
@@ -88,17 +91,17 @@ public class Logger {
 	/**
 	 * 로그 기록 
 	 * 
-	 * @param level 로그 레벨 (0~7) 기본값 1: info
 	 * @param message
+	 * @param level 로그 레벨(0~7) - 1 - info
 	 */
 	public static void log(String message, int level) {
-				
-		if (level <0 || level > 7) level = 1; // info가 기본값		
+		
+		if (level < 0 || level > 7) level = 1; // info가 기본값
 		
 		BufferedWriter bw = null;
 		PrintWriter out  = null;
 		try {
-			// setWriter 설정값 Writer가 없는 경우 FileWriter 또는 System.out 설정 
+			// 별도 설정 Writer가 없는 경우 FileWriter 또는 System.out 설정 
 			if (writer == null) {
 				if (status.equals("dev")) { // 콘솔 출력 
 					setStream(System.out);
@@ -111,18 +114,18 @@ public class Logger {
 			out = new PrintWriter(bw);
 			
 			StringBuilder sb = new StringBuilder();
-			// 로그 레벨 표기
+			// 로그 레벨 표기 
 			sb.append("[%s]");
 			
-			// 로그 작성 시간 표기
+			// 로그 작성 시간 표기 
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			String time = sdf.format(new Date());
 			sb.append("[%s]");
 			
-			//메세지 표기
+			// 메세지 표기 
 			sb.append("%s%n");
 			
-			out.printf(sb.toString(), errorLevels[level],time,message);
+			out.printf(sb.toString(), errorLevels[level], time, message);
 			out.flush();
 			
 		} catch (IOException e) {
@@ -143,16 +146,17 @@ public class Logger {
  		}
 	}
 	
- 	/**
- 	 * 로그 기록, level - INFO로 고정
- 	 * @param message
- 	 */
+	/**
+	 * 로그 기록, level - INFO로 고정 
+	 * 
+	 * @param message
+	 */
 	public static void log(String message) {
-		log(message, INFO);
+		log(message, Logger.INFO);
 	}
 	
 	public static void log(StringBuilder sb, int level) {
-		log(sb.toString(),level);
+		log(sb.toString(), level);
 	}
 	
 	public static void log(StringBuffer sb, int level) {
@@ -160,68 +164,72 @@ public class Logger {
 	}
 	
 	/**
-	 * 로그 기록 - 사용자 접속 정보
+	 * 로그기록 - 사용자 접속 정보
 	 * 
 	 * @param request
 	 */
 	public static void log(ServletRequest request) {
 		/**
-		 * 1. 요청 메서드
-		 * 2. 요청 URL
-		 * 3. 접속 IP
-		 * 4. Referrer - 유입 경로
-		 * 5. User Agent -> 요청 헤더
-		 * 6. Accept Language -> 사용 언어
+		 * 1. 요청 메서드(O)
+		 * 2. 요청 URL(O)
+		 * 3. 접속 IP(O)
+		 * 4. Referrer - 유입 경로 (O)
+		 * 5. User Agent -> 요청 헤더 (O)
+		 * 6. Accept-Language -> 사용 언어 (O) 
 		 */
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest req = (HttpServletRequest)request;
 			StringBuilder sb = new StringBuilder();
+			
 			String method = req.getMethod();
-			String referer = req.getHeader("referer"); // 유입 경로
+			String referer = req.getHeader("referer"); // 유입경로
+			
 			sb.append(method);
-			sb.append("/ URL: ");
+			sb.append(" / URL : ");
 			sb.append(req.getRequestURL());
-			sb.append("/ IP: ");
+			sb.append(" / IP : ");
 			sb.append(req.getRemoteAddr());
-			if (referer != null ) {
-				sb.append(" / REF: ");
+			if (referer != null) {
+				sb.append(" / REF : ");
 				sb.append(referer);
 			}
-			
-			// User Agent (브라우저 접속 종류 정보)
-			sb.append(" / UA: ");
+			// User Agent(브라우저 접속 정보)
+			sb.append(" / UA : ");
 			sb.append(req.getHeader("user-agent"));
 			
-			// 사용 언어
-			sb.append(" / LANG: ");
+			// 사용 언어 
+			sb.append(" / LANG : ");
 			sb.append(req.getHeader("accept-language"));
 			
-			log(sb,INFO);
-		}		
+			log(sb, Logger.INFO);
+		} // if
 	}
-
+	
 	/**
+	 * 예외, 에러에대한 로그 기록 
 	 * 
-	 * @param e // 로그 레벨 ERROR로 고정
+	 * @param e   /  로그 레벨 ERROR로 고정 
 	 */
 	public static void log(Throwable e) {
 		
+		
+		log("------------------------------------- Error Stack Start ----------------------------", ERROR);
 		StackTraceElement[] stacks = e.getStackTrace();
-		log("--------------------------------- ERROR STACK START ---------------------------------",ERROR);
 		for (StackTraceElement stack : stacks) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("ClassName: ");
+			sb.append("ClassName : ");
 			sb.append(stack.getClassName());
-			sb.append(" / File: ");
+			sb.append(" / File : ");
 			sb.append(stack.getFileName());
-			sb.append(" / LINE: ");
+			sb.append(" / LINE : ");
 			sb.append(stack.getLineNumber());
-			sb.append(" / Method: ");
-			sb.append(stack.getMethodName());			
-			log(sb,ERROR);
-		}		
-		log("--------------------------------- ERROR STACK END -----------------------------------", ERROR);
+			sb.append(" / Method : " );
+			sb.append(stack.getMethodName());
+			log(sb, ERROR);
+		}
 		
-		log("", Logger.ERROR);
+		
+		log("------------------------------------- Error Stack END ----------------------------", ERROR);
+		log("", ERROR);
 	}
 }
