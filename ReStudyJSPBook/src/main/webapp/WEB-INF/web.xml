@@ -20,5 +20,9 @@
 			<form-login-page>/ch10/login.jsp</form-login-page>
 			<form-error-page>/ch10/login_failed.jsp</form-error-page>
 		</form-login-config>
-	</login-config>	
+	</login-config>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/ch11/not_found.jsp</location>
+	</error-page>
 </web-app>
