@@ -7,7 +7,7 @@
 		"user" : "root", 
 		"password" : "aA!12345"
 	},
-	"LogDir" : "D:\\logs",
+	"LogDir" : "C:\\logs",
 	"css": {
 	},
 	"js" : {

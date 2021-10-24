@@ -1,0 +1,21 @@
+01) 다국어 처리의 개요
+
+02) Locale 클래스를 이용한 다국어 처리
+	java.util.Locale request.getLocale();
+	
+	Locale locale = new Locale("ko","KR");
+	Locae locale = Locale.KOREA;
+	
+	로케일 감지 메소드의 종류
+	getDefault() 디폴트 로케일의 현재 값을 가져옵니다.
+	getCountry() 현재 로케일 국가/지역코드(대문자)를 가져옵니다.
+	getDisplayCountry() 현재 로케일의 국가 이름을 가져옵니다.
+	getLanguage() 현재 로케일의 언어 코드를 가져 옵니다.
+	getDisplayLanguage() 현재 로케일의 언어 이름을 가져 옵니다.
+	
+	언어설정
+	날짜와 시간 설정
+	통화와 숫자 설정	
+	
+03) JSTL fmt 태그를 이용한 다국어 처리
+	
