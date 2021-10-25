@@ -2,7 +2,10 @@ package com.controller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.IOException;
+import java.io.*;
+
+import com.core.Logger;
+import com.models.member.*;
 
 /**
  * /member/* 컨트롤러 
@@ -11,6 +14,7 @@ import java.io.IOException;
 public class MemberController extends HttpServlet {
 		
 	private String httpMethod; //Http 요청 메서드: GET,POST,...
+	private PrintWriter out;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
 		
@@ -21,6 +25,10 @@ public class MemberController extends HttpServlet {
 		} else { //GET이 아닌 경우 -> 유입된 입력 양식 데이터 처리
 			request.setCharacterEncoding("UTF-8");
 		}
+		
+		/** PrintWriter 공통 */
+		out = response.getWriter();
+		
 		
 		String URI = request.getRequestURI();
 		String mode = URI.substring(URI.lastIndexOf("/") + 1);
@@ -61,8 +69,15 @@ public class MemberController extends HttpServlet {
 		if (httpMethod.equals("GET")) {
 			RequestDispatcher rd = request.getRequestDispatcher("/views/member/form.jsp");
 			rd.include(request, response);
-		} else {
-			
+		} else { // 양식 처리
+			response.setContentType("text/html; charset=utf-8");
+			MemberDao dao = MemberDao.getInstance();
+			try {
+				dao.join(request);
+			} catch (Exception e) {				
+				out.printf("<script>alert('%s');</script>",e.getMessage());
+				Logger.log(e);
+			}
 		}
 	}
 	
