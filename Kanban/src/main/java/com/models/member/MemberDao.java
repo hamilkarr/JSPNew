@@ -103,5 +103,23 @@ public class MemberDao {
 				throw new Exception(params[1]);
 			}
 		}
+		
+		/** 아이디 체크 */ 
+		// 1. 아이디 체크 (8~30)
+		String memId = request.getParameter("memId");
+		if (memId.length() < 8 || memId.length() > 30) {
+			throw new Exception("아이디는 8자리 이상, 30자리 이하로 입력해 주세요.");
+		}
+		
+		// 2. 알파벳 + 숫자로만 구성
+		if(!memId.matches("[a-zA-Z0-9]+")) {
+			throw new Exception("아이디는 알파벳과 숫자로만 구성해 주세요.");
+		}
+		
+		// 3. 아이디 중복 체크
+		String sql = "Select Count(*) cnt From member where memId = ?";
+		ArrayList<Map<String, String>> bindings = new ArrayList<Map<String,String>>();
+		bindings.add(setBinding("String", memId));
+		ArrayList<Member> member = DB.<Member>executyQuery(sql, bindings, new Member());
 	}
 }
