@@ -1,11 +1,14 @@
 package com.models.member;
 
 import java.util.*;
+import java.sql.*;
 import javax.servlet.http.*;
+import static com.core.DB.setBinding;
 
 import org.mindrot.jbcrypt.*;
 
 import com.core.DB;
+import com.core.Logger;
 /**
  * MemberDao 클래스 
  *
@@ -48,24 +51,9 @@ public class MemberDao {
 		bindings.add(setBinding("String", request.getParameter("memNm")));
 		bindings.add(setBinding("String", cellPhone));
 				
-		//int rs = DB.executeUpdate(sql, bindings);
-		int rs = 0;
+		int rs = DB.executeUpdate(sql, bindings);		
 		return (rs >0)?true:false;
-	}
-	
-	/**
-	 * SQL 바인딩 데이터를 Map 형태로 지정
-	 * @param dataType
-	 * @param data
-	 * @return
-	 */
-	public Map<String,String> setBinding(String dataType, String data) {
-		
-		Map <String, String> map = new HashMap<>();
-		map.put(dataType, data);
-		
-		return map;
-	}
+	}	
 	
 	/**
 	 * 회원 가입 데이터 검증
@@ -117,9 +105,101 @@ public class MemberDao {
 		}
 		
 		// 3. 아이디 중복 체크
-		String sql = "Select Count(*) cnt From member where memId = ?";
+		String[] fields = {"memId"};
+		ArrayList<Map<String, String>> bindings = new ArrayList<>();
+		bindings.add(setBinding("String", memId));		
+		int count = DB.getCount("member",fields, bindings);
+		if (count > 0) { // 아이디 중복
+			throw new Exception("이미 가입된 아이디 입니다.");
+		}
+		
+		/** 비밀번호 체크 */
+		// 1. 비밀번호 자리수 체크(8자리 이상)		
+		String memPw = request.getParameter("memPw");
+		if (memPw.length() < 8) {
+			throw new Exception("비밀번호는 8자리 이상 입력해 주세요.");
+		}
+		
+		// 2. 비밀번호 복잡성 ( 수수자 + 알파벳 + 특수문자가 각각 1개 이상 입력)
+		/*
+		if (memPw.matches("*[0-9]+") && memPw.matches("*[a-zA-z]+") && memPw.matches("*[~!@#$%^&*()]+")) {
+			throw new Exception ("비밀번호는 숫자,알파벳,특수문자가 각각 1개 이상 포함되어야 합니다.");
+		}
+		*/
+		
+		// 3. 비밀번호 확인
+		String memPwRe = request.getParameter("memPwRe");
+		if (!memPw.equals(memPwRe)) {
+			throw new Exception("비밀번호를 확인해 주세요");
+		}
+		
+		/** 휴대전화번호 체크 */
+		String cellPhone = request.getParameter("cellPhone");
+		if (cellPhone != null && !cellPhone.trim().equals("")) {
+			/**
+			 * 1. 통일성 있도록 숫자로만 추출(숫자가 아닌 문자만 제거 -> 숫자만 남음)
+			 * 2. 패턴 체크
+			 */
+			cellPhone = cellPhone.replaceAll("[^0-9]","");
+			String pattern ="01[016789][0-9]{3,4}[0-9]{4}";
+			// System.out.println("cellPhone: " + cellPhone);
+			if (!cellPhone.matches(pattern)) {
+				throw new Exception("적합한 휴대전화 번호를 입력해 주세요.");
+			}
+		}
+	}
+	
+	/**
+	 * 로그인 처리
+	 * @param request - 세션을 사용하기 위해서(HttpSession getSession())
+	 * @param memId
+	 * @param memPw
+	 * @return
+	 */
+	public boolean login(HttpServletRequest request, String memId, String memPw) {
+		/**
+		 * 1. memId를 통해 회원 정보를 조회
+		 * 2. 회원 정보가 조회가 되면(실제 회원이 있으면) -> 비밀번호를 체크
+		 * 3. 비밀번호도 일치? -> 세션 처리(회원 번호 - memNo 세션에 저장)
+		 */
+		
+		Member member = getMember(memId);
+		System.out.println(member.getMemNm());
+		
+		return false;
+	}
+	
+	public boolean login(HttpServletRequest request) {
+	
+		return login(request, request.getParameter("memId"), request.getParameter("memPw"));
+	}
+	
+	public Member getMember(String memId) {
+		int memNo = 0;
+		String sql = "Select memNo From member Where memId =?";
+		try (Connection conn = DB.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);){
+			pstmt.setString(1, memId);
+			
+			
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				memNo = rs.getInt("memNo");
+			}
+			rs.close();
+			
+		} catch (SQLException | ClassNotFoundException e) {
+			Logger.log(e);
+		}
+		return (memNo == 0)?null:getMember(memNo);
+	}
+	
+	public Member getMember(int memNo) {
+		String sql = "SELECT * FROM member WHERE memNo = ?";
 		ArrayList<Map<String, String>> bindings = new ArrayList<Map<String,String>>();
-		bindings.add(setBinding("String", memId));
-		ArrayList<Member> member = DB.<Member>executyQuery(sql, bindings, new Member());
+		bindings.add(setBinding("Integer", String.valueOf(memNo)));
+		
+		Member member = DB.executeQueryOne(sql, bindings, new Member());
+		return member;
 	}
 }

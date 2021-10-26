@@ -6,7 +6,7 @@ import com.models.*;
 /**
  * MemberBean 클래스
  */
-public class Member extends Dto{
+public class Member extends Dto<Member>{
 	private int memNo; // 회원 번호
 	private String memId;
 	private String memPw;
@@ -40,14 +40,19 @@ public class Member extends Dto{
 	}
 	
 	@Override
-	public void setResultSet(ResultSet rs) throws SQLException {
-		this.memNo = rs.getInt("memNo");
-		this.memId = rs.getString("memId");
-		this.memPw = rs.getString("memPw");
-		this.memPw = rs.getString("memPwHint");
-		this.memPw = rs.getString("memNm");
-		this.cellPhone = rs.getString("cellPhone");
-		this.regDt = rs.getString("regDt");
+	public Member setResultSet(ResultSet rs) throws SQLException {
+		return new Member (
+							rs.getInt("memNo"),
+							rs.getString("memId"),
+							rs.getString("memPw"),
+							rs.getString("memPwHint"),
+							rs.getString("memNm"),
+							rs.getString("cellPhone"),
+							rs.getString("regDt"));
+	}
+	
+	public Member getNewInstance() {
+		return new Member();
 	}
 
 

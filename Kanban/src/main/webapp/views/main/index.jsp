@@ -7,7 +7,7 @@
 <main>
 	<div class="login_box">
 		<div class='tit'>로그인</div>
-		<form name='frmLogin' id='frmLogin' method="post" action="${rootURL}/memeber/login"  target="ifrmHidden" autocomplete="off">
+		<form name='frmLogin' id='frmLogin' method="post" action="${rootURL}/member/login"  target="ifrmHidden" autocomplete="off">
 		<input type="text" name="memId" placeholder="아이디" >
 		<input type="password" name="memPw" placeholder="비밀번호" >
 		

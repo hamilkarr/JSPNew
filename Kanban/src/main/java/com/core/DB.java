@@ -23,99 +23,110 @@ public class DB {
 		return conn;
 	}
 
-	public static <E extends Dto> ArrayList<E> executyQuery(String sql, ArrayList<Map<String, String>> bindings, E dto) { // E -> Object
+	public static <E extends Dto> ArrayList<E> executyQuery(String sql, ArrayList<Map<String, String>> bindings,
+			E dto) { // E -> Object
 		// SQL - 로그 기록
 		Logger.log(sql);
-		
+
 		ArrayList<E> list = new ArrayList<>();
-		ArrayList<String> logBindings = new ArrayList<>();
-		try (Connection conn = DB.getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		ArrayList<String> logBindings = new ArrayList<>(); // 로그 기록 작성을 위한 리스트
+
+		try (Connection conn = DB.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			if (bindings != null) {
 				int no = 1;
-				for (Map <String, String> map : bindings) {
+				for (Map<String, String> map : bindings) {
 					Iterator<String> ir = map.keySet().iterator();
 					if (ir.hasNext()) {
 						String dataType = ir.next();
 						String value = map.get(dataType);
 						logBindings.add(value); // 바인딩 데이터를 로그로 기록
-						switch(dataType) {
-						case "String" :
+						switch (dataType) {
+						case "String":
 							pstmt.setString(no, value);
 							break;
-						case "Integer" :
+						case "Integer":
 							pstmt.setInt(no, Integer.valueOf(value));
 							break;
-						case "Double" :
+						case "Double":
 							pstmt.setDouble(no, Double.valueOf(value));
 							break;
 						}
 					}
 					no++;
 				} // endfor
-				
-				
+
 				ResultSet rs = pstmt.executeQuery();
-				while(rs.next()) {
-					dto.setResultSet(rs);
-					list.add(dto);
+				while (rs.next()) {
+					list.add((E) dto.setResultSet(rs));
 				}
 				rs.close();
-				
-				//SQL 로그 기록
+
+				// SQL 로그 기록
 				StringBuilder sb = new StringBuilder();
 				sb.append("SQL: ");
 				sb.append(sql);
 				sb.append(" / Bindings: ");
 				sb.append(logBindings.toString());
-				Logger.log(sb,Logger.INFO);
+				Logger.log(sb, Logger.INFO);
 			}
-			
+
 		} catch (SQLException | ClassNotFoundException e) {
 			Logger.log(e);
 		}
-		
+
 		return list;
 	}
 	
+	public static <E extends Dto> E executeQueryOne(String sql, ArrayList<Map<String, String>> bindings, E dto) {
+		ArrayList<E> list = executyQuery(sql,bindings,dto);
+		if (list == null ) {
+			return null;
+		} else {
+			return list.get(0);
+		}		
+		
+	}
+
 	/**
 	 * Update, Insert, Delete에서 사용
+	 * 
 	 * @param sql
 	 * @param bindings
 	 * @param isReternGeneratedKey Insert인 경우 추가된 번호 반환
-	 * @return int - Insert인 경우 -> 추가된 증감번호(Primary Key, Auto Increment), 나머지는 - 반영된 투플의 개수
+	 * @return int - Insert인 경우 -> 추가된 증감번호(Primary Key, Auto Increment), 나머지는 - 반영된
+	 *         투플의 개수
 	 */
-	public static int executeUpdate(String sql, ArrayList<Map <String,String>> bindings, boolean isReturnGeneratedKey) {
+	public static int executeUpdate(String sql, ArrayList<Map<String, String>> bindings, boolean isReturnGeneratedKey) {
 		int rs = 0;
 		ArrayList<String> logBindings = new ArrayList<>();
-		
-		try(Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);) {
-			
+
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
+
 			int no = 1;
 			for (Map<String, String> map : bindings) {
 				Iterator<String> ir = map.keySet().iterator();
-				if (ir.hasNext()) { //Map은 한개씩만 추가
+				if (ir.hasNext()) { // Map은 한개씩만 추가
 					String dataType = ir.next();
 					String value = map.get(dataType);
 					logBindings.add(value);
-					switch(dataType) {
-						case "String" :
-							pstmt.setString(no, value);
-							break;
-						case "Integer" :
-							pstmt.setInt(no, Integer.valueOf(value));
-							break;
-						case "Double" :
-							pstmt.setDouble(no, Double.valueOf(value));
-							break;
+					switch (dataType) {
+					case "String":
+						pstmt.setString(no, value);
+						break;
+					case "Integer":
+						pstmt.setInt(no, Integer.valueOf(value));
+						break;
+					case "Double":
+						pstmt.setDouble(no, Double.valueOf(value));
+						break;
 					}
 				}
 				no++;
 			} // endfor
-			
+
 			rs = pstmt.executeUpdate();
-			
+
 			/** Insert후 추가된 증감 번호 */
 			if (isReturnGeneratedKey) {
 				ResultSet gkrs = pstmt.getGeneratedKeys();
@@ -124,8 +135,8 @@ public class DB {
 				}
 				gkrs.close();
 			}
-			
-			//SQL 로그 기록
+
+			// SQL 로그 기록
 			StringBuilder sb = new StringBuilder();
 			sb.append("SQL: ");
 			sb.append(sql);
@@ -133,17 +144,118 @@ public class DB {
 			sb.append(logBindings.toString());
 			sb.append("/ rs: ");
 			sb.append(rs);
-			
-			Logger.log(sb,Logger.INFO);
-			
+
+			Logger.log(sb, Logger.INFO);
+
 		} catch (SQLException | ClassNotFoundException e) {
 			Logger.log(e);
 		}
-		
+
 		return rs;
 	}
-	
-	public static int executeUpdate(String sql, ArrayList<Map<String,String>> bindings) {
+
+	public static int executeUpdate(String sql, ArrayList<Map<String, String>> bindings) {
 		return executeUpdate(sql, bindings, false);
+	}
+
+	/**
+	 * 테이블 + 조건(=)에 따른 개수
+	 * 
+	 * @param tableName
+	 * @param fields    조건 속성명
+	 * @param bindings
+	 * @return
+	 */
+	public static int getCount(String tableName, String[] fields, ArrayList<Map<String, String>> bindings) {
+		int count = 0;
+
+		ArrayList<String> logBindings = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT COUNT(*) cnt FROM ");
+		sb.append(tableName);
+
+		if (fields != null && fields.length > 0) {
+			boolean isFirst = true;
+			sb.append(" WHERE ");
+			for (String field : fields) {
+				if (!isFirst) {
+					sb.append(" AND ");
+				}
+				sb.append(field);
+				sb.append("= ?");
+
+				isFirst = false;
+			}
+		} // endif
+
+		String sql = sb.toString();
+		try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			/** 데이터 바인딩 */
+			if (fields != null && fields.length > 0 && bindings != null) {
+				int no = 1;
+				for (Map<String, String> map : bindings) {
+					Iterator<String> ir = map.keySet().iterator();
+					if (ir.hasNext()) {
+						String dataType = ir.next();
+						String value = map.get(dataType);
+						logBindings.add(value);
+						switch (dataType) {
+						case "String":
+							pstmt.setString(no, value);
+							break;
+						case "Integer":
+							pstmt.setInt(no, Integer.valueOf(value));
+							break;
+						case "Double":
+							pstmt.setDouble(no, Double.valueOf(value));
+							break;
+						default:
+							break;
+						}
+					}
+					no++;
+				}
+			}
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt("cnt");
+			}
+			rs.close();
+		} catch (SQLException | ClassNotFoundException e) {
+			Logger.log(e);
+		}
+
+		// SQL 로그 기록
+		sb = new StringBuilder();
+		sb.append("SQL: ");
+		sb.append(sql);
+		sb.append(" / Bindings: ");
+		sb.append(logBindings.toString());
+		sb.append("/ count: ");
+		sb.append(count);
+
+		Logger.log(sb, Logger.INFO);
+		return count;
+	}
+	
+	public static int getCount(String tableName) {
+		return getCount(tableName, null, null);
+	}
+	
+	/**
+	 * SQL 바인딩 데이터를 Map 형태로 지정
+	 * 
+	 * @param dataType
+	 * @param data
+	 * @return
+	 */
+	public static Map<String, String> setBinding(String dataType, String data) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put(dataType, data);
+
+		return map;
 	}
 }
