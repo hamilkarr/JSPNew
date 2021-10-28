@@ -8,68 +8,70 @@ import com.core.Logger;
 import com.models.member.*;
 
 /**
- *  /member/* 컨트롤러
+ * /member/* 컨트롤러
  *
  */
 public class MemberController extends HttpServlet {
-	
+
 	private String httpMethod; // Http 요청 메서드, GET, POST
 	private PrintWriter out;
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		/** 요청 메서드 */
 		httpMethod = request.getMethod().toUpperCase();
 		if (httpMethod.equals("GET")) {
 			response.setContentType("text/html; charset=utf-8");
 		} else { // GET이 아닌 경우 -> 유입된 입력 양식 데이터 처리
 			response.setCharacterEncoding("utf-8");
-			request.setCharacterEncoding("utf-8");
-
 		}
-		
+
 		out = response.getWriter();
 
 		String URI = request.getRequestURI();
 		String mode = URI.substring(URI.lastIndexOf("/") + 1);
-		switch(mode) {
-			case "join" : // 회원가입
-				joinController(request, response);
-				break;
-			case "info" : // 회원정보 수정
-				infoController(request, response);
-				break;
-			case "login" : // 로그인
-				loginController(request, response);
-				break;
-			case "findid" : // 아이디 찾기
-				findidController(request, response);
-				break;
-			case "findpw" : // 비밀번호 찾기
-				findpwController(request, response);
-				break;
-			case "logout" : // 로그아웃 
-				logoutController(request, response);
-				break;
-			default : // 없는 페이지 
-				RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
-				rd.forward(request, response);
+		switch (mode) {
+		case "join": // 회원가입
+			joinController(request, response);
+			break;
+		case "info": // 회원정보 수정
+			infoController(request, response);
+			break;
+		case "login": // 로그인
+			loginController(request, response);
+			break;
+		case "findid": // 아이디 찾기
+			findidController(request, response);
+			break;
+		case "findpw": // 비밀번호 찾기
+			findpwController(request, response);
+			break;
+		case "logout": // 로그아웃
+			logoutController(request, response);
+			break;
+		default: // 없는 페이지
+			RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
+			rd.forward(request, response);
 		}
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
-	
+
 	/**
 	 * 회원 가입 /member/join
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void joinController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (httpMethod.equals("GET")) { // 양식 출력 
+	private void joinController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (httpMethod.equals("GET")) { // 양식 출력
 			RequestDispatcher rd = request.getRequestDispatcher("/views/member/form.jsp");
 			rd.include(request, response);
 		} else { // 양식 처리
@@ -88,7 +90,7 @@ public class MemberController extends HttpServlet {
 			}
 		}
 	}
-	
+
 	/**
 	 * 회원 정보 수정 /member/info
 	 * 
@@ -97,29 +99,36 @@ public class MemberController extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void infoController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	private void infoController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
-	
+
 	/**
-	 * 로그인 /member/login 
+	 * 로그인 /member/login
 	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void loginController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		MemberDao dao = MemberDao.getInstance();
-		try {
-			dao.login(request);
-			out.printf("<script>parent.location.replace('%s');</script>","../kanban/work");
-		} catch (Exception e) {
-			Logger.log(e);
-			out.printf("<script>alert('%s');</script>", e.getMessage());
+	private void loginController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (httpMethod.equals("GET")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/main/index.jsp");
+			rd.include(request, response);
+		} else {
+			MemberDao dao = MemberDao.getInstance();
+			try {
+				dao.login(request);
+				out.printf("<script>parent.location.replace('%s');</script>", "../kanban/work");
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');</script>", e.getMessage());
+			}
 		}
 	}
-	
+
 	/**
 	 * 아이디 찾기 /member/findid
 	 * 
@@ -128,10 +137,28 @@ public class MemberController extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void findidController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	private void findidController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("text/html; charset=utf-8");
+			
+			if (httpMethod.equals("POST")) {
+				MemberDao dao = MemberDao.getInstance();				
+				try {
+					String memId = dao.findId(request);
+					request.setAttribute("memId", memId);
+					
+				} catch (Exception e) {
+					Logger.log(e);
+					out.printf("<script>alert('%s');</script>",e.getMessage());
+				}
+			}	
+			
+			response.setContentType("text/html; charset=utf-8");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/member/findid.jsp");
+			rd.include(request, response);		
 	}
-	
+
 	/**
 	 * 비밀번호 찾기
 	 * 
@@ -140,21 +167,30 @@ public class MemberController extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void findpwController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	private void findpwController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if(httpMethod.equals("GET")) { //비밀번호 찾기 양식
+			RequestDispatcher rd = request.getRequestDispatcher("/views/member/findpw.jsp");
+			rd.include(request, response);
+		} else { // 일치하는 회원 검증 -> 비밀번호 초기화 페이지로 이동
+			MemberDao dao = MemberDao.getInstance();
+			dao.findPw(request);
+		}
 	}
-	
+
 	/**
-	 * 로그아웃 
+	 * 로그아웃
 	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void logoutController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void logoutController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		MemberDao dao = MemberDao.getInstance();
 		dao.logout(request);
+		PrintWriter out = response.getWriter();
+		out.printf("<script>location.replace('%s');</script>", "../index.jsp");
 	}
 }
-
