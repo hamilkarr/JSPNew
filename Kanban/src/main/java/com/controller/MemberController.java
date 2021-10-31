@@ -50,6 +50,9 @@ public class MemberController extends HttpServlet {
 		case "logout": // 로그아웃
 			logoutController(request, response);
 			break;
+		case "change_pw": // 비밀번호 초기화
+			changePwController(request, response);
+			break;
 		default: // 없는 페이지
 			RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
 			rd.forward(request, response);
@@ -72,6 +75,7 @@ public class MemberController extends HttpServlet {
 	private void joinController(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (httpMethod.equals("GET")) { // 양식 출력
+			request.setAttribute("action", "../member/join"); // 양식 처리 경로
 			RequestDispatcher rd = request.getRequestDispatcher("/views/member/form.jsp");
 			rd.include(request, response);
 		} else { // 양식 처리
@@ -100,8 +104,36 @@ public class MemberController extends HttpServlet {
 	 * @throws IOException
 	 */
 	private void infoController(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException {		
+		Member member = null;
+		try {
+			if (request.getAttribute("member") != null) {
+				member = (Member) request.getAttribute("member");
+			}
 
+			if (member == null) {
+				throw new Exception("등록된 회원 정보가 없습니다.");
+			}
+
+		} catch (Exception e) {
+			Logger.log(e);
+			out.printf("<script>alert('%s');history.back();</script>", e.getMessage());
+			return;
+		}
+
+		if (httpMethod.equals("GET")) { // 수정양식
+			request.setAttribute("action", "../member/info");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/member/form.jsp");
+			rd.include(request, response);
+		} else { // 수정 처리
+			MemberDao dao = MemberDao.getInstance();
+			try {
+				dao.updateInfo(request);
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');</script>", e.getMessage());
+			}
+		}
 	}
 
 	/**
@@ -139,24 +171,24 @@ public class MemberController extends HttpServlet {
 	 */
 	private void findidController(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-			request.setCharacterEncoding("utf-8");
-			response.setContentType("text/html; charset=utf-8");
-			
-			if (httpMethod.equals("POST")) {
-				MemberDao dao = MemberDao.getInstance();				
-				try {
-					String memId = dao.findId(request);
-					request.setAttribute("memId", memId);
-					
-				} catch (Exception e) {
-					Logger.log(e);
-					out.printf("<script>alert('%s');</script>",e.getMessage());
-				}
-			}	
-			
-			response.setContentType("text/html; charset=utf-8");
-			RequestDispatcher rd = request.getRequestDispatcher("/views/member/findid.jsp");
-			rd.include(request, response);		
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+
+		if (httpMethod.equals("POST")) {
+			MemberDao dao = MemberDao.getInstance();
+			try {
+				String memId = dao.findId(request);
+				request.setAttribute("memId", memId);
+
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');</script>", e.getMessage());
+			}
+		}
+
+		response.setContentType("text/html; charset=utf-8");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/member/findid.jsp");
+		rd.include(request, response);
 	}
 
 	/**
@@ -169,12 +201,81 @@ public class MemberController extends HttpServlet {
 	 */
 	private void findpwController(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if(httpMethod.equals("GET")) { //비밀번호 찾기 양식
+		if (httpMethod.equals("GET")) { // 비밀번호 찾기 양식
 			RequestDispatcher rd = request.getRequestDispatcher("/views/member/findpw.jsp");
 			rd.include(request, response);
 		} else { // 일치하는 회원 검증 -> 비밀번호 초기화 페이지로 이동
 			MemberDao dao = MemberDao.getInstance();
-			dao.findPw(request);
+			try {
+				Member member = dao.findPw(request);
+				if (member == null) {
+					throw new Exception("일치하는 회원이 없습니다.");
+				}
+
+				/**
+				 * 비밀번호 초기화 페이지 이동전 처리 1. 접속 만료 시간 2. 비번 초기화시에 필요한 회원번호는 숨겨서 처리 -> 세션에 담아서 초기화
+				 * 처리(POST)에서 조회하여 처리 3. 접속시간 만료 -> 회원번호 삭제 -> 만료시간 이후에 초기화 페이지 접속 -> 접속이 만료되었다는
+				 * 메세지 출력. 접속 불가능
+				 */
+				HttpSession session = request.getSession();
+				long expireTime = System.currentTimeMillis() + (3 * 60 * 1000);
+				session.setAttribute("expireTime", expireTime);
+
+				// 회원번호 세션 처리
+				session.setAttribute("change_pw_memNo", member.getMemNo());
+
+				out.printf("<script>parent.location.replace('%s');</script>", "../member/change_pw");
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');</script>", e.getMessage());
+			}
+		}
+	}
+
+	/**
+	 * 비밀번호 초기화
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void changePwController(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (httpMethod.equals("GET")) { // 초기화 양식
+			try {
+				HttpSession session = request.getSession();
+				long expireTime = 0L;
+				if (session.getAttribute("expireTime") != null) {
+					expireTime = (Long) session.getAttribute("expireTime");
+				}
+
+				// 만료시간이 지난 경우
+				if (expireTime < System.currentTimeMillis()) {
+					session.removeAttribute("change_pw_memNo");
+					throw new Exception("페이지 접속이 만료 되었습니다.");
+				}
+
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');location.replace('%s');</script>", e.getMessage(), "../member/findpw");
+				return;
+			}
+			RequestDispatcher rd = request.getRequestDispatcher("/views/member/changepw.jsp");
+			rd.include(request, response);
+		} else { // 초기화 처리
+			try {
+				MemberDao dao = MemberDao.getInstance();
+				boolean result = dao.changePw(request);
+				if (!result) {
+					throw new Exception("비밀번호 변경에 실패 했습니다.");
+				}
+				// 변경에 성공하면 -> 로그인 페이지 (메인 페이지)
+				out.printf("<script>parent.location.replace('%s');</script>", "../index.jsp");
+			} catch (Exception e) {
+				Logger.log(e);
+				out.printf("<script>alert('%s');</script>", e.getMessage());
+			}
 		}
 	}
 
