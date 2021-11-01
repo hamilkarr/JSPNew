@@ -17,5 +17,10 @@
 	},
 	"AddonFooter" : {
 		"*" : "common"			
+	},
+	"NaverLogin" : {
+		"clientId" : "69se08pd4zx2Ujls3TIT",
+		"secret" : "A26Y07GMmo",
+		"callbackURL" : "http://localhost:8080/Kanban/member/naver_login"
 	}
  }

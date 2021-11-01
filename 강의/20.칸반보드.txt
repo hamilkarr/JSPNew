@@ -3,3 +3,21 @@ URL
 2. /kanban/add - 작업 등록
 3. /kanban/edit - 작업 수정
 4. /kanban/remove - 작업 삭제
+
+네이버 로그인
+	REST API (Application Programming Interface)
+	
+oAuth
+	1. 인증코드
+	URL에 clientId, Callback URL에 포함하여 링크 -> 네이버쪽 callbackURL + 인증코드(code)
+	
+	2. code -> AccessToken을 발급(clientId + secret)
+	(유효시간)
+	- 서비스 접근
+	
+	3. 발급받은 AccessToken을 이용하여 회원프로필조회 API를 호출 ->
+	4. 회원가입, 로그인
+	
+	Client ID mUUVBtxEjtuEhy916F8q
+	
+	Client Secret  BJesE5zSPy
