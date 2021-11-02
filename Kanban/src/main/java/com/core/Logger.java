@@ -215,7 +215,7 @@ public class Logger {
 		
 		
 		log("------------------------------------- Error Stack Start ----------------------------", ERROR);
-		log("Mesaage : " + e.getMessage(), ERROR);
+		log("Message : " + e.getMessage(), ERROR);
 		log("Exception : " + e.getClass().getName(),ERROR);
 		log("------------------------------------- Error Class Name  ----------------------------", ERROR);
 		StackTraceElement[] stacks = e.getStackTrace();

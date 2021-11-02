@@ -13,17 +13,21 @@ public class Member extends Dto<Member>{
 	private String memPwHint;
 	private String memNm;
 	private String cellPhone;
+	private String socialType; // 소셜 로그인 가입 채널
+	private String socialId; // 소셜 로그인 아이디
 	private String regDt;
 
 	public Member() {}
 	
-	public Member(int memNo, String memId, String memPw, String memPwHint, String memNm, String cellPhone, String regDt) {		
+	public Member(int memNo, String memId, String memPw, String memPwHint, String memNm, String cellPhone,String socialType, String socialId, String regDt) {		
 		this.memNo = memNo;
 		this.memId = memId;
 		this.memPw = memPw;
 		this.memPwHint = memPwHint;
 		this.memNm = memNm;
 		this.cellPhone = cellPhone;
+		this.socialType = (socialType == null)?"none":socialType;
+		this.socialId = socialId;
 		this.regDt = regDt;
 	}
 	
@@ -35,6 +39,8 @@ public class Member extends Dto<Member>{
 			rs.getString("memPwHint"),
 			rs.getString("memNm"),
 			rs.getString("cellPhone"),
+			rs.getString("socialType"),
+			rs.getString("socialId"),
 			rs.getString("regDt")
 		);
 	}
@@ -48,6 +54,8 @@ public class Member extends Dto<Member>{
 							rs.getString("memPwHint"),
 							rs.getString("memNm"),
 							rs.getString("cellPhone"),
+							rs.getString("socialType"),
+							rs.getString("socialId"),
 							rs.getString("regDt"));
 	}
 	
@@ -102,6 +110,22 @@ public class Member extends Dto<Member>{
 
 	public void setCellPhone(String cellPhone) {
 		this.cellPhone = cellPhone;
+	}
+
+	public String getSocialType() {
+		return socialType;
+	}
+
+	public void setSocialType(String socialType) {
+		this.socialType = socialType;
+	}
+
+	public String getSocialId() {
+		return socialId;
+	}
+
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
 	}
 
 	public String getRegDt() {

@@ -80,7 +80,24 @@ public class MemberController extends HttpServlet {
 	private void joinController(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (httpMethod.equals("GET")) { // 양식 출력
+			HttpSession session = request.getSession();
+			
 			request.setAttribute("action", "../member/join"); // 양식 처리 경로
+			String socialType = "none";
+			Member socialMember = null;
+			
+			String[] socialTypes = {"naver", "kakao"};
+			for (String type : socialTypes) {
+				if (session.getAttribute(type + "_member") != null) {
+					socialType = type;
+					socialMember = (Member)session.getAttribute(type + "_member");
+					break;
+				}
+			}
+			
+			request.setAttribute("socialType", socialTypes);
+			request.setAttribute("socialMember", socialMember);			
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/views/member/form.jsp");
 			rd.include(request, response);
 		} else { // 양식 처리
@@ -314,7 +331,24 @@ public class MemberController extends HttpServlet {
 	private void naverLoginController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		NaverLogin naver = NaverLogin.getInstance();		
 		try {
-			naver.getAccessToken(request);
+			String accessToken = naver.getAccessToken(request);
+			naver.getProfile(request, accessToken);
+			
+			/**
+			 *  1. 네이버 소셜 채널로 가입이 완료 -> 로그인 처리
+			 *  2. 가입이 안되있는 경우 -> 회원 가입 처리
+			 */
+			if (naver.isJoin(request)) { // 1. 로그인 처리				
+				boolean result = naver.login(request);
+				if (!result) { // 로그인 실패
+					throw new Exception("네이버 아이디로 로그인 실패!!");
+				}
+				// 로그인 성공시 작업 요약
+				out.printf("<script>location.replace('%s');</script>", "../kanban/work");
+			} else {
+				// 2. 회원 가입 페이지로 이동
+				out.printf("<script>location.replace('%s');</script>","../member/join");
+			}
 		} catch (Exception e) {
 			Logger.log(e);
 			out.printf("<script>alert('%s');location.replace('../member/login');</script>",e.getMessage());
