@@ -23,44 +23,44 @@ public class DB {
 		return conn;
 	}
 
-	public static <E extends Dto> ArrayList<E> executeQuery(String sql, ArrayList<DBField> bindings,
-			E dto) { // E -> Object
+	public static <E extends Dto> ArrayList<E> executeQuery(String sql, ArrayList<DBField> bindings, E dto) { // E ->
+																												// Object
 		// SQL - 로그 기록
 		Logger.log(sql);
 
 		ArrayList<E> list = new ArrayList<>();
-		ArrayList<String> logBindings = null; 
+		ArrayList<String> logBindings = null;
 
 		try (Connection conn = DB.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			if (bindings != null) {
 				// 바인딩 처리
-				logBindings = processBinding(pstmt, bindings);				
+				logBindings = processBinding(pstmt, bindings);
 
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
 					list.add((E) dto.setResultSet(rs));
 				}
 				rs.close();
-
-				// SQL 로그 기록
-				StringBuilder sb = new StringBuilder();
-				sb.append("SQL: ");
-				sb.append(sql);
-				sb.append(" / Bindings: ");
-				sb.append(logBindings.toString());
-				Logger.log(sb, Logger.INFO);
 			}
 
 		} catch (SQLException | ClassNotFoundException e) {
 			Logger.log(e);
+		} finally {
+			// SQL 로그 기록
+			StringBuilder sb = new StringBuilder();
+			sb.append("SQL: ");
+			sb.append(sql);
+			sb.append(" / Bindings: ");
+			sb.append(logBindings.toString());
+			Logger.log(sb, Logger.INFO);
 		}
 
 		return list;
 	}
-	
-	public static<E extends Dto> E executeQueryOne(String sql, ArrayList<DBField> bindings, E dto) {
+
+	public static <E extends Dto> E executeQueryOne(String sql, ArrayList<DBField> bindings, E dto) {
 		ArrayList<E> list = executeQuery(sql, bindings, dto);
-		if (list == null || list.size() == 0) {			
+		if (list == null || list.size() == 0) {
 			return null;
 		} else {
 			return list.get(0);
@@ -82,9 +82,9 @@ public class DB {
 
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
-			
+
 			logBindings = processBinding(pstmt, bindings);
-			
+
 			rs = pstmt.executeUpdate();
 
 			/** Insert후 추가된 증감 번호 */
@@ -95,8 +95,11 @@ public class DB {
 				}
 				gkrs.close();
 			}
-
+		} catch (SQLException | ClassNotFoundException e) {
+			Logger.log(e);
+		} finally {
 			// SQL 로그 기록
+
 			StringBuilder sb = new StringBuilder();
 			sb.append("SQL: ");
 			sb.append(sql);
@@ -106,9 +109,6 @@ public class DB {
 			sb.append(rs);
 
 			Logger.log(sb, Logger.INFO);
-
-		} catch (SQLException | ClassNotFoundException e) {
-			Logger.log(e);
 		}
 
 		return rs;
@@ -177,11 +177,11 @@ public class DB {
 		Logger.log(sb, Logger.INFO);
 		return count;
 	}
-	
+
 	public static int getCount(String tableName) {
 		return getCount(tableName, null, null);
 	}
-	
+
 	/**
 	 * SQL 바인딩 데이터를 Map 형태로 지정
 	 * 
@@ -191,38 +191,40 @@ public class DB {
 	 */
 	public static DBField setBinding(String dataType, String data) {
 
-		return new DBField(dataType,data);
+		return new DBField(dataType, data);
 	}
-	
+
 	/**
 	 * SQL 바인딩 처리
+	 * 
 	 * @param pstmt
 	 * @param bindings
 	 */
-	public static ArrayList<String> processBinding(PreparedStatement pstmt, ArrayList<DBField> bindings) throws SQLException {
-		
+	public static ArrayList<String> processBinding(PreparedStatement pstmt, ArrayList<DBField> bindings)
+			throws SQLException {
+
 		ArrayList<String> logBindings = new ArrayList<>(); // 로그용 바인딩 데이터
-		
+
 		int no = 1;
 		for (DBField binding : bindings) {
 			String dataType = binding.getType();
-			String value = binding.getValue();			
+			String value = binding.getValue();
 			logBindings.add(value);
-			
+
 			switch (dataType) {
-			case "String" :
-				pstmt.setString(no,value);
+			case "String":
+				pstmt.setString(no, value);
 				break;
-			case "Integer" :
+			case "Integer":
 				pstmt.setInt(no, Integer.valueOf(value));
 				break;
-			case "Double" :
+			case "Double":
 				pstmt.setDouble(no, Double.valueOf(value));
-				break;			
+				break;
 			}
 			no++;
 		}
-		
+
 		return logBindings;
 	}
 }

@@ -17,6 +17,8 @@ import org.json.simple.parser.*;
  *
  */
 public abstract class SocialLogin {
+	
+	private static String[] socialTypes = {"naver", "kakao"};
 	/** 
 	 * Access Token을 발급 받기위한 인증 code 발급 URL 생성 
 	 * @return
@@ -55,6 +57,58 @@ public abstract class SocialLogin {
 	 * @return
 	 */
 	public abstract boolean login(HttpServletRequest request);
+	
+	/**
+	 * 현재 세션에 담겨있는 소셜 프로필 정보 Member 인스턴스로 반환
+	 * socialType - naver - 네이버 프로필 // kakao - 카카오 프로필
+	 * @param request
+	 * @return
+	 */
+	public static Member getSocialMember(HttpServletRequest request) {
+		Member socialMember = null;
+		HttpSession session = request.getSession();
+				
+		for (String type : socialTypes) {
+			if (session.getAttribute(type + "_member") != null) {				
+				socialMember = (Member)session.getAttribute(type + "_member");
+				break;
+			}
+		}
+		return socialMember;
+	}
+	
+	/**
+	 * 세션에 있는 프로필 정보로 각 소셜 채널에 맞는 인스턴스 반환
+	 * @param request
+	 * @return
+	 */
+	public static SocialLogin getSocialInstance(HttpServletRequest request) {
+		Member member = getSocialMember(request);
+		String type = "none";
+		SocialLogin instance = null;
+		if (member != null) {
+			type = member.getSocialType();
+			switch(type) {
+				case "naver" :
+					instance = NaverLogin.getInstance();
+					break;
+				case "kakao" :
+					break;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * 소셜 프로필 세션 정보 모두 비우기
+	 * @param request
+	 */
+	public static void clear(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		for (String type : socialTypes) {
+			session.removeAttribute(type + "_member");
+		}
+	}
 	
 	/**
 	 * 원격 HTTP 요청...

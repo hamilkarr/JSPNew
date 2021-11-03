@@ -22,7 +22,15 @@ if (request.getAttribute("socialMember") != null) {
 	<div class='join_box login_box'>
 		<div class='tit'>
 			<c:if test="${socialType != 'none'}">
-				
+				<c:choose>
+					<c:when test="${socialType == 'naver'}" >
+						네이버
+					</c:when>
+					<c:when test="${socialType = 'kakao'}" >
+						카카오
+					</c:when>
+				</c:choose>
+				아이디로 
 			</c:if>
 			<c:choose>
 				<c:when test="${member == null}">
@@ -39,7 +47,7 @@ if (request.getAttribute("socialMember") != null) {
 				<dd>
 					<c:choose>
 						<c:when test="${member == null}">
-							<input type="text" name="memId">
+							<input type="text" name="memId" value="${socialMember.memId}">
 						</c:when>
 						<c:otherwise>
 							<c:out value="${member.memId}" />
@@ -47,12 +55,14 @@ if (request.getAttribute("socialMember") != null) {
 					</c:choose>
 				</dd>
 			</dl>
-			<dl>
+			<c:if test="${socialType == 'none'}" >
+ 			<dl>
 				<dt>비밀번호</dt>
 				<dd>
 					<input type="password" name="memPw">
 				</dd>
 			</dl>
+			
 			<dl>
 				<dt>비밀번호 확인</dt>
 				<dd>
@@ -65,10 +75,18 @@ if (request.getAttribute("socialMember") != null) {
 					<input type="text" name="memPwHint" value="${member.memPwHint}">
 				</dd>
 			</dl>
+			</c:if>
 			<dl>
 				<dt>회원명</dt>
 				<dd>
-					<input type="text" name="memNm" value="${member.memNm}">
+					<c:choose>
+						<c:when test="${member == null }" >
+							<input type='text' name='memNm' value="${socialMember.memNm}" >
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="memNm" value="${member.memNm}">
+						</c:otherwise>
+					</c:choose>
 				</dd>
 			</dl>
 			<dl>

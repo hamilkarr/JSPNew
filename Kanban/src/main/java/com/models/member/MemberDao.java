@@ -9,9 +9,8 @@ import static com.core.DB.setBinding;
 
 import org.mindrot.jbcrypt.*;
 
-import com.core.DB;
-import com.core.Logger;
-import com.core.DBField;
+import com.core.*;
+import com.models.snslogin.*;
 
 /**
  * MemberDao 클래스
@@ -19,6 +18,7 @@ import com.core.DBField;
  */
 public class MemberDao {
 	private static MemberDao instance = new MemberDao();
+	private static Member socialMember;
 
 	private MemberDao() {
 	} // 기본 생성자 private -> 외부에서는 인스턴스 생성 불가, 내부에서만 생성 가능
@@ -26,7 +26,8 @@ public class MemberDao {
 	public static MemberDao getInstance() {
 		if (instance != null) {
 			instance = new MemberDao();
-		}
+		}	
+		
 		return instance;
 	}
 
@@ -54,6 +55,11 @@ public class MemberDao {
 				isLogin = true;
 			}
 			request.setAttribute("isLogin", isLogin);
+			
+			/** 소셜 프로필 유지 처리 */
+			if (socialMember == null) {
+				socialMember = SocialLogin.getSocialMember(req);
+			}
 		}
 
 	}
@@ -87,9 +93,20 @@ public class MemberDao {
 		checkJoinData(request);
 
 		ArrayList<DBField> bindings = new ArrayList<>();
-		String sql = "Insert Into member (memId,memPw,memPwHint,memNm,cellPhone) Values (?,?,?,?,?)";
+		String sql = "Insert Into member (memId,memPw,memPwHint,memNm,cellPhone,socialType,socialId) Values (?,?,?,?,?,?,?)";
 		String memPw = request.getParameter("memPw");
-		String hash = BCrypt.hashpw(memPw, BCrypt.gensalt(10));
+		String hash = "";
+		String memPwHint = "";
+		String socialType = "";
+		String socialId = "";
+		
+		if (socialMember == null) { // 일반회원 -> 비밀번호 해시
+			hash = BCrypt.hashpw(memPw, BCrypt.gensalt(10));
+			memPwHint = request.getParameter("memPwHint");
+		} else { // 소셜 회원 - socialType, socialId
+			socialType = socialMember.getSocialType();
+			socialId = socialMember.getSocialId();
+		}
 
 		/** 휴대전화번호 형식 -> 숫자로만 구성 */
 		String cellPhone = request.getParameter("cellPhone");
@@ -97,11 +114,18 @@ public class MemberDao {
 
 		bindings.add(setBinding("String", request.getParameter("memId")));
 		bindings.add(setBinding("String", hash));
-		bindings.add(setBinding("String", request.getParameter("memPwHint")));
+		bindings.add(setBinding("String", memPwHint));
 		bindings.add(setBinding("String", request.getParameter("memNm")));
 		bindings.add(setBinding("String", cellPhone));
+		bindings.add(setBinding("String", socialType));
+		bindings.add(setBinding("String", socialId));		
 
 		int rs = DB.executeUpdate(sql, bindings);
+		if (rs > 0 && socialMember != null) { // 소셜 로그인 성공 -> 로그인 처리
+			SocialLogin sociallogin = SocialLogin.getSocialInstance(request);
+			sociallogin.login(request);			
+		}
+		
 		return (rs > 0) ? true : false;
 	}
 
@@ -123,6 +147,9 @@ public class MemberDao {
 
 		Member member = (Member) request.getAttribute("member");
 		String memPwHint = request.getParameter("memPwHint");
+		if (memPwHint == null) {
+			memPwHint = "";
+		}
 		String memNm = request.getParameter("memNm");
 		String cellPhone = request.getParameter("cellPhone");
 		if (cellPhone != null) {
@@ -165,15 +192,31 @@ public class MemberDao {
 	public void checkJoinData(HttpServletRequest request) throws Exception {
 		/**
 		 * 1. 필수 항목 체크 
-		 * 2. 아이디 체크 1) 자리수 체크 (8~30) 2) 알파벳 + 숫자만 입력 3) 아이디 중복 체크 
+		 * 2. 아이디 체크 
+		 * 	1) 자리수 체크 (8~30) 
+		 * 	2) 알파벳 + 숫자만 입력 
+		 * 	3) 아이디 중복 체크 
 		 * 3. 비밀번호
 			 * 1) 자리수 체크(8자리 이상~) 
 			 * 2) 복잡성 체크 - 비밀번호에는 숫자, 알파벳 특수문자가 각각 1개씩 포함 
 			 * 3) 비밀번호 확인 
 		 * 4.휴대전화번호 (필수 항목 없음) - 휴대전화번호가 들어오면 - 휴대전화번호 형식에 맞는지 체크
 		 */
-		String[] required = { "memId//아이디를 입력해 주세요.", "memPw//비밀번호를 입력해 주세요.", "memPwRe//비밀번호를 확인해 주세요.",
-				"memPwHint//비밀번호 힌트를 입력해 주세요.", "memNm//회원명을 입력해 주세요.", };
+		String[] required = null;
+		if (socialMember == null) {
+			required = new String[] { 
+					"memId//아이디를 입력해 주세요.",
+					"memPw//비밀번호를 입력해 주세요.",
+					"memPwRe//비밀번호를 확인해 주세요.",				
+					"memPwHint//비밀번호 힌트를 입력해 주세요.",
+					"memNm//회원명을 입력해 주세요."
+			};
+		} else { // 소셜 회원
+			required = new String[] {
+					"memId//아이디를 입력해 주세요.",
+					"memNm//회원명을 입력해 주세요."
+			};
+		}
 
 		for (String re : required) {
 			String[] params = re.split("//");
@@ -206,9 +249,11 @@ public class MemberDao {
 		}
 
 		/** 비밀번호 체크 */
-		String memPw = request.getParameter("memPw");
-		String memPwRe = request.getParameter("memPwRe");
-		checkPassword(memPw, memPwRe);
+		if (socialMember == null) {
+			String memPw = request.getParameter("memPw");
+			String memPwRe = request.getParameter("memPwRe");
+			checkPassword(memPw, memPwRe);
+		}
 
 		/** 휴대전화번호 체크 */
 		String cellPhone = request.getParameter("cellPhone");
