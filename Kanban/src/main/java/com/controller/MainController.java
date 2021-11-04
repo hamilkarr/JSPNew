@@ -12,7 +12,7 @@ import com.models.snslogin.*;
  */
 public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=utf-8");
+		response.setContentType("text/html; charset=utf-8");		
 		
 		SocialLogin.clear(request);
 		
