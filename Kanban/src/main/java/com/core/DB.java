@@ -99,15 +99,13 @@ public class DB {
 			Logger.log(e);
 		} finally {
 			// SQL 로그 기록
-
 			StringBuilder sb = new StringBuilder();
-			sb.append("SQL: ");
+			sb.append("SQL : ");
 			sb.append(sql);
-			sb.append(" / Bindings: ");
+			sb.append(" / Bindings : ");
 			sb.append(logBindings.toString());
-			sb.append("/ rs: ");
-			sb.append(rs);
-
+			sb.append("/ rs : ");
+			sb.append(rs);		
 			Logger.log(sb, Logger.INFO);
 		}
 
@@ -217,6 +215,9 @@ public class DB {
 				break;
 			case "Integer":
 				pstmt.setInt(no, Integer.valueOf(value));
+				break;
+			case "Long" :
+				pstmt.setLong(no, Long.valueOf(value));
 				break;
 			case "Double":
 				pstmt.setDouble(no, Double.valueOf(value));

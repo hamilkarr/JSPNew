@@ -2,7 +2,12 @@ package com.controller;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import java.util.*;
 import java.io.IOException;
+
+import com.core.*;
+import com.models.kanban.*;
 
 /**
  *   /kanban 컨트롤러
@@ -57,9 +62,16 @@ public class KanbanController extends HttpServlet {
 	
 	/** 작업 등록 */
 	private void addController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// FileInfo file = FileUpload.getInstance().getFile(7);
+		// System.out.println("fileName: " + ifle.getOriginalName());
+		// System.out.println("uploaded");
 		if (httpMethod.equals("POST")) { // 등록 처리 
+			KanbanDao dao = KanbanDao.getInstance();
+			dao.add(request);
 			
 		} else { // 등록 양식
+			request.setAttribute("gid", System.currentTimeMillis());
+			
 			RequestDispatcher rd = request.getRequestDispatcher("/views/kanban/form.jsp");
 			rd.include(request, response);
 		}

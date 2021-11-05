@@ -5,6 +5,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 import com.core.*;
+import com.models.file.FileInfo;
 import com.models.member.*;
 
 /**
@@ -72,13 +73,18 @@ public class CommonFilter implements Filter {
 		String rootURL = request.getServletContext().getContextPath();
 		request.setAttribute("rootURL", rootURL);
 		
+		/** rootPath */
+		String rootPath = request.getServletContext().getRealPath(".");
+		request.setAttribute("rootPath", rootPath);
+		
 		/** 로그인 유지 */
 		MemberDao.init(request);
 		
 		/** URL 접속 권한 체크 */
 		AccessController.init(request, response);
 		
-		
+		/** 파일 정보 초기 설정 */
+		FileInfo.init(request);		
 		
 		// 헤더 출력
 		if (isPrintOk(request)) {
