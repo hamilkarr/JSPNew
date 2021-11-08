@@ -18,10 +18,10 @@ public class AccessController {
 	private static boolean isLogin;
 	
 	/** 회원 전용 URI */
-	private static String[] memberOnlyURI = {"/member/info"};
+	private static String[] memberOnlyURI = {"/member/info" };
 	
 	/** 비회원 전용 URI */
-	private static String[] guestOnlyURI = {"/member/join","/member/findid","/member/findpw"};
+	private static String[] guestOnlyURI = {"/member/join", "/member/findid", "/member/findpw"};
 	
 	/**
 	 * 페이지별 접속 체크 
@@ -33,17 +33,18 @@ public class AccessController {
 				HttpServletRequest req = (HttpServletRequest)request;
 				requestURI = req.getRequestURI();
 				isLogin = MemberDao.isLogin(request);
-				AccessController.response = response;
+				AccessController.response = response; 
 				rootURL = (String)request.getAttribute("rootURL");
 				
 				// 비회원 전용 URI 체크 
 				checkGuestOnly();
 				
-				// 메인페이지 접속 체크
+				// 메인페이지 접속 체크 
 				checkMainPage();
 				
 				// 회원 전용 URI 체크
 				checkMemberOnly();
+				
 			}
 			
 		} catch (Exception e) {
@@ -74,14 +75,11 @@ public class AccessController {
 	}
 	
 	/**
-	 * 메인페이지 접속 권한 체크
-	 * - 비회원만 접속 가능(로그인)
-	 * - 회원 -> 작업 요약 페이지 이동
-	 * @throws Exception
+	 * 메인페이지 접속 권한 체크 
+	 * 		- 비회원만 접속 가능(로그인)
+	 * 		- 회원 -> 작업 요약 페이지 이동 
 	 */
 	private static void checkMainPage() throws IOException {
-		// URI = "/" or "/index.jsp"
-		// System.out.println("rootURL: " + rootURL);
 		if (isLogin && (requestURI.indexOf("/index.jsp") != -1 || requestURI.equals(rootURL + "/"))) { // 로그인 한 경우
 			PrintWriter out = response.getWriter();
 			out.printf("<script>location.replace('%s');</script>", "kanban/work");
@@ -89,20 +87,22 @@ public class AccessController {
 	}
 	
 	/**
-	 * 회원 전용 URI 접근 체크
+	 * 회원 전용 URI 접근 체크 
+	 * 
 	 * @throws Exception
 	 */
 	private static void checkMemberOnly() throws Exception {
-		/** 로그인 하지 않았을때 접속하면 안됨 */
+		/** 로그인 하지 않았을때 접속 하면 X */
 		if (!isLogin) {
 			for (String URI : memberOnlyURI) {
-				if (requestURI.indexOf(URI) != -1) { // 비회원이 회원전용 URI에 접속
+				if (requestURI.indexOf(URI) != -1) { // 비회원이 회원전용 URI에 접속 
 					throw new Exception("회원 전용 페이지 입니다.");
 				}
 			}
 		}
 	}
 }
+
 
 
 

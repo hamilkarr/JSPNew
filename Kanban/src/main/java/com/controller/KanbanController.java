@@ -1,9 +1,8 @@
 package com.controller;
 
+import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-
-import java.util.*;
 import java.io.*;
 
 import com.core.*;
@@ -23,7 +22,7 @@ public class KanbanController extends HttpServlet {
 		String URI = request.getRequestURI();
 		String mode = URI.substring(URI.lastIndexOf("/") + 1);
 		
-		httpMethod = request.getMethod().toUpperCase(); // GET, POST, DELETE		
+		httpMethod = request.getMethod().toUpperCase(); // GET, POST, DELETE
 		
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
@@ -32,7 +31,6 @@ public class KanbanController extends HttpServlet {
 		}
 		
 		out = response.getWriter();
-		
 		switch(mode) {
 			case "work" : // 작업목록
 				workController(request, response);
@@ -49,6 +47,7 @@ public class KanbanController extends HttpServlet {
 			default : // 없는 페이지 
 				RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
 				rd.forward(request, response);
+				
 		}
 	}
 	
@@ -57,7 +56,7 @@ public class KanbanController extends HttpServlet {
 	}
 	
 	/** 작업 목록 */
-	private void workController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+	private void workController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/views/kanban/main.jsp");
 		rd.include(request, response);
@@ -65,15 +64,13 @@ public class KanbanController extends HttpServlet {
 	
 	/** 작업 등록 */
 	private void addController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// FileInfo file = FileUpload.getInstance().getFile(7);
-		// System.out.println("fileName: " + ifle.getOriginalName());
-		// System.out.println("uploaded");
+		
 		if (httpMethod.equals("POST")) { // 등록 처리 
-			KanbanDao dao = KanbanDao.getInstance();
 			try {
+				KanbanDao dao = KanbanDao.getInstance();
 				dao.add(request);
 			} catch (Exception e) {
-				out.printf("<script>alert('%s');</script>",e.getLocalizedMessage());
+				out.printf("<script>alert('%s');</script>", e.getMessage());
 			}
 			
 		} else { // 등록 양식

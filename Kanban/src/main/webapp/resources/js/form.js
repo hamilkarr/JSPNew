@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentloaded", function() {
+window.addEventListener("DOMContentLoaded", function() {
 	const addFile = document.querySelector(".add_file");
 	if (addFile) {
 		addFile.addEventListener("click", function(e) {
@@ -7,4 +7,3 @@ window.addEventListener("DOMContentloaded", function() {
 		}, false);
 	}
 }, false);
-

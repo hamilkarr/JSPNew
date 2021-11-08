@@ -23,10 +23,10 @@ if (request.getAttribute("socialMember") != null) {
 		<div class='tit'>
 			<c:if test="${socialType != 'none'}">
 				<c:choose>
-					<c:when test="${socialType == 'naver'}" >
+					<c:when test="${socialType == 'naver'}">
 						네이버
 					</c:when>
-					<c:when test="${socialType = 'kakao'}" >
+					<c:when test="${socialType == 'kakao' }">
 						카카오
 					</c:when>
 				</c:choose>
@@ -55,14 +55,13 @@ if (request.getAttribute("socialMember") != null) {
 					</c:choose>
 				</dd>
 			</dl>
-			<c:if test="${socialType == 'none'}" >
- 			<dl>
+			<c:if test="${socialType == 'none'}">
+			<dl>
 				<dt>비밀번호</dt>
 				<dd>
 					<input type="password" name="memPw">
 				</dd>
 			</dl>
-			
 			<dl>
 				<dt>비밀번호 확인</dt>
 				<dd>
@@ -80,8 +79,8 @@ if (request.getAttribute("socialMember") != null) {
 				<dt>회원명</dt>
 				<dd>
 					<c:choose>
-						<c:when test="${member == null }" >
-							<input type='text' name='memNm' value="${socialMember.memNm}" >
+						<c:when test="${member == null }">
+							<input type="text" name="memNm" value="${socialMember.memNm}">
 						</c:when>
 						<c:otherwise>
 							<input type="text" name="memNm" value="${member.memNm}">

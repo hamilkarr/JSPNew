@@ -41,18 +41,18 @@
 		<url-pattern>/member/*</url-pattern>
 	</servlet-mapping>
 	<!-- /member E -->
-	<!-- /file -->
+	<!-- /file S -->
 	<servlet>
 		<servlet-name>File</servlet-name>
-		<servlet-class>com.controller.FileController</servlet-class>
+		<servlet-class>com.controller.FileController</servlet-class>	
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>File</servlet-name>
 		<url-pattern>/file/*</url-pattern>
 	</servlet-mapping>
-	
+	<!--  /file E -->
 	<!-- 서블릿 E  -->
-	<!--  에러 페이지 -->
+	<!--  에러 페이지 S  -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/views/error/404.jsp</location>
@@ -61,6 +61,8 @@
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/views/error/error.jsp</location>
 	</error-page>
+	<!--  에러 페이지 E  -->
 </web-app>
+
 
 

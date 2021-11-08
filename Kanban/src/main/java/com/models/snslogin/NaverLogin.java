@@ -113,7 +113,7 @@ public class NaverLogin extends SocialLogin {
 	@Override
 	public Member getProfile(HttpServletRequest request, String accessToken) {
 		/**
-		* 접근 토큰(access token)을 전달하는 헤더
+		 * 접근 토큰(access token)을 전달하는 헤더
 		* 다음과 같은 형식으로 헤더 값에 접근 토큰(access token)을 포함합니다. 
 		* 토큰 타입은 "Bearer"로 값이 고정돼 있습니다. 
 		* Authorization: {토큰 타입] {접근 토큰]
@@ -189,6 +189,7 @@ public class NaverLogin extends SocialLogin {
 			
 			return true;
 		}
+		
 		// 프로필 정보 세션 비우기
 		SocialLogin.clear(request);
 		

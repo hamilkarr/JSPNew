@@ -1,13 +1,13 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page import="com.models.member.*" %>
+<%@ page  import="com.models.member.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String rootURL = (String)request.getAttribute("rootURL");
-	boolean isLogin = (boolean)request.getAttribute("isLogin");
-	Member member  = (Member)request.getAttribute("member");
+	boolean isLogin = (Boolean)request.getAttribute("isLogin");
+	Member member = (Member)request.getAttribute("member");
 %>
 <c:set var="rootURL" value="<%=rootURL%>" />
-<c:set var="isLogin" value="<%=isLogin %>" />
+<c:set var="isLogin" value="<%=isLogin%>" />
 <c:set var="member" value="<%=member%>" />
 <header>
 	<div class="main_top">

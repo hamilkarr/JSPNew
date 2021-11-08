@@ -19,7 +19,7 @@ public class CommonFilter implements Filter {
 	 * 정적 디렉토리(헤더, 푸터가 적용되지 않는 경로)
 	 *    - css, js, image ... 
 	 */
-	private String[] staticDirs = {"resources","file"};
+	private String[] staticDirs = {"resources", "file"};
 	
 	public void init(FilterConfig config) throws ServletException {
 		
@@ -56,18 +56,8 @@ public class CommonFilter implements Filter {
 		}
 		request.setAttribute("cssJsVersion", cssJsVersion);
 		
-		/** Body 태그 추가 클래스 */		
-		request.setAttribute("bodyClass", config.getBodyClass());
-		
-		/** 요청 메서드 + requestURL, Request Encoding 설정 */
-		if (request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest) request;
-			
-			request.setAttribute("httpMethod", req.getMethod().toUpperCase());
-			request.setAttribute("requestURL", req.getRequestURL().toString());
-			
-			req.setCharacterEncoding("utf-8");
-		}
+		/** Body 태그 추가 클래스 */
+		request.setAttribute("bodyClass",  config.getBodyClass());
 		
 		/** rootURL */
 		String rootURL = request.getServletContext().getContextPath();
@@ -77,6 +67,16 @@ public class CommonFilter implements Filter {
 		String rootPath = request.getServletContext().getRealPath(".");
 		request.setAttribute("rootPath", rootPath);
 		
+		/** 요청 메서드 + requestURL, Request Encoding 설정 */
+		if (request instanceof HttpServletRequest) {
+			HttpServletRequest req = (HttpServletRequest)request;
+			
+			request.setAttribute("httpMethod", req.getMethod().toUpperCase());
+			request.setAttribute("requestURL", req.getRequestURL().toString());
+			
+			req.setCharacterEncoding("UTF-8");
+		}
+		
 		/** 로그인 유지 */
 		MemberDao.init(request);
 		
@@ -84,7 +84,7 @@ public class CommonFilter implements Filter {
 		AccessController.init(request, response);
 		
 		/** 파일 정보 초기 설정 */
-		FileInfo.init(request);		
+		FileInfo.init(request);
 		
 		// 헤더 출력
 		if (isPrintOk(request)) {
@@ -158,11 +158,11 @@ public class CommonFilter implements Filter {
 			/** 요청 메서드 GET 방식이 아닌 경우 제외 */
 			String method = req.getMethod().toUpperCase();
 			if (!method.equals("GET") && (outline != null && !outline.equals("print"))) {
+				System.out.println("테스트");
 				return false;
 			}
 			
 			/** 요청 파라미터 중에서 outline = none일때 제외 */
-			
 			if (outline != null && outline.equals("none")) {
 				return false;
 			}

@@ -9,57 +9,61 @@ import com.core.*;
 import com.models.file.*;
 
 /**
- * 파일 다운로드, 삭제 처리 /file/download/파일등록번호 삭제처리 /file/delete/파일등록번호
+ *  파일 다운로드 /file/download/파일 등록번호
+ *   삭제 처리  /file/delete/파일등록번호
+ * 
  */
 public class FileController extends HttpServlet {
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
 		try {
 			String URI = request.getRequestURI();
 			String[] URIs = URI.split("/");
 			int idx = 0;
-			if (URIs[URIs.length] != null) {
+			if (URIs[URIs.length - 1] != null) {
 				idx = Integer.valueOf(URIs[URIs.length - 1]);
 			}
 			String mode = URIs[URIs.length - 2];
-			switch (mode) {
-				case "download":
+			switch(mode) {
+				case "download" :
 					downloadController(request, response, idx);
 					break;
-				case "delete":
+				case "delete" : 
 					deleteController(request, response, idx);
 					break;
-				default:
+				default : 
 					rd.forward(request, response);
 			}
+			
 		} catch (ArrayIndexOutOfBoundsException e) {
 			rd.forward(request, response);
 		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 	
 	/**
-	 * 다운로드
+	 * 다운로드 
+	 * 
 	 * @param request
 	 * @param response
-	 * @param idx - 파일 등록 번호
+	 * @param idx - 파일 등록번호 
 	 * @throws ServletException
 	 * @throws IOException
 	 */
 	private void downloadController(HttpServletRequest request, HttpServletResponse response, int idx) throws ServletException, IOException {
-		FileUpload.getInstance().download(response,idx);
+		FileUpload.getInstance().download(response, idx);
 	}
 	
 	/**
-	 * 파일 삭제 처리
+	 * 파일 삭제 
+	 * 
 	 * @param request
 	 * @param response
-	 * @param idx - 파일 등록 번호
+	 * @param idx 파일 등록번호
 	 * @throws ServletException
 	 * @throws IOException
 	 */
@@ -67,3 +71,7 @@ public class FileController extends HttpServlet {
 		FileUpload.getInstance().delete(idx);
 	}
 }
+
+
+
+

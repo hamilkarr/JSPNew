@@ -216,11 +216,10 @@ public class Logger {
 		
 		log("------------------------------------- Error Stack Start ----------------------------", ERROR);
 		log("Message : " + e.getMessage(), ERROR);
-		log("Exception : " + e.getClass().getName(),ERROR);
-		log("------------------------------------- Error Class Name  ----------------------------", ERROR);
+		log("Exception : " + e.getClass().getName(), ERROR);
 		StackTraceElement[] stacks = e.getStackTrace();
 		for (StackTraceElement stack : stacks) {
-			StringBuilder sb = new StringBuilder();			
+			StringBuilder sb = new StringBuilder();
 			sb.append("ClassName : ");
 			sb.append(stack.getClassName());
 			sb.append(" / File : ");
