@@ -24,7 +24,7 @@ public class MemberDao {
 	} // 기본 생성자 private -> 외부에서는 인스턴스 생성 불가, 내부에서만 생성 가능
 
 	public static MemberDao getInstance() {
-		if (instance != null) {
+		if (instance == null) {
 			instance = new MemberDao();
 		}	
 		

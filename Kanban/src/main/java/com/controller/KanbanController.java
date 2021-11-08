@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 import java.util.*;
-import java.io.IOException;
+import java.io.*;
 
 import com.core.*;
 import com.models.kanban.*;
@@ -16,19 +16,22 @@ import com.models.kanban.*;
 public class KanbanController extends HttpServlet {
 	
 	private String httpMethod; // 요청 메서드
+	private PrintWriter out;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String URI = request.getRequestURI();
 		String mode = URI.substring(URI.lastIndexOf("/") + 1);
 		
-		httpMethod = request.getMethod().toUpperCase(); // GET, POST, DELETE
+		httpMethod = request.getMethod().toUpperCase(); // GET, POST, DELETE		
 		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 		if (httpMethod.equals("GET")) {
 			response.setContentType("text/html; charset=utf-8");
-		} else { 
-			request.setCharacterEncoding("UTF-8");
 		}
+		
+		out = response.getWriter();
 		
 		switch(mode) {
 			case "work" : // 작업목록
@@ -67,7 +70,11 @@ public class KanbanController extends HttpServlet {
 		// System.out.println("uploaded");
 		if (httpMethod.equals("POST")) { // 등록 처리 
 			KanbanDao dao = KanbanDao.getInstance();
-			dao.add(request);
+			try {
+				dao.add(request);
+			} catch (Exception e) {
+				out.printf("<script>alert('%s');</script>",e.getLocalizedMessage());
+			}
 			
 		} else { // 등록 양식
 			request.setAttribute("gid", System.currentTimeMillis());

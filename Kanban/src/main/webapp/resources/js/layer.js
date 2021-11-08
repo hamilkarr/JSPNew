@@ -1,7 +1,9 @@
 /** 레이어 팝업 */
 const layer = {
-	/** 팝업 열기 */
-	popup(url, width, height) {
+	/** 팝업 열기
+	 * @param callback -> 레이어 팝업 컨텐츠가 로딩된 후 실행
+	 */
+	popup(url, width, height, callback) {
 		width = width || 350;
 		height = height || 350;
 		
@@ -52,6 +54,9 @@ const layer = {
 			})
 			.then((res) => {
 				innerDiv.innerHTML = res.data;
+				if (typeof callback =='function') {
+					callback();
+				}
 			})
 			.catch((err) => {
 				console.error(err);

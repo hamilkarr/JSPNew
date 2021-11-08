@@ -3,7 +3,7 @@ package com.models.kanban;
 import java.sql.*;
 import com.models.*;
 
-public class Kanban extends Dto{
+public class Kanban extends Dto<Kanban>{
 	private int idx;
 	private long gid;
 	private int memNo;

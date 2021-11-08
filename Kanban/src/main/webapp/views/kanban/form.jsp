@@ -1,8 +1,4 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%
-	String rootURL = (String)request.getAttribute("rootURL");	
-%>
-<script type="text/javascript" src="<%=rootURL%>/resources/js/form.js"></script>
 <form name="frmAdd" id="frmAdd" method="post" action="../kanban/add" target="ifrmHidden" autocomplete="off" enctype="multipart/form-data">
 	<input type="hidden" name="gid" value="${gid}" />
 	<dl>
@@ -29,11 +25,12 @@
 		</dd>
 	</dl>
 	<dl>
-		<dt>파일첨부<span class="add_file"><i class="xi-file-add-o"></i>추가</span></dt>
+		<dt>파일첨부
+			<span class="del_file"><i class='xi-file-remove-o'></i>삭제</span>
+			<span class="add_file"><i class="xi-file-add-o"></i>추가</span>
+		</dt>
 		<dd id="file_upload">
-			<div class='rows'><input type="file" name="file1" ></div>
-			<div class='rows'><input type="file" name="file2" ></div>
-			<div class='rows'><input type="file" name="file3" ></div>
+			<div class='rows'><input type="file" name="file1" ></div>			
 		</dd>
 	</dl>
 	<input type="submit" value="작업등록">

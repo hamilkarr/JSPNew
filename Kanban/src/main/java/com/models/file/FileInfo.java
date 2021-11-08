@@ -7,7 +7,7 @@ import javax.servlet.*;
 
 import com.models.*;
 
-public class FileInfo extends Dto{
+public class FileInfo extends Dto<FileInfo>{
 	private int idx;
 	private long gid;
 	private String originalName;
