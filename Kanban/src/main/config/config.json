@@ -9,6 +9,7 @@
 	},
 	"LogDir" : "C:\\logs",
 	"css": {
+		"/Kanban" : "kanban"
 	},
 	"js" : {
 		"/kanban": "kanban"

@@ -69,6 +69,9 @@ public class FileController extends HttpServlet {
 	 */
 	private void deleteController(HttpServletRequest request, HttpServletResponse response, int idx) throws ServletException, IOException {
 		FileUpload.getInstance().delete(idx);
+		boolean result = FileUpload.getInstance().delete(idx);
+		PrintWriter out = response.getWriter();
+		out.print(result?"1":"0");
 	}
 }
 
