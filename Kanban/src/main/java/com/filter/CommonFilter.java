@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.core.*;
 import com.models.file.FileInfo;
+import com.models.kanban.KanbanDao;
 import com.models.member.*;
 
 /**
@@ -86,6 +87,9 @@ public class CommonFilter implements Filter {
 		/** 파일 정보 초기 설정 */
 		FileInfo.init(request);
 		
+		/** KanbanDao */
+		KanbanDao.init(request);
+		
 		// 헤더 출력
 		if (isPrintOk(request)) {
 			printHeader(request, response);
@@ -157,8 +161,7 @@ public class CommonFilter implements Filter {
 			
 			/** 요청 메서드 GET 방식이 아닌 경우 제외 */
 			String method = req.getMethod().toUpperCase();
-			if (!method.equals("GET") && (outline != null && !outline.equals("print"))) {
-				System.out.println("테스트");
+			if ((!method.equals("GET") && outline == null) || (!method.equals("GET") && !outline.equals("print"))) {				
 				return false;
 			}
 			

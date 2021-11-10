@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page  import="com.models.member.*" %>
+<%@ page import="com.models.member.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String rootURL = (String)request.getAttribute("rootURL");
@@ -28,16 +28,24 @@
 </header>
 <nav>
 	<ul class='layout_width'>
-		<li>
+		<li 
+			<c:if test="${menu == 'work'}">class='on'</c:if>
+		>
 			<a href="${rootURL}/kanban/work">작업요약</a>
 		</li>
-		<li>
+		<li 
+			<c:if test="${menu == 'list_ready'}">class='on'</c:if>
+		>
 			<a href="${rootURL}/kanban/list?status=ready">준비중</a>
 		</li>
-		<li>
+		<li 
+			<c:if test="${menu == 'list_progress'}">class='on'</c:if>
+		>
 			<a href="${rootURL}/kanban/list?status=progress">진행중</a>
 		</li>
-		<li>
+		<li 
+			<c:if test="${menu == 'list_done'}">class='on'</c:if>
+		>
 			<a href="${rootURL}/kanban/list?status=done">완료</a>
 		</li>
 	</ul>

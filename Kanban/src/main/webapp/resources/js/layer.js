@@ -46,30 +46,33 @@ const layer = {
 			
 			const innerDiv = document.createElement("div");
 			innerDiv.id = "inner_html";
-			
-			if (url.indexOf("?") == -1) {
-				url += "?";
-			} else {
-				url += "&";
-			}
-			url += "outline=none";
-			axios({
-				method : "GET",
-				url : url,
-			})
-			.then((res) => {
-				innerDiv.innerHTML = res.data;
-				if (typeof callback == 'function') {
-					callback();
-				}
-			})
-			.catch((err) => {
-				console.error(err);
-			});
-			
+
 			div.appendChild(innerDiv);	
 			document.body.appendChild(div);
 		}
+		
+		if (url.indexOf("?") == -1) {
+			url += "?";
+		} else {
+			url += "&";
+		}
+		url += "outline=none";
+		axios({
+			method : "GET",
+			url : url,
+		})
+		.then((res) => {
+			const el = document.querySelector("#layer_popup #inner_html");
+			if (el) {
+				el.innerHTML = res.data;
+			}
+			if (typeof callback == 'function') {
+				callback();
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+		});
 	},
 	/**
 		팝업 닫기 
@@ -87,5 +90,4 @@ const layer = {
 		}
 	}	
 };
-
 
