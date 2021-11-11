@@ -15,7 +15,7 @@ import org.json.simple.parser.*;
  */
 public class Config {
 	
-	private static ServletRequest request;
+	private static HttpServletRequest request;
 	private static String requestURI;
 	
 	private static Config instance = null;
@@ -28,6 +28,9 @@ public class Config {
 	*  
 	*/
 	private Config() {
+		request = Request.get();
+		requestURI = request.getRequestURI();
+		
 		String configPath = request.getServletContext().getRealPath(".");
 		configPath += File.separator + ".." + File.separator + "config" + File.separator + "config.json";
 		
@@ -58,21 +61,7 @@ public class Config {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * 초기화
-	 * 
-	 * @param request
-	 */
-	public static void init(ServletRequest request) {
-		Config.request = request;
-		
-		if (request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest)request;
-			requestURI = req.getRequestURI();
-		}
-	}
+	}	
 	
 	/**
 	 * 싱글톤 인스턴스 반환
@@ -232,7 +221,7 @@ public class Config {
 	 * @return
 	 */
 	public String getBodyClass() {
-		String rootURL = request.getServletContext().getContextPath();
+		String rootURL = Request.get().getServletContext().getContextPath();
 		String URI = requestURI.replace(rootURL, "").replace("index.jsp", "");
 		if (URI.equals("/")) { // 메인페이지
 			return "body-main body-index";
