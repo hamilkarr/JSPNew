@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<web-app>
+	<!-- 서블릿 S -->
+	<!-- 게시판 작성 S -->
+	<servlet>
+		<servlet-name>BlogWrite</servlet-name>
+		<servlet-class>com.controller.WriteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlogWrite</servlet-name>
+		<url-pattern>/blog/write</url-pattern>
+	</servlet-mapping>
+	<!-- 게시판 작성 E -->
+	<!-- 게시판 조회 S -->
+	<servlet>
+		<servlet-name>BlogView</servlet-name>
+		<servlet-class>com.controller.ViewController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlogView</servlet-name>
+		<url-pattern>/blog/view</url-pattern>
+	</servlet-mapping>
+	<!-- 게시판 조회 E -->
+	<!--  게시글 삭제 S -->
+	<servlet>
+		<servlet-name>BlogDelete</servlet-name>
+		<servlet-class>com.controller.DeleteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlogDelete</servlet-name>
+		<url-pattern>/blog/delete</url-pattern>
+	</servlet-mapping>
+	<!--  게시글 삭제 E -->
+	<!--  게시글 수정 S -->
+	<servlet>
+		<servlet-name>BlogEdit</servlet-name>
+		<servlet-class>com.controller.EditController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlogEdit</servlet-name>
+		<url-pattern>/blog/edit</url-pattern>
+	</servlet-mapping>
+	<!--  게시글 수정 E -->
+	<!--  게시글 목록 S -->
+	<servlet>
+		<servlet-name>BlogList</servlet-name>
+		<servlet-class>com.controller.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BlogList</servlet-name>
+		<url-pattern>/blog/list</url-pattern>
+	</servlet-mapping>
+	<!--  게시글 목록 E -->
+	<!--  파일 업로드 S -->
+	<servlet>
+		<servlet-name>FileUpload</servlet-name>
+		<servlet-class>com.controller.FileUploadController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileUpload</servlet-name>
+		<url-pattern>/popup/upload</url-pattern>
+	</servlet-mapping>
+	<!-- 파일 업로드 E -->	
+	<!--  공통 필터 S -->
+	<filter>
+		<filter-name>Common</filter-name>
+		<filter-class>com.filter.CommonFilter</filter-class>
+		<init-param>
+			<param-name>Driver</param-name>
+			<param-value>com.mysql.cj.jdbc.Driver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Url</param-name>
+			<param-value>jdbc:mysql://localhost:3306/blog</param-value>
+		</init-param>
+		<init-param>
+			<param-name>User</param-name>
+			<param-value>root</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Pass</param-name>
+			<param-value>aA!12345</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Common</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!--  공통 필터 E -->	
+	<!-- 서블릿 E -->
+</web-app>
