@@ -1,0 +1,28 @@
+{ 
+	"Environment" : "development",
+	"PageTitle" : "사이트 기본제목",
+	"DB":  { 
+		"Driver": "com.mysql.cj.jdbc.Driver",
+		"Url" : "jdbc:mysql://localhost:3306/blog",
+		"user" : "root", 
+		"password" : "aA!12345"
+	},
+	"LogDir" : "C:\\logs",
+	"css": {
+		"/kanban" : "kanban"
+	},
+	"js" : {
+		"/kanban" : "kanban"
+	},
+	"AddonHeader" : {
+		"*" : "common"
+	},
+	"AddonFooter" : {
+		"*" : "common"
+	},
+	"NaverLogin" : {
+		"clientId" : "69se08pd4zx2Ujls3TIT",
+		"secret" : "A26Y07GMmo",
+		"callbackURL" : "http://localhost:8080/TeamBoard/member/naver_login"
+	}
+ }
