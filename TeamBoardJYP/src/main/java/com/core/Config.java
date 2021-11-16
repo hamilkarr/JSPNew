@@ -75,6 +75,7 @@ public class Config {
 		return instance;
 	}
 	
+	/*
 	public static Config getInstance(boolean isNew) {
 		if (instance == null || isNew) {
 			instance = new Config();
@@ -82,6 +83,7 @@ public class Config {
 		
 		return instance;
 	}
+	*/
 	
 	public static void init(ServletRequest request) {
 		if (request instanceof HttpServletRequest) {
@@ -118,51 +120,7 @@ public class Config {
 		}
 		
 		return map;
-	}
-	
-	/**
-	 * URI 패턴에 따른 CSS 파일 목록 
-	 * 
-	 * @return
-	 */
-	public HashSet<String> getCss() {
-		
-		HashSet<String> list = new HashSet<>();
-		HashMap<String, String> css = (HashMap<String, String>)get("css");
-		Iterator<String> ir = css.keySet().iterator();
-		while(ir.hasNext()) {
-			String URI = ir.next();
-			if (requestURI.indexOf(URI) != -1) {
-				StringTokenizer st = new StringTokenizer(css.get(URI), "||");
-				while(st.hasMoreTokens()) {
-					list.add(st.nextToken());
-				}
-			}
-		}
-		
-		return list;
-	}
-	
-	/**
-	 * URI 패턴에 따른 JS 파일 목록 
-	 * @return
-	 */
-	public HashSet<String> getScripts() {
-		HashSet<String> list = new HashSet<>();
-		HashMap<String, String> js = (HashMap<String, String>)get("js");
-		Iterator<String> ir = js.keySet().iterator();
-		while(ir.hasNext()) {
-			String URI = ir.next();
-			if (requestURI.indexOf(URI) != -1) { // URI 포함되어 있다면 
-				StringTokenizer st = new StringTokenizer(js.get(URI), "||");
-				while(st.hasMoreTokens()) {
-					list.add(st.nextToken());
-				}
-			}
-		}
-		
-		return list;
-	}
+	}	
 	
 	/**
 	 * 헤더, 푸터 addon 경로 
@@ -226,6 +184,50 @@ public class Config {
 	 */
 	public String getFooterAddon() {
 		return getAddon("AddonFooter");
+	}
+	
+	/**
+	 * URI 패턴에 따른 CSS 파일 목록 
+	 * 
+	 * @return
+	 */
+	public HashSet<String> getCss() {
+		
+		HashSet<String> list = new HashSet<>();
+		HashMap<String, String> css = (HashMap<String, String>)get("css");
+		Iterator<String> ir = css.keySet().iterator();
+		while(ir.hasNext()) {
+			String URI = ir.next();
+			if (requestURI.indexOf(URI) != -1) {
+				StringTokenizer st = new StringTokenizer(css.get(URI), "||");
+				while(st.hasMoreTokens()) {
+					list.add(st.nextToken());
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	/**
+	 * URI 패턴에 따른 JS 파일 목록 
+	 * @return
+	 */
+	public HashSet<String> getScripts() {
+		HashSet<String> list = new HashSet<>();
+		HashMap<String, String> js = (HashMap<String, String>)get("js");
+		Iterator<String> ir = js.keySet().iterator();
+		while(ir.hasNext()) {
+			String URI = ir.next();
+			if (requestURI.indexOf(URI) != -1) { // URI 포함되어 있다면 
+				StringTokenizer st = new StringTokenizer(js.get(URI), "||");
+				while(st.hasMoreTokens()) {
+					list.add(st.nextToken());
+				}
+			}
+		}
+		
+		return list;
 	}
 	
 	/**

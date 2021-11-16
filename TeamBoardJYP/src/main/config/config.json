@@ -1,0 +1,28 @@
+{ 
+	"Environment" : "development",
+	"PageTitle" : "배틀그라운드 클론 게시판",
+	"DB":  { 
+		"Driver": "com.mysql.cj.jdbc.Driver",
+		"Url" : "jdbc:mysql://localhost:3306/teamboard",
+		"user" : "root", 
+		"password" : "aA!12345"
+	},
+	"LogDir" : "C:\\logs",
+	"css": {
+		"/board" : "board"
+	},
+	"js" : {
+		"/board": "board"
+	},
+	"AddonHeader" : {
+		"*" : "common"		
+	},
+	"AddonFooter" : {
+		"*" : "common"			
+	},
+	"NaverLogin" : {
+		"clientId" : "69se08pd4zx2Ujls3TIT",
+		"secret" : "A26Y07GMmo",
+		"callbackURL" : "http://localhost:8080/TeamBoard/member/naver_login"
+	}
+ }

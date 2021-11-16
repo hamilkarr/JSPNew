@@ -125,7 +125,7 @@ public class KanbanDao {
 		} else {
 			status = (String)object;
 		}
-		System.out.println("member : " + request.getAttribute("member"));
+	
 		int memNo = 0;
 		if (request.getAttribute("member") != null) {
 			Member member = (Member)request.getAttribute("member");
@@ -250,6 +250,10 @@ public class KanbanDao {
 		}
 		
 		HttpSession session = request.getSession();
+		
+		if (session.getAttribute("member") == null) {
+			return false;
+		}
 		Member member = (Member)session.getAttribute("member");
 		Kanban data = get(idx);
 		int memNo = member.getMemNo();
@@ -257,9 +261,7 @@ public class KanbanDao {
 			return true; // 수정, 삭제권한 있음..
 		}
 		return false;
-	}
-	*/
-		
+		*/
 	}
 }
 

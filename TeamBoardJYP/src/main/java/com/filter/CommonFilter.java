@@ -9,77 +9,70 @@ import java.io.PrintWriter;
 // import com.models.member.*;
 
 /**
- * 공통 필터 - 사이트 전역 적용 
+ * 공통 필터 - 사이트 전역 적용
  * 
- * 1. 초기 설정(DB, Logger .... )
- * 2. 헤더 푸터 설정
+ * 1. 초기 설정(DB, Logger .... ) 2. 헤더 푸터 설정
  */
 public class CommonFilter implements Filter {
-	/** 
-	 * 정적 디렉토리(헤더, 푸터가 적용되지 않는 경로)
-	 *    - css, js, image ... 
+	/**
+	 * 정적 디렉토리(헤더, 푸터가 적용되지 않는 경로) - css, js, image ...
 	 */
-	private String[] staticDirs = {"resources", "file"};
-	
+	private String[] staticDirs = { "resources", "file" };
+
 	public void init(FilterConfig config) throws ServletException {
-		
+
 	}
-	
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-		//BootStrap.init(request, response);
-		
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws ServletException, IOException {
+		// BootStrap.init(request, response);
+
 		// 헤더 출력
 		if (isPrintOk(request)) {
 			printHeader(request, response);
 		}
-		
+
 		chain.doFilter(request, response);
-		
+
 		// 푸터 출력
 		if (isPrintOk(request)) {
 			printFooter(request, response);
-		}	
+		}
 	}
-	
-	/** 
-	 * 헤더 출력 
+
+	/**
+	 * 헤더 출력
 	 * 
 	 */
 	private void printHeader(ServletRequest request, ServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
 		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/header/main.jsp");
 		rd.include(request, response);
-		
+
 		/** 헤더 추가 영역 처리 */
 		/*
-		Config config = Config.getInstance();
-		String addonURL = config.getHeaderAddon();
-		if (addonURL != null) {
-			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
-			inc.include(request, response);
-		}
-		*/
+		 Config config = Config.getInstance(); String addonURL =
+		 config.getHeaderAddon(); if (addonURL != null) { RequestDispatcher inc =
+		 request.getRequestDispatcher(addonURL); inc.include(request, response); }
+		 */
 	}
-	
+
 	/**
-	 * 푸터 출력 
+	 * 푸터 출력
 	 */
 	private void printFooter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		
+
 		/** 푸터 추가 영역 처리 */
 		/*
-		Config config = Config.getInstance();
-		String addonURL = config.getFooterAddon();
-		if (addonURL != null) {
-			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
-			inc.include(request, response);
-		}
-		*/
-		
+		 * Config config = Config.getInstance(); String addonURL =
+		 * config.getFooterAddon(); if (addonURL != null) { RequestDispatcher inc =
+		 * request.getRequestDispatcher(addonURL); inc.include(request, response); }
+		 */
+
 		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/footer/main.jsp");
 		rd.include(request, response);
 	}
-	
+
 	/**
 	 * 헤더, 푸터를 출력 할지 결정 
 	 * 
@@ -87,7 +80,7 @@ public class CommonFilter implements Filter {
 	 * @return
 	 */
 	private boolean isPrintOk(ServletRequest request) {
-		/*
+		
 		if (request instanceof HttpServletRequest) {
 			HttpServletRequest req = (HttpServletRequest)request;
 			
@@ -100,24 +93,18 @@ public class CommonFilter implements Filter {
 			}
 			// 정적 경로 제외 E
 			
-			String outline = request.getParameter("outline");
-			
-			// 요청 메서드 GET 방식이 아닌 경우 제외 
-			String method = req.getMethod().toUpperCase();
-			if ((!method.equals("GET") && outline == null) || (!method.equals("GET") && outline != null && !outline.equals("print"))) {
-				return false;
-			}
-			
-			// 요청 파라미터 중에서 outline = none일때 제외 
-			if (outline != null && outline.equals("none")) {
-				return false;
-			}
+			/*
+			 * String outline = request.getParameter("outline");
+			 * 
+			 * // 요청 메서드 GET 방식이 아닌 경우 제외 String method = req.getMethod().toUpperCase(); if
+			 * ((!method.equals("GET") && outline == null) || (!method.equals("GET") &&
+			 * outline != null && !outline.equals("print"))) { return false; }
+			 * 
+			 * // 요청 파라미터 중에서 outline = none일때 제외 if (outline != null &&
+			 * outline.equals("none")) { return false; }
+			 */
 		}	
-	*/
 		
 		return true;
 	}
 }
-
-
-
