@@ -61,6 +61,7 @@
 		<servlet-name>File</servlet-name>
 		<url-pattern>/file/*</url-pattern>
 	</servlet-mapping>
+	-->
 	
 	<error-page>
 		<error-code>404</error-code>
@@ -69,7 +70,7 @@
 	<error-page>
 		<exception-type>java.lang.Throwable</exception-type>
 		<location>/views/error/error.jsp</location>
-	</error-page> -->
+	</error-page> 
 	
 </web-app>
 
