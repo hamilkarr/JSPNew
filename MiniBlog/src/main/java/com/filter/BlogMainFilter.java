@@ -35,9 +35,11 @@ public class BlogMainFilter implements Filter {
 		String siteURL = req.getServletContext().getContextPath();
 		req.setAttribute("siteURL", siteURL);
 
-		// 헤더 출력
+		// 헤더 출력		
 		outlineHeader(req, resp);
+		
 		chain.doFilter(req, resp);
+		
 		// 푸터 출력
 		outlineFooter(req, resp);
 	}

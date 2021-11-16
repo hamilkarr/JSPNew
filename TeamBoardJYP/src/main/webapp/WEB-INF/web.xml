@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+	<!-- 필터 S  -->
+	<filter>
+		<filter-name>Common Filter</filter-name>
+		<filter-class>com.filter.CommonFilter</filter-class>
+		<!-- <init-param>
+			<param-name>DBDriver</param-name>
+			<param-value>com.mysql.cj.jdbc.Driver</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBUrl</param-name>
+			<param-value>jdbc:mysql://localhost:3306/teamboard</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBUser</param-name>
+			<param-value>root</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DBPass</param-name>
+			<param-value>aA!12345</param-value>
+		</init-param> -->
+	</filter>
+	<filter-mapping>
+		<filter-name>Common Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 필터 E -->
+	<!-- 서블릿 S -->
+	<!-- 메인페이지 /index.jsp -->
+	<servlet>
+		<servlet-name>main</servlet-name>
+		<servlet-class>com.controller.MainController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>main</servlet-name>
+		<url-pattern>/index.jsp</url-pattern>
+	</servlet-mapping>
+	<!-- 메인페이지 E  -->
+	<!-- /member S -->
+	<servlet>
+		<servlet-name>Member</servlet-name>
+		<servlet-class>com.controller.MemberController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Member</servlet-name>
+		<url-pattern>/member/*</url-pattern>
+	</servlet-mapping>
+	<!-- /member E -->
+	<!-- /kanban S  -->
+	<servlet>
+		<servlet-name>Board</servlet-name>
+		<servlet-class>com.controller.BoardController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Board</servlet-name>
+		<url-pattern>/board/*</url-pattern>
+	</servlet-mapping>
+	<!-- /kanban E -->
+	<!-- /file S -->
+	<servlet>
+		<servlet-name>File</servlet-name>
+		<servlet-class>com.controller.FileController</servlet-class>	
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>File</servlet-name>
+		<url-pattern>/file/*</url-pattern>
+	</servlet-mapping>
+	<!--  /file E -->
+	<!-- 서블릿 E  -->
+	<!--  에러 페이지 S  -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/views/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/views/error/error.jsp</location>
+	</error-page>
+	<!--  에러 페이지 E  -->
+</web-app>
+
+
+
