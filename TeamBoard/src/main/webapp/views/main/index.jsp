@@ -3,9 +3,11 @@
 <%
 	String rootURL = (String)request.getAttribute("rootURL");
 	String naverCodeURL = (String)request.getAttribute("naverCodeURL");
+	String kakaoCodeURL = (String)request.getAttribute("kakaoCodeURL");
 %>
 <c:set var="rootURL" value="<%=rootURL%>" />
 <c:set var="naverCodeURL" value="<%=naverCodeURL%>" />
+<c:set var="kakaoCodeURL" value="<%=kakaoCodeURL %>" />
 <main>
 	<div class="login_box">
 		<div class='tit'>로그인</div>
@@ -25,7 +27,10 @@
 			
 			<input type="submit" value="로그인">
 			<a href="${naverCodeURL}">
-			<img src="${rootURL}/resources/image/naverlogin_btn.png" width="340">
+			<img src="${rootURL}/resources/img/naverlogin_btn.png" width="340">
+			</a>
+			<a href="${kakaoCodeURL}">
+			<img src="${rootURL}/resources/img/kakao_login_large_narrow.png" width="340">
 			</a>
 		</form>
 	</div>

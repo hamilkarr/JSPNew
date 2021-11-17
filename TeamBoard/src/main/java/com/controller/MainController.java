@@ -20,6 +20,9 @@ public class MainController extends HttpServlet {
 		String naverCodeURL = NaverLogin.getInstance().getCodeURL();
 		request.setAttribute("naverCodeURL", naverCodeURL);
 		
+		String kakaoCodeURL = KakaoLogin.getInstance().getCodeURL();
+		request.setAttribute("kakaoCodeURL", kakaoCodeURL);
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/views/main/index.jsp");
 		rd.include(request, response);
 	}

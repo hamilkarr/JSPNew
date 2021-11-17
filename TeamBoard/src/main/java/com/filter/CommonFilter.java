@@ -5,8 +5,8 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-// import com.core.*;
-// import com.models.member.*;
+import com.core.*;
+import com.models.member.*;
 
 /**
  * 공통 필터 - 사이트 전역 적용
@@ -25,7 +25,7 @@ public class CommonFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
-		// BootStrap.init(request, response);
+		BootStrap.init(request, response);
 
 		// 헤더 출력
 		if (isPrintOk(request)) {
@@ -50,11 +50,14 @@ public class CommonFilter implements Filter {
 		rd.include(request, response);
 
 		/** 헤더 추가 영역 처리 */
-		/*
-		 Config config = Config.getInstance(); String addonURL =
-		 config.getHeaderAddon(); if (addonURL != null) { RequestDispatcher inc =
-		 request.getRequestDispatcher(addonURL); inc.include(request, response); }
-		 */
+
+		Config config = Config.getInstance();
+		String addonURL = config.getHeaderAddon();
+		if (addonURL != null) {
+			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+			inc.include(request, response);
+		}
+
 	}
 
 	/**
@@ -63,27 +66,29 @@ public class CommonFilter implements Filter {
 	private void printFooter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
 
 		/** 푸터 추가 영역 처리 */
-		/*
-		 * Config config = Config.getInstance(); String addonURL =
-		 * config.getFooterAddon(); if (addonURL != null) { RequestDispatcher inc =
-		 * request.getRequestDispatcher(addonURL); inc.include(request, response); }
-		 */
+
+		Config config = Config.getInstance();
+		String addonURL = config.getFooterAddon();
+		if (addonURL != null) {
+			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+			inc.include(request, response);
+		}
 
 		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/footer/main.jsp");
 		rd.include(request, response);
 	}
 
 	/**
-	 * 헤더, 푸터를 출력 할지 결정 
+	 * 헤더, 푸터를 출력 할지 결정
 	 * 
 	 * @param request
 	 * @return
 	 */
 	private boolean isPrintOk(ServletRequest request) {
-		
+
 		if (request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest)request;
-			
+			HttpServletRequest req = (HttpServletRequest) request;
+
 			// 정적 경로 제외 S
 			String URI = req.getRequestURI();
 			for (String dir : staticDirs) {
@@ -92,7 +97,7 @@ public class CommonFilter implements Filter {
 				}
 			}
 			// 정적 경로 제외 E
-			
+
 			/*
 			 * String outline = request.getParameter("outline");
 			 * 
@@ -103,8 +108,8 @@ public class CommonFilter implements Filter {
 			 * // 요청 파라미터 중에서 outline = none일때 제외 if (outline != null &&
 			 * outline.equals("none")) { return false; }
 			 */
-		}	
-		
+		}
+
 		return true;
 	}
 }

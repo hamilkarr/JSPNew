@@ -96,10 +96,11 @@ public class MemberDao {
 		checkJoinData(request);
 		
 		ArrayList<DBField> bindings = new ArrayList<>();
-		String sql = "INSERT INTO member (memId, memPw, memPwHint, memNm, cellPhone, socialType, socialId) VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO member (memId, memPw, memPwHint, memNm, memLv ,cellPhone, socialType, socialId) VALUES (?,?,?,?,?,?,?,?)";
 		String memPw = request.getParameter("memPw");
 		String hash = "";
 		String memPwHint = "";
+		String memLv = "silver";
 		String socialType = "none";
 		String socialId = "";
 		if (socialMember == null) { // 일반회원 -> 비밀번호 해시
@@ -118,6 +119,7 @@ public class MemberDao {
 		bindings.add(setBinding("String", hash));
 		bindings.add(setBinding("String", memPwHint));
 		bindings.add(setBinding("String", request.getParameter("memNm")));
+		bindings.add(setBinding("String", memLv));
 		bindings.add(setBinding("String", cellPhone));
 		bindings.add(setBinding("String", socialType));
 		bindings.add(setBinding("String", socialId));
