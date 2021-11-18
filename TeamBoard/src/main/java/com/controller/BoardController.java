@@ -9,7 +9,7 @@ public class BoardController extends HttpServlet{
 			throws ServletException, IOException {
 		
 		response.setContentType("text/html; charset=utf-8");
-		RequestDispatcher rd = request.getRequestDispatcher("/views/board/main.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/board/list.jsp");
 		rd.include(request, response);
 	}
 

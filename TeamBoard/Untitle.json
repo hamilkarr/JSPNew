@@ -1,0 +1,13 @@
+
+json : {"id":1996108180,
+        "connected_at":"2021-11-17T14:51:42Z",
+        "kakao_account":{
+          "email_needs_agreement":false,
+          "profile_nickname_needs_agreement":false,
+          "profile":{"nickname":"준영"},
+          "is_email_valid":true,
+          "is_email_verified":true,
+          "has_email":true,
+          "email":"hamilkarr@naver.com"},
+        "properties":{"nickname":"준영"},
+      }

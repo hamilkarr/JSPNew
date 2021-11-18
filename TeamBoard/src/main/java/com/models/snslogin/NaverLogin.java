@@ -84,7 +84,7 @@ public class NaverLogin extends SocialLogin {
 			} else { // 오류 발생시
 				throw new Exception((String)json.get("error_description"));
 			}
-		}		
+		}
 		
 		return accessToken;
 	}
