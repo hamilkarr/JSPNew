@@ -1,100 +1,115 @@
 package com.filter;
 
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
+import com.core.*;
+import com.models.member.*;
 
-import com.core.DB;
-
+/**
+ * 공통 필터 - 사이트 전역 적용
+ * 
+ * 1. 초기 설정(DB, Logger .... ) 2. 헤더 푸터 설정
+ */
 public class CommonFilter implements Filter {
-	private FilterConfig filterconfig;
-	private String[] staticDirs = { "resources" };
+	/**
+	 * 정적 디렉토리(헤더, 푸터가 적용되지 않는 경로) - css, js, image ...
+	 */
+	private String[] staticDirs = { "resources", "file" };
 
-	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		this.filterconfig = filterconfig;
-		
-		DB.init(filterConfig);
+	public void init(FilterConfig config) throws ServletException {
+
 	}
 
-	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		
-		String siteURL = request.getServletContext().getContextPath();
-		request.setAttribute("siteURL", siteURL);
-		
-		outlineHeader(request, response);
+			throws ServletException, IOException {
+		BootStrap.init(request, response);
+
+		// 헤더 출력
+		if (isPrintOk(request)) {
+			printHeader(request, response);
+		}
+
 		chain.doFilter(request, response);
-		outlineFooter(request, response);
-	}
-	
-	public void outlineHeader(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		if (isOutlineRequired(request)) { 
-			response.setContentType("text/html; charset=utf-8");
-			String headerFile = isPopup(request)?"/outline/popup_header.jsp":"/outline/header.jsp";
-			RequestDispatcher header = request.getRequestDispatcher(headerFile);
-			header.include(request, response);
+
+		// 푸터 출력
+		if (isPrintOk(request)) {
+			printFooter(request, response);
 		}
 	}
-	
-	public void outlineFooter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
-		if (isOutlineRequired(request)) {
-			String footerFile = isPopup(request)?"/outline/popup_footer.jsp":"/outline/footer.jsp";
-			RequestDispatcher footer = request.getRequestDispatcher(footerFile);
-			footer.include(request, response);
+
+	/**
+	 * 헤더 출력
+	 * 
+	 */
+	private void printHeader(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=utf-8");
+		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/header/main.jsp");
+		rd.include(request, response);
+
+		/** 헤더 추가 영역 처리 */
+
+		Config config = Config.getInstance();
+		String addonURL = config.getHeaderAddon();
+		if (addonURL != null) {
+			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+			inc.include(request, response);
 		}
+
 	}
-	
-	// 헤더 푸터 필요여부 확인
-	public boolean isOutlineRequired(ServletRequest request) {
+
+	/**
+	 * 푸터 출력
+	 */
+	private void printFooter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+
+		/** 푸터 추가 영역 처리 */
+
+		Config config = Config.getInstance();
+		String addonURL = config.getFooterAddon();
+		if (addonURL != null) {
+			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+			inc.include(request, response);
+		}
+
+		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/footer/main.jsp");
+		rd.include(request, response);
+	}
+
+	/**
+	 * 헤더, 푸터를 출력 할지 결정
+	 * 
+	 * @param request
+	 * @return
+	 */
+	private boolean isPrintOk(ServletRequest request) {
 
 		if (request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest)request;
-			
-			String method = req.getMethod().toUpperCase();
-			if (!method.equals("GET")) 
-				return false;
-			
+			HttpServletRequest req = (HttpServletRequest) request;
+
+			// 정적 경로 제외 S
 			String URI = req.getRequestURI();
 			for (String dir : staticDirs) {
-				if (URI.indexOf("/" + dir) != -1) {
+				if (URI.indexOf("/" + dir) != -1) { // 정적 경로가 포함되어 있으면 false
 					return false;
 				}
 			}
-			
-			/** 확장자가 .jsp로 끝나는 경로는 제외 */ // paging.js에 url에서 paging.jsp의 iframe의 header 등이 추가 되어서 body가 추가 된것. jsp확장자를 걸러주면됨.
-			if (URI.indexOf(".jsp") != -1) {
-				return false;
-			}
-			
-			/** isAjax로 GET 또는 POST로 데이터가 넘어온 경우는 제외 */
-			if (req.getParameter("isAjax") != null) {
-				return false;
-			}
+			// 정적 경로 제외 E
+
+			/*
+			 * String outline = request.getParameter("outline");
+			 * 
+			 * // 요청 메서드 GET 방식이 아닌 경우 제외 String method = req.getMethod().toUpperCase(); if
+			 * ((!method.equals("GET") && outline == null) || (!method.equals("GET") &&
+			 * outline != null && !outline.equals("print"))) { return false; }
+			 * 
+			 * // 요청 파라미터 중에서 outline = none일때 제외 if (outline != null &&
+			 * outline.equals("none")) { return false; }
+			 */
 		}
-		
+
 		return true;
-	}
-	
-	// 팝업 페이지 확인
-	public boolean isPopup(ServletRequest request) {
-		if (request instanceof HttpServletRequest) {
-			HttpServletRequest req = (HttpServletRequest)request;
-			String URI = req.getRequestURI();
-			if (URI.indexOf("/popup") != -1) {
-				return true;
-			}
-		}
-		
-		
-		return false;
 	}
 }
