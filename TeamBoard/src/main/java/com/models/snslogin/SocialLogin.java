@@ -96,6 +96,7 @@ public abstract class SocialLogin {
 					instance = NaverLogin.getInstance();
 					break;
 				case "kakao" :
+					instance = KakaoLogin.getInstance();
 					break;
 			}
 		}

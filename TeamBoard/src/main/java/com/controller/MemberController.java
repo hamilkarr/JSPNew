@@ -379,7 +379,7 @@ public class MemberController extends HttpServlet {
 			if (kakao.isJoin()) { // 가입되어 있는 경우 
 				boolean result = kakao.login(); // 로그인
 				if (!result) { // 로그인 실패 
-					throw new Exception("네이버 아이디 로그인 실패!");
+					throw new Exception("카카오 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
 				out.printf("<script>location.replace('%s');</script>", "../kanban/work");
