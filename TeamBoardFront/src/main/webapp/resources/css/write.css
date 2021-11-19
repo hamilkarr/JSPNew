@@ -1,0 +1,81 @@
+/**공통**/
+
+* {
+  	box-sizing: border-box;
+  	font-family: "Noto Sans KR", sans-serif;
+}
+
+html {
+  	font-size: 18px;
+}
+
+body {
+  	margin: 0 20px;
+  	color: #333;
+}
+
+a {
+  	text-decoration: none;
+  	color: #333;
+}
+
+/** 헤더 list와 writebox가 겹침! */
+
+/** 작성 board/write.jsp */
+.writebox {
+	width: 1200px;
+	height: auto;
+	margin: 0 auto;
+}
+
+.category_box {
+    margin-top: 32px;
+}
+
+.category_box .select_btn {
+    display: block;
+    padding: 9px 15px 9px 15px;
+    font-size: 16px;
+    border: 1px solid #dfdfdf;
+}
+
+.addImage {
+	margin-top: 8px;
+    cursor: pointer;
+    border: 1px solid #dfdfdf;
+    font-size: 16px;
+    padding: 5px 8px;
+    float: left;
+}
+
+.text_box input {
+	display: block;
+	font-size:15px;
+	border: 1px solid  #dfdfdf;
+	padding: 12px 12px; 
+	width: 1200px;
+	margin: 10px 0;
+}
+
+.writebox input[type="submit"],
+.writebox input[type="reset"] {
+  	padding:5px 10px;
+  	text-decoration: none;
+  	cursor: pointer;
+   	line-height: 30px;
+   	font-size:16px;
+    text-decoration: none;
+   	margin:30px 8px 0;
+	float: right;
+}
+.writebox input[type="submit"] {
+	color: ffffff;
+	background-color: #e89407;
+	border: none; 
+}
+
+.writebox input[type="reset"] {
+	color: black;
+	background-color: #ffffff;
+	border: 1px solid #dfdfdf;
+}

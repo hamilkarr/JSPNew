@@ -22,7 +22,9 @@
 	<head>
 		<meta charset='utf-8'>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/style.css${version}" />
+		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/common.css${version}" />
+		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/header.css${version}" />
+		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/footer.css${version}" />
 		<c:forEach var="css" items="${addCss}">
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/${css}.css${version}" />
 		</c:forEach>
@@ -30,6 +32,7 @@
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/layer.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/common.js${version}"></script>
+		<script type="text/javascript" src="${rootURL}/resources/js/header.js${version}"></script>
 		<c:forEach var="script" items="${addScripts}">
 		<script type="text/javascript" src="${rootURL}/resources/js/${script}.js${version}"></script>
 		</c:forEach>

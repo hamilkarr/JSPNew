@@ -22,6 +22,7 @@
 	<head>
 		<meta charset='utf-8'>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+		<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/common.css${version}" />
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/header.css${version}" />
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/footer.css${version}" />
@@ -29,10 +30,13 @@
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/${css}.css${version}" />
 		</c:forEach>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/layer.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/common.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/header.js${version}"></script>
+		<script type="text/javascript" src="${rootURL}/resources/js/banner.js${version}"></script>
+		<script type="text/javascript" src="${rootURL}/resources/js/paging.js${version}"></script>
 		<c:forEach var="script" items="${addScripts}">
 		<script type="text/javascript" src="${rootURL}/resources/js/${script}.js${version}"></script>
 		</c:forEach>

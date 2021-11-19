@@ -182,7 +182,7 @@ public class MemberController extends HttpServlet {
 			MemberDao dao = MemberDao.getInstance();
 			try {
 				dao.login(request);
-				out.printf("<script>parent.location.replace('%s');</script>", "../kanban/work");
+				out.printf("<script>parent.location.replace('%s');</script>", "../board");
 			} catch (Exception e) {
 				Logger.log(e);
 				out.printf("<script>alert('%s');</script>", e.getMessage());
@@ -346,7 +346,7 @@ public class MemberController extends HttpServlet {
 					throw new Exception("네이버 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
-				out.printf("<script>location.replace('%s');</script>", "../kanban/work");
+				out.printf("<script>location.replace('%s');</script>", "../board");
 			} else { // 미가입
 				// 회원 가입 페이지 이동
 				out.printf("<script>location.replace('%s');</script>", "../member/join");
@@ -382,7 +382,7 @@ public class MemberController extends HttpServlet {
 					throw new Exception("카카오 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
-				out.printf("<script>location.replace('%s');</script>", "../kanban/work");
+				out.printf("<script>location.replace('%s');</script>", "../board");
 			} else { // 미가입
 				// 회원 가입 페이지 이동
 				out.printf("<script>location.replace('%s');</script>", "../member/join");

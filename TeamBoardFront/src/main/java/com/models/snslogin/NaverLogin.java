@@ -142,6 +142,7 @@ public class NaverLogin extends SocialLogin {
 					null,
 					(String)res.get("name"),
 					null,
+					null,
 					"naver",
 					(String)res.get("id"),
 					null

@@ -61,9 +61,8 @@
 
 nav {
 	background-color: black;
+	position: absolute;
 	width: 100%;
-	position: relative;
-	z-index: 100;
 }
 
 nav .nav_list .box {
@@ -73,17 +72,6 @@ nav .nav_list .box {
 
 nav .show-bar li {
 	margin-top: 5px;
-}
-
-nav .show-bar {
-	font-size: 0.9rem;
-	height: 230px;
-	padding-top: 30px;
-	width: 100%;
-	background-color: black;
-	left: 0;
-	/* position: absolute;
-	z-index: 100; */
 }
 
 nav .show-bar a:hover {
@@ -111,16 +99,14 @@ nav .nav_list {
 	display: flex;
 	flex-direction: row;
 }
-
-/* js 추가 class */
-
+nav .show-bar {
+	display: flex;
+	flex-direction: column;
+	height: 230px;
+	padding-top: 30px;
+}
+  
 .fixed-nav {
 	position: fixed; 
 	top:0px;
 }
-
-/* .z-index_top {
-	left: 0;
-	position: absolute;
-	z-index: 100;
-} */

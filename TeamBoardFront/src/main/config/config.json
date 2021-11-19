@@ -24,5 +24,10 @@
 		"clientId" : "69se08pd4zx2Ujls3TIT",
 		"secret" : "A26Y07GMmo",
 		"callbackURL" : "http://localhost:8080/TeamBoard/member/naver_login"
-	}
+	},
+	"KakaoLogin" : {
+		"clientId" : "2abc62bcbaa56703660a6046071200fa",
+		"adimin" : "3403a941a72fda87879567909b8928e5",
+		"redirectURI" : "http://localhost:8080/TeamBoard/member/kakao_login"
+	}	
  }

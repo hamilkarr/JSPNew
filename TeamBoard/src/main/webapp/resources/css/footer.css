@@ -2,8 +2,7 @@
 
 footer {
 	background-color: black;
-	padding: 100px 0;
-	margin-top: auto;
+	height: 400px;
 	font-size: 0.9rem;
 	display: flex;
 	flex-direction: column;
@@ -21,7 +20,7 @@ footer::before {
 	content: "";
 	position: absolute;
 	top:-55px;
-	height: 60px;
+	height: 55px;
 	left: 0;
 	right: 0;
 }

@@ -13,19 +13,21 @@ public class Member extends Dto<Member> {
 	private String memPw; // 비밀번호
 	private String memPwHint; // 비밀번호 찾기 힌트
 	private String memNm; // 회원명
-	private String cellPhone; // 휴대전화번호
+	private String memLv; // 회원등급
+	private String cellPhone; // 휴대전화번호	
 	private String socialType; // 소셜 로그인 가입 채널
 	private String socialId; // 소셜 로그인 채널별 회원 구분 ID
 	private String regDt; // 가입일시
 	
 	public Member() {}
 	
-	public Member(int memNo, String memId, String memPw, String memPwHint, String memNm, String cellPhone, String socialType, String socialId, String regDt) {
+	public Member(int memNo, String memId, String memPw, String memPwHint, String memNm,String memLv, String cellPhone, String socialType, String socialId, String regDt) {
 		this.memNo = memNo;
 		this.memId = memId;
 		this.memPw = memPw;
 		this.memPwHint = memPwHint;
 		this.memNm = memNm;
+		this.memLv = (memLv == null)?"silver":memLv;
 		this.cellPhone = cellPhone;
 		this.socialType = (socialType == null)?"none":socialType;
 		this.socialId = socialId;
@@ -39,6 +41,7 @@ public class Member extends Dto<Member> {
 			rs.getString("memPw"),
 			rs.getString("memPwHint"),
 			rs.getString("memNm"),
+			rs.getString("memLv"),
 			rs.getString("cellPhone"),
 			rs.getString("socialType"),
 			rs.getString("socialId"),
@@ -86,6 +89,14 @@ public class Member extends Dto<Member> {
 		this.memNm = memNm;
 	}
 	
+	public String getMemLv() {
+		return memLv;
+	}
+
+	public void setMemLv(String memLv) {
+		this.memLv = memLv;
+	}
+
 	public String getCellPhone() {
 		return cellPhone;
 	}
@@ -126,6 +137,7 @@ public class Member extends Dto<Member> {
 									rs.getString("memPw"),
 									rs.getString("memPwHint"),
 									rs.getString("memNm"),
+									rs.getString("memLv"),
 									rs.getString("cellPhone"),
 									rs.getString("socialType"),
 									rs.getString("socialId"),

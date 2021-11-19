@@ -56,6 +56,9 @@ public class MemberController extends HttpServlet {
 			case "naver_login" : // 네이버 로그인 Callback URL
 				naverLoginController(request, response);
 				break;
+			case "kakao_login" : // 카카오 로그인 Callback URL
+				kakaoLoginController(request, response);
+				break;
 			default : // 없는 페이지 
 				RequestDispatcher rd = request.getRequestDispatcher("/views/error/404.jsp");
 				rd.forward(request, response);
@@ -170,6 +173,8 @@ public class MemberController extends HttpServlet {
 			
 			String naverCodeURL = NaverLogin.getInstance().getCodeURL();
 			request.setAttribute("naverCodeURL", naverCodeURL);
+			String kakaoCodeURL = KakaoLogin.getInstance().getCodeURL();
+			request.setAttribute("kakaoCodeURL", kakaoCodeURL);			
 			
 			RequestDispatcher rd = request.getRequestDispatcher("/views/main/index.jsp");
 			rd.include(request, response);
@@ -177,7 +182,7 @@ public class MemberController extends HttpServlet {
 			MemberDao dao = MemberDao.getInstance();
 			try {
 				dao.login(request);
-				out.printf("<script>parent.location.replace('%s');</script>", "../kanban/work");
+				out.printf("<script>parent.location.replace('%s');</script>", "../board");
 			} catch (Exception e) {
 				Logger.log(e);
 				out.printf("<script>alert('%s');</script>", e.getMessage());
@@ -341,7 +346,43 @@ public class MemberController extends HttpServlet {
 					throw new Exception("네이버 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
-				out.printf("<script>location.replace('%s');</script>", "../kanban/work");
+				out.printf("<script>location.replace('%s');</script>", "../board");
+			} else { // 미가입
+				// 회원 가입 페이지 이동
+				out.printf("<script>location.replace('%s');</script>", "../member/join");
+			}
+			
+		} catch (Exception e) {
+			Logger.log(e);
+			out.printf("<script>alert('%s');location.replace('../member/login');</script>", e.getMessage());
+		}
+	}
+	
+	/**
+	 * 카카오 로그인 Callback URL 
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void kakaoLoginController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		KakaoLogin kakao = KakaoLogin.getInstance();
+		try {
+			String accessToken = kakao.getAccessToken();
+			kakao.getProfile(accessToken);
+			
+			/**
+			 *  카카오 소셜 채널로 이미 가입이 완료된 경우 -> 로그인 처리 
+			 *  가입이 안되어 있는 경우 -> 회원 가입 처리 
+			 */
+			if (kakao.isJoin()) { // 가입되어 있는 경우 
+				boolean result = kakao.login(); // 로그인
+				if (!result) { // 로그인 실패 
+					throw new Exception("카카오 아이디 로그인 실패!");
+				}
+				// 로그인 성공시 작업 요약 
+				out.printf("<script>location.replace('%s');</script>", "../board");
 			} else { // 미가입
 				// 회원 가입 페이지 이동
 				out.printf("<script>location.replace('%s');</script>", "../member/join");
