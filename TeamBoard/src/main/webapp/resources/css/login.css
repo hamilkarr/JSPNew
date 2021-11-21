@@ -1,0 +1,114 @@
+/**공통 */
+* {
+  	box-sizing: border-box;
+  	font-family: "Noto Sans KR", sans-serif;
+}
+
+html {
+	font-size: 13px; color: black;
+}
+
+a{
+	text-decoration: none;
+	color:black;
+}
+
+/** 헤더 list와 로그인박스가 겹침! */
+
+/** main/index.jsp 로그인 */
+
+.login_tit {
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	padding-bottom: 15px;
+	margin-bottom: 25px;
+	border-bottom: 1px solid gray;
+}
+
+.loginbox {
+	width: 500px; 
+	height: 600px;
+	margin: 50px auto;
+	border: 1px solid #dfdfdf ;
+	border-radius: 3px;
+	padding: 25px 40px;
+}
+
+.loginbox input[type='text'],
+.loginbox input[type='password'] {
+	width: 100%;
+	height: 50px;
+	border: 1px solid #dfdfdf;
+	border-radius: 3px; 
+	margin-bottom: 10px; 
+	display: block; 
+	padding: 0 10px;
+}
+
+.loginbox input[type='submit'] {
+	width: 100%; 
+	height: 55px;
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffffff;
+	background-color: #e89407;
+	border-radius: 3px;
+	border: none; 
+	cursor: pointer;
+	margin-top: 25px;
+}
+
+.loginbox .findjoin_link {
+	padding: 18px 0 8px;	
+}
+
+.loginbox .findjoin_link:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.loginbox .findjoin_link .left {
+	float: left; 
+} 
+
+.loginbox .findjoin_link .right {
+	float: right;
+}
+
+.loginbox .findjoin_link a:hover {
+	text-decoration: underline;
+}
+
+.loginbox .findjoin_link .left a { 
+	margin-right: 10px; 
+}
+
+.loginbox .snsline {
+	display: flex;
+    flex-basis: 100%;
+    align-items: center; 
+    color: #a1a1a1;
+    font-size: 14px;
+    margin: 8px 0px;
+}
+
+.loginbox .snsline::before,
+.loginbox .snsline::after{
+	content: "";
+    flex-grow: 1;
+    background: #a1a1a1;
+    height: 1px;
+    font-size: 0px;
+    line-height: 0px;
+    margin: 0px 16px;
+}
+
+.loginbox  img {
+	width: 100%;
+	height: 60px;
+	margin:8px 1px;
+	padding:0 28px 0 28px;
+}

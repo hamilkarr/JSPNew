@@ -14,10 +14,11 @@ $(function() {
     $(".show-bar").hide();
     $("nav").mouseover(function () {
         $(".show-bar").show();
+        // $(".show-bar").addClass( 'z-index_top' );
 
     });
     $("nav").mouseout(function () {
-        $(".show-bar").hide();
+      $(".show-bar").hide();
     });
 
         const navOffset = $( 'nav' ).offset();

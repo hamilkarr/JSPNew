@@ -36,8 +36,9 @@
 </header>
 
 <!--com/models/kanban/kanban.java-->
-<!--show-bar z-index처리(게시판 영역 합친후)-->
-<!-- class='on' 클릭했을때, 링크이동할때 색변함 ??-->
+<!--show-bar htrml 구조 변경? 드롭다운 문제, 해결해야함.-->
+<!-- class='on' 클릭했을때, 링크이동할때 색변함 ??
+	-> 게시판 목록 전체 | 일반 | 팁과 정보 에 적용 하면 될듯-->
 <nav>
 	<ul class='nav_list layout_width'>
 		<li class='box'
@@ -118,6 +119,5 @@
 	</li>
 	</ul>
 </nav>
-
 
 
