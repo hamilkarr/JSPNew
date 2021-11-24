@@ -1,0 +1,126 @@
+/* 배너 */
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 게시판 */
+.inner_box{
+	width: 1090px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+}
+
+/* 게시판 목록 tit */
+h3 {
+    padding-top: 90px;
+    margin-bottom: 8px;
+    font-size: 45px;
+    font-weight: normal;
+}
+
+.bord_tit {
+	border-top: 3px solid #000000;
+}
+
+/* 게시판 구분 tit */
+
+.tit_list{
+	overflow: hidden;
+	height: 50px;
+	padding-top: 20px;
+	padding-left: 0px;
+}
+
+.tit_list li {
+	float: left;  
+    text-decoration: none;
+    padding-left: 38px;
+    padding-right: 2px;
+}
+
+.tit_list li a {
+	color: #e89407;
+}
+
+.tit_link::before {
+	content: '';
+	float: left;
+	width: 1px;
+	height: 20px;
+	margin: 3px 0 0 -20px;
+	background : #e6e5e5;
+}
+
+/* 게시판 목록 table */
+.board_table{
+	width: 100%;
+	text-align: center;
+	color: #252525;
+	margin-bottom: 20px;
+}
+
+.table_tit th {
+	padding: 25px 0;
+	font-size:20px;
+	color: #ffffff;
+	background-color: #252525;
+	letter-spacing: 2px;
+}
+
+.tr_list td {
+	padding: 20px 0;
+	border-bottom: 1px solid #d8d8d8;
+}
+
+.board_bottom {
+	padding-top: 50px;
+	text-align: center;
+}
+
+.page {
+	background-color: #252525;
+	color: #ffffff;
+}
+
+.write_btn {
+	float : right;
+	top: 20px;
+	line-height: 40px;
+	width: 170px;
+	height: 50px;
+	background-color: #f19a09;
+	border: 0;
+}
+
+.write {
+	color: #ffffff;
+	font-size: 15px;
+}
