@@ -26,6 +26,7 @@
 		<servlet-name>List</servlet-name>
 		<url-pattern>/list</url-pattern>
 	</servlet-mapping>
+<!-- security -->
 	<security-role>
 		<role-name>manager</role-name>		
 	</security-role>

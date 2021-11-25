@@ -26,7 +26,7 @@ public class Pagination {
 		pageLinks = (pageLinks <= 0) ? 5 : pageLinks;
 
 		// 1페이지당 출력 개수
-		limit = (limit <= 0) ? 15 : limit;
+		limit = (limit <= 0) ? 3 : limit;
 
 		num = (int) floor((this.page - 1) / pageLinks); // 페이지 구간 번호
 

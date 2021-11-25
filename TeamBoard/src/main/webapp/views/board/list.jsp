@@ -4,6 +4,7 @@
 <%@ page import="com.models.Dto" %> --%>
 <%
 	String rootURL = (String)request.getAttribute("rootURL");
+	String pagingHtml = (String)request.getAttribute("pagingHtml");
 %>
 <c:set var="rootURL" value="<%=rootURL%>" />
 
@@ -48,19 +49,23 @@
 			</tr>
 		</thead>
 		<tbody class="board_content">
+		<c:forEach var="item" items="${list}">
 			<tr class="tr_list">
-				<td>구분</td>
-				<td>제목</td>
-				<td>작성자</td>
-				<td>작성일</td>
-			</tr>
+					<td><c:out value="${item.status}"/></td>
+					<td><c:out value="${item.postTitle}"/></td>
+					<td><c:out value="${item.memId}"/></td>
+					<td><c:out value="${item.regDt}"/></td>		
+				</tr>
+			</c:forEach>
 		</tbody>
 	</table>
 	<div id="board_bttom">
-		<a class="page" href="#">다음 페이지</a>
+		<%=pagingHtml%>
+		<!-- <a class="page" href="#">다음 페이지</a> -->
 		<button class="write_btn">
 			<a class="write" href="write">글쓰기</a>
 		</button>
 	</div>
 </div>
+
 <!-- 게시판 목록E -->

@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `board`
+--
+
+DROP TABLE IF EXISTS `board`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `board` (
+  `postNm` int NOT NULL AUTO_INCREMENT,
+  `status` enum('normal','tip') DEFAULT 'normal',
+  `postTitle` varchar(65) NOT NULL,
+  `content` text NOT NULL,
+  `memId` varchar(30) NOT NULL,
+  `regDt` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`postNm`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `board`
+--
+
+LOCK TABLES `board` WRITE;
+/*!40000 ALTER TABLE `board` DISABLE KEYS */;
+INSERT INTO `board` VALUES (1,'normal','2','4','hamilkarr','2021-11-24 23:12:16'),(2,'tip','5','5','hamilkarr','2021-11-24 23:12:29'),(3,'normal','2444','555','hamilkarr','2021-11-25 18:18:36'),(4,'normal','4','44','','2021-11-25 23:53:15'),(5,'tip','5','55','','2021-11-25 23:53:26'),(6,'tip','6','66','hamilkarr','2021-11-25 23:53:46'),(7,'normal','7','77','hamilkarr','2021-11-25 23:53:58'),(8,'normal','2','2','hamilkarr','2021-11-25 23:56:30'),(9,'normal','4','4','hamilkarr','2021-11-25 23:56:37');
+/*!40000 ALTER TABLE `board` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `member`
 --
 
@@ -28,6 +56,7 @@ CREATE TABLE `member` (
   `memPw` varchar(65) NOT NULL,
   `memPwHint` varchar(50) NOT NULL,
   `memNm` varchar(30) NOT NULL,
+  `memLv` enum('silver','gold','platinum','admin') DEFAULT 'silver' COMMENT '회원 등급',
   `cellPhone` varchar(11) DEFAULT NULL,
   `socialType` enum('none','kakao','naver') DEFAULT 'none',
   `socialId` varchar(65) DEFAULT NULL,
@@ -35,7 +64,7 @@ CREATE TABLE `member` (
   `modDt` datetime DEFAULT NULL,
   PRIMARY KEY (`memNo`),
   UNIQUE KEY `memId` (`memId`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +73,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (6,'test1234','$2a$10$mHAGPDdsWMCMDRXKRetn0e44emMM8ALJJS7ILE3HBVaeVaHFDgRpO','힌트','test1234','01022223333','none','','2021-11-17 09:12:43',NULL);
+INSERT INTO `member` VALUES (1,'hamilkarr','','','준영','silver','01033334444','kakao','1996108180','2021-11-24 20:31:07',NULL),(2,'test1234','$2a$10$pvQyIhScZV/zDO187emogeWJegRCy8aFAJ8grYmwvTv22C49QH1Ri','hint','test1234','silver','01022223333','none','','2021-11-24 22:55:20',NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +86,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-17  9:29:53
+-- Dump completed on 2021-11-26  0:04:51

@@ -1,0 +1,282 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
+
+/** 공통 */
+* {
+  	box-sizing: border-box;
+  	font-family: "Noto Sans KR", sans-serif;
+	list-style: none;
+	text-decoration:none;
+}
+
+html {
+  	font-size: 18px;
+  	
+}
+
+body {
+	display: block;
+  	margin: 0;
+  	padding: 0;
+  	color: #333;
+}
+
+/** 겹치는 부분(소희,혜진)
+ul {
+padding: 0;
+margin: 0;
+ }
+
+ dl,
+ dt,
+ dd {
+list-style-type: none;
+margin: 0;
+ }
+
+ a {
+text-decoration: none;
+color: black;
+ }
+ */
+
+ .layout_width {
+width: 1300px;
+margin: 0 auto;
+ }
+
+ nav a, footer a, footer dt, footer dd, .copyright {
+color: white;
+ }
+
+/** 메인 페이지 상단 */
+
+.main_top {
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+.main_top a:first-child {
+	margin-right: 0.5rem;
+}
+
+nav {
+	background-color: black;
+}
+
+nav .nav_list .box {
+	text-align: center;
+	width:calc(100%/8);
+}
+
+nav .show-bar li {
+	margin-top: 5px;
+}
+
+nav .show-bar a:hover {
+	border-bottom: 1px solid #E0AC47;
+	color: #E0AC47;
+}
+
+.border_bottom {
+	height: 1px;
+	background-color: rgb(39, 39, 39);
+}
+
+.border_bottom_each {
+	height: 3px;
+	background-color: #E0AC47;
+}
+
+nav .nav_over {
+	display: block;
+	height: 90px;
+	line-height: 90px;
+}
+
+nav .nav_list {
+	display: flex;
+	flex-direction: row;
+}
+nav .show-bar {
+	display: flex;
+	flex-direction: column;
+	height: 230px;
+	padding-top: 30px;
+}
+
+
+/*list*/
+
+.tr_list {
+	cursor: pointer;
+ 	text-align: center;
+}
+h1 {
+  	text-align: center;
+}
+
+.post_list table {
+  	width: 500px;
+  	margin: 0 auto 0 auto;
+  	border-collapse: collapse;
+
+}
+
+.post_list {
+	margin-top: 150px;
+}
+
+#button {
+  	float:right;
+  	margin-right: 100px;
+  	border: none;
+ 	color: black;
+  	padding: 15px 30px;
+  	text-align: center;
+  	text-decoration: none;
+  	cursor: pointer;
+  	font-size: 18px
+}
+
+th, td {
+	padding: 15px 30px;
+}
+
+th {
+	font-size: 23px;
+}
+
+tr {
+	border-bottom: 1px solid gray;
+}
+
+/*write*/
+
+input[type="submit"],
+input[type="reset"] {
+ 	border: none;
+  	color: black;
+  	padding:5px;
+  	text-decoration: none;
+  	cursor: pointer;
+   	line-height: 30px;
+   	font-size:20px;
+    text-decoration: none;
+   	margin:10px;
+	float: right;
+}
+
+.addImage {
+	cursor: pointer;
+}
+
+.box input {
+	display: block;
+	border : none;
+	font-size:35px;
+	border-bottom: 1px solid gray;
+	padding: 20px 30px; 
+	margin: 20px 0;
+}
+
+/*view*/
+
+.view {
+	margin-bottom: 100px;	
+}
+
+.view li {
+	font-size: 25px;
+	margin: 40px auto 0 auto;
+}
+
+.view li:nth-child(2) {
+	padding-bottom: 50px;
+  	border-bottom: 1px solid gray;
+}
+
+.view-Links a {
+	line-height: 30px;
+   	font-size:30px;
+    text-decoration: none;
+   	margin:10px;
+   	background-color: #EFEFEF;
+   	padding: 10px 30px;
+}
+
+
+/** 사이트 하단 사이트맵&회사정보 */
+
+footer {
+	background-color: black;
+	height: 400px;
+	font-size: 0.9rem;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+	position:relative;
+}
+
+footer .site_map {
+	margin-left: 20%;
+}
+
+footer::before {
+	background-image: url("../img/footer_top.png");
+	content: "";
+	position: absolute;
+	top:-55px;
+	height: 55px;
+	left: 0;
+	right: 0;
+}
+
+footer .site_map_list {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+}
+
+footer .site_map_list li {
+	margin-right: 20px;
+}
+
+footer .site_map_list li:before,
+footer .company_info .border:before {
+	content: "|";
+	color: white;
+	margin-right: 0.9rem;
+}
+footer .company_info .border {
+	padding-left: 15px;
+}
+
+footer .site_map_list li:first-child:before {
+	display: none;
+}
+
+footer .site_map_list li a{
+	text-align: center;
+}
+
+footer .site_map .company_info {
+	margin-top: 30px;
+}
+
+footer .site_map .company_info dt,
+footer .site_map .company_info dd {
+  display: table-cell;
+}
+
+footer .site_map .company_info dl {
+	line-height: 0.8rem;
+	display: inline;
+}
+
+footer .copyright {
+	margin-top: 40px;
+}

@@ -1,0 +1,126 @@
+/** 메인 페이지 상단 */
+
+.main_top .inner {
+	height: 70px;
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+
+/* .main_top .inner a:first-child {
+	margin-right: 0.5rem;
+} */
+
+.islogin {
+	border: 1px solid #f9930e;
+	width: 152px;
+	height: 38px;
+	text-align: center;
+	font-size: 0.8rem;
+	color: #f9930e;
+	font-weight: bold;
+	
+}
+
+.profile {
+	font-size: 0.8rem;
+	color: #7a7a7a;
+	margin-right: 10px;
+	display: flex;
+}
+
+.profile a {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 70px;
+	margin: 0 3px 0 6px;
+	border-bottom: 1px solid black;
+}
+
+.logout {
+	padding-top: 4px;
+}
+
+.islogin .xi-user-o {
+	margin: 5px 10px 5px -15px;
+	font-size:x-large;
+	vertical-align: middle;
+}
+
+.islogin span {
+	vertical-align: middle;
+}
+
+.islogin:hover {
+	color: #383838;
+	background-color: #ffc501;
+	border: 1px solid #ffc501;
+}
+
+nav {
+	background-color: black;
+	width: 100%;
+	position: relative;
+	z-index: 100;
+}
+
+nav .nav_list .box {
+	text-align: center;
+	width:calc(100%/8);
+}
+
+nav .show-bar li {
+	margin-top: 5px;
+}
+
+nav .show-bar {
+	font-size: 0.9rem;
+	height: 230px;
+	padding-top: 30px;
+	width: 100%;
+	background-color: black;
+	left: 0;
+	/* position: absolute;
+	z-index: 100; */
+}
+
+nav .show-bar a:hover {
+	border-bottom: 1px solid #E0AC47;
+	color: #E0AC47;
+}
+
+.border_bottom {
+	height: 1px;
+	background-color: rgb(39, 39, 39);
+}
+
+.border_bottom_each {
+	height: 3px;
+	background-color: #E0AC47;
+}
+
+nav .nav_over {
+	display: block;
+	height: 90px;
+	line-height: 90px;
+}
+
+nav .nav_list {
+	display: flex;
+	flex-direction: row;
+}
+
+/* js 추가 class */
+
+.fixed-nav {
+	position: fixed; 
+	top:0px;
+}
+
+/* .z-index_top {
+	left: 0;
+	position: absolute;
+	z-index: 100;
+} */
