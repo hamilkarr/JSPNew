@@ -8,7 +8,7 @@
 %>
 <c:set var="rootURL" value="<%=rootURL%>" />
 
-<script src="../resources/js/paging.js"></script>
+<!-- <script src="../resources/js/paging.js"></script> -->
 
 <!-- 배너S -->
 <div class="swiper mySwiper">
@@ -49,23 +49,20 @@
 			</tr>
 		</thead>
 		<tbody class="board_content">
-		<c:forEach var="item" items="${list}">
 			<tr class="tr_list">
-					<td><c:out value="${item.status}"/></td>
-					<td><c:out value="${item.postTitle}"/></td>
-					<td><c:out value="${item.memId}"/></td>
-					<td><c:out value="${item.regDt}"/></td>		
-				</tr>
-			</c:forEach>
+				<td>구분</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성일</td>
+			</tr>
 		</tbody>
 	</table>
 	<div id="board_bttom">
-		<%=pagingHtml%>
 		<!-- <a class="page" href="#">다음 페이지</a> -->
+		<%=pagingHtml%>
 		<button class="write_btn">
 			<a class="write" href="write">글쓰기</a>
 		</button>
 	</div>
 </div>
-
 <!-- 게시판 목록E -->
