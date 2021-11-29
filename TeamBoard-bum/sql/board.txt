@@ -1,9 +1,0 @@
-CREATE TABLE `board` (
-  `postNm` int NOT NULL AUTO_INCREMENT,
-  `status` enum('normal','tip') DEFAULT 'normal',
-  `postTitle` varchar(65) NOT NULL,
-  `content` text NOT NULL,
-  `memId` varchar(30) NOT NULL,
-  `regDt` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`postNm`)
-)
