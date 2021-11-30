@@ -38,7 +38,12 @@ String pagingHtml = (String) request.getAttribute("pagingHtml");
         </c:choose>
           <td><c:out value="${item.status}"/></td>
           <td>
-            <a href="view?postNm=${item.postNm}"><c:out value="${item.postTitle}" /></a>
+            <a href="view?postNm=${item.postNm}">
+            	<c:out value="${item.postTitle}" />
+            	<c:if test="${item.commentCnt > 0}">
+            	<span class='comment_cnt'>[${item.commentCnt}]</span>
+            	</c:if>
+            </a>
           </td>
           <td><c:out value="${item.memId}" /></td>
           <td><c:out value="${item.regDt}" /></td>

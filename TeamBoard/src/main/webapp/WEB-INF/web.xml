@@ -37,17 +37,15 @@
 		<url-pattern>/board/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- 
 	<servlet>
 		<servlet-name>File</servlet-name>
 		<servlet-class>com.controller.FileController</servlet-class>	
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>File</servlet-name>
-		<url-pattern>/file/*</url-pattern>
+		<url-pattern>/popup/upload</url-pattern>
 	</servlet-mapping>
-	-->
-	
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/views/error/404.jsp</location>

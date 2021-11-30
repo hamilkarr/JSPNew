@@ -176,7 +176,7 @@ public class MemberController extends HttpServlet {
 			String kakaoCodeURL = KakaoLogin.getInstance().getCodeURL();
 			request.setAttribute("kakaoCodeURL", kakaoCodeURL);			
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/views/main/index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/views/board/list.jsp");
 			rd.include(request, response);
 		} else {
 			MemberDao dao = MemberDao.getInstance();
@@ -346,7 +346,7 @@ public class MemberController extends HttpServlet {
 					throw new Exception("네이버 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
-				out.printf("<script>location.replace('%s');</script>", "../board");
+				out.printf("<script>location.replace('%s');</script>", "../board/list");
 			} else { // 미가입
 				// 회원 가입 페이지 이동
 				out.printf("<script>location.replace('%s');</script>", "../member/join");
@@ -382,7 +382,7 @@ public class MemberController extends HttpServlet {
 					throw new Exception("카카오 아이디 로그인 실패!");
 				}
 				// 로그인 성공시 작업 요약 
-				out.printf("<script>location.replace('%s');</script>", "../board");
+				out.printf("<script>location.replace('%s');</script>", "../board/list");
 			} else { // 미가입
 				// 회원 가입 페이지 이동
 				out.printf("<script>location.replace('%s');</script>", "../member/join");
@@ -394,5 +394,3 @@ public class MemberController extends HttpServlet {
 		}
 	}
 }
-
-

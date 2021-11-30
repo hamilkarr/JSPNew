@@ -1,12 +1,19 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 임시로 css 루트 적용 S -->
 <%
 	String memId = (String)request.getAttribute("memId");
+	String rootURL = (String)request.getAttribute("rootURL");
 %>
+<c:set var="rootURL" value="<%=rootURL%>" />
+<link href='<%=rootURL%>/resources/css/member.css' rel='stylesheet' style='text/css' />
+<!-- 임시로 css 루트 적용 E -->
+
 <c:set var="memId" value="<%=memId%>" />
 <main>
-	<div class='findid_box login_box'>
-		<div class='tit'>아이디 찾기</div>
+	<div class='findid_box loginbox'>
+		<div class='member_tit'>아이디 찾기</div>
 		<c:choose>
 			<c:when test="${memId == null}">
 				<form method="post" action="../member/findid" autocomplete="off">

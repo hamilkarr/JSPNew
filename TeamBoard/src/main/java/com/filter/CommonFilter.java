@@ -46,36 +46,66 @@ public class CommonFilter implements Filter {
 	 */
 	private void printHeader(ServletRequest request, ServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
-		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/header/main.jsp");
-		rd.include(request, response);
+		try {
+			response.setContentType("text/html; charset=utf-8");
+			if (popup(request) == true) {
+				RequestDispatcher header = request.getRequestDispatcher("/views/outline/header/popup_header.jsp");
+				header.include(request, response);
+			} else {
+				RequestDispatcher header = request.getRequestDispatcher("/views/outline/header/main.jsp");
+				header.include(request, response);
 
-		/** 헤더 추가 영역 처리 */
+				/** 헤더 추가 영역 처리 */
 
-		Config config = Config.getInstance();
-		String addonURL = config.getHeaderAddon();
-		if (addonURL != null) {
-			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
-			inc.include(request, response);
+				Config config = Config.getInstance();
+				String addonURL = config.getHeaderAddon();
+				if (addonURL != null) {
+					RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+					inc.include(request, response);
+				}
+			}
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 	/**
 	 * 푸터 출력
 	 */
 	private void printFooter(ServletRequest request, ServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			response.setContentType("text/html; charset=utf-8");
+			if (popup(request) == true) {
+				RequestDispatcher footer = request.getRequestDispatcher("/views/outline/footer/popup_footer.jsp");
+				footer.include(request, response);
+			} else {
+				RequestDispatcher rd = request.getRequestDispatcher("/views/outline/footer/main.jsp");
+				rd.include(request, response);
 
-		/** 푸터 추가 영역 처리 */
+				/** 푸터 추가 영역 처리 */
 
-		Config config = Config.getInstance();
-		String addonURL = config.getFooterAddon();
-		if (addonURL != null) {
-			RequestDispatcher inc = request.getRequestDispatcher(addonURL);
-			inc.include(request, response);
+				Config config = Config.getInstance();
+				String addonURL = config.getFooterAddon();
+				if (addonURL != null) {
+					RequestDispatcher inc = request.getRequestDispatcher(addonURL);
+					inc.include(request, response);
+				}
+			}
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		RequestDispatcher rd = request.getRequestDispatcher("/views/outline/footer/main.jsp");
-		rd.include(request, response);
+	public boolean popup(ServletRequest req) {
+		if (req instanceof HttpServletRequest) {
+			HttpServletRequest req2 = (HttpServletRequest) req;
+			String URI = req2.getRequestURI();
+			if (URI.indexOf("/popup") != -1) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -98,16 +128,19 @@ public class CommonFilter implements Filter {
 			}
 			// 정적 경로 제외 E
 
-			/*
-			 * String outline = request.getParameter("outline");
-			 * 
-			 * // 요청 메서드 GET 방식이 아닌 경우 제외 String method = req.getMethod().toUpperCase(); if
-			 * ((!method.equals("GET") && outline == null) || (!method.equals("GET") &&
-			 * outline != null && !outline.equals("print"))) { return false; }
-			 * 
-			 * // 요청 파라미터 중에서 outline = none일때 제외 if (outline != null &&
-			 * outline.equals("none")) { return false; }
-			 */
+			String outline = request.getParameter("outline");
+
+			// 요청 메서드 GET 방식이 아닌 경우 제외
+			String method = req.getMethod().toUpperCase();
+			if ((!method.equals("GET") && outline == null)
+					|| (!method.equals("GET") && outline != null && !outline.equals("print"))) {
+				return false;
+			}
+
+			// 요청 파라미터 중에서 outline = none일때 제외
+			if (outline != null && outline.equals("none")) {
+				return false;
+			}
 		}
 
 		return true;

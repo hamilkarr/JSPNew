@@ -28,11 +28,12 @@ CREATE TABLE `board` (
   `postTitle` varchar(65) NOT NULL,
   `content` text NOT NULL,
   `memId` varchar(30) NOT NULL,
+  `commentCnt` int unsigned DEFAULT '0',
   `regDt` datetime DEFAULT CURRENT_TIMESTAMP,
   `isNotice` tinyint(1) DEFAULT '0' COMMENT '공지사항 여부 - 0 - 일반 게시글, 1 - 공지사항',
   PRIMARY KEY (`postNm`),
   KEY `ix_isNotice` (`isNotice` DESC,`regDt` DESC)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +42,7 @@ CREATE TABLE `board` (
 
 LOCK TABLES `board` WRITE;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
-INSERT INTO `board` VALUES (1,'normal','2','4','hamilkarr','2021-11-24 23:12:16',1),(2,'tip','5','5','hamilkarr','2021-11-24 23:12:29',0),(3,'normal','2444','555','hamilkarr','2021-11-25 18:18:36',0),(4,'normal','4','44','','2021-11-25 23:53:15',0),(5,'tip','5','55','','2021-11-25 23:53:26',0),(6,'tip','6','66','hamilkarr','2021-11-25 23:53:46',0),(7,'normal','7','77','hamilkarr','2021-11-25 23:53:58',0),(8,'normal','2','2','hamilkarr','2021-11-25 23:56:30',0),(9,'normal','4','4','hamilkarr','2021-11-25 23:56:37',0),(10,NULL,'444','555','test1234','2021-11-27 21:36:41',0),(11,NULL,'222','555','test1234','2021-11-27 21:36:57',0),(12,NULL,'t666','333','test1234','2021-11-27 21:37:04',0),(13,NULL,'222','555','test1234','2021-11-27 21:37:39',0),(14,NULL,'4','4','hamilkarr','2021-11-27 22:30:24',0),(15,NULL,'5','5','hamilkarr','2021-11-27 22:30:32',0),(16,NULL,'7','7','hamilkarr','2021-11-27 22:30:50',0),(17,NULL,'99','9','hamilkarr','2021-11-27 22:31:37',0),(18,NULL,'44','555','hamilkarr','2021-11-28 00:16:40',1),(19,NULL,'공지사항 일껄요','하하','hamilkarr','2021-11-28 00:16:56',1),(20,NULL,'44','555','hamilkarr','2021-11-28 13:34:05',0);
+INSERT INTO `board` VALUES (1,'normal','2','4','hamilkarr',0,'2021-11-24 23:12:16',1),(2,'tip','5','5','hamilkarr',0,'2021-11-24 23:12:29',0),(3,'normal','2444','555','hamilkarr',0,'2021-11-25 18:18:36',0),(4,'normal','4','44','',0,'2021-11-25 23:53:15',0),(5,'tip','5','55','',0,'2021-11-25 23:53:26',0),(6,'tip','6','66','hamilkarr',0,'2021-11-25 23:53:46',0),(7,'normal','7','77','hamilkarr',0,'2021-11-25 23:53:58',0),(8,'normal','2','2','hamilkarr',0,'2021-11-25 23:56:30',0),(9,'normal','4','4','hamilkarr',0,'2021-11-25 23:56:37',0),(10,'normal','correction','correction','test1234',0,'2021-11-27 21:36:41',0),(11,NULL,'222','555','test1234',0,'2021-11-27 21:36:57',0),(12,'normal','t666','correction','test1234',0,'2021-11-27 21:37:04',0),(14,NULL,'4','4','hamilkarr',0,'2021-11-27 22:30:24',0),(15,NULL,'5','5','hamilkarr',0,'2021-11-27 22:30:32',0),(16,NULL,'7','7','hamilkarr',0,'2021-11-27 22:30:50',0),(17,NULL,'99','9','hamilkarr',0,'2021-11-27 22:31:37',0),(18,NULL,'44','555','hamilkarr',0,'2021-11-28 00:16:40',1),(19,NULL,'공지사항 일껄요','하하','hamilkarr',0,'2021-11-28 00:16:56',1),(20,NULL,'44','555','hamilkarr',0,'2021-11-28 13:34:05',0),(22,'normal','22','44','hamilkarr',0,'2021-11-29 23:01:07',0),(23,'tip','testtest','testest','hamilkarr',0,'2021-11-29 23:01:27',0),(24,'normal','testttsetwsetste','testsetset','hamilkarr',2,'2021-11-29 23:01:54',0);
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +62,7 @@ CREATE TABLE `boardcomment` (
   PRIMARY KEY (`commentNm`),
   KEY `postNm_idx` (`postNm`),
   CONSTRAINT `postNm` FOREIGN KEY (`postNm`) REFERENCES `board` (`postNm`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +71,7 @@ CREATE TABLE `boardcomment` (
 
 LOCK TABLES `boardcomment` WRITE;
 /*!40000 ALTER TABLE `boardcomment` DISABLE KEYS */;
+INSERT INTO `boardcomment` VALUES (1,12,'test1234','댓글','2021-11-30 20:26:36'),(2,24,'hamilkarr','댓글테스트','2021-11-30 22:52:24'),(3,24,'hamilkarr','댓글 테스트2','2021-11-30 22:52:31');
 /*!40000 ALTER TABLE `boardcomment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-29 21:11:25
+-- Dump completed on 2021-11-30 22:58:30

@@ -78,7 +78,7 @@ public class KakaoLogin extends SocialLogin {
 			}
 		}
 		
-		System.out.println("##AccessToken: " + accessToken.toString());
+//		System.out.println("##AccessToken: " + accessToken.toString());
 		return accessToken;
 		
 	}
@@ -103,7 +103,7 @@ public class KakaoLogin extends SocialLogin {
 		headers.put("Authorization", "Bearer " + accessToken);
 		JSONObject json = httpRequest(apiURL, headers);
 		
-		System.out.println("#### json : " + json);
+		// System.out.println("#### json : " + json);
 		
 		/*
 		if (json == null || json.get("profile") == null) {
@@ -114,7 +114,7 @@ public class KakaoLogin extends SocialLogin {
 		String memId = null;
 		JSONObject res = (JSONObject)json.get("kakao_account");
 		
-		System.out.println("res : " + res);
+		// System.out.println("res : " + res);
 		
 		JSONObject profile = (JSONObject)res.get("profile");
 		
@@ -154,7 +154,7 @@ public class KakaoLogin extends SocialLogin {
 		HttpSession session = Req.get().getSession();
 		session.setAttribute("kakao_member", member);
 		
-		System.out.println("##### Kakao member : " + member.toString());
+		// System.out.println("##### Kakao member : " + member.toString());
 		
 		return member;
 	}

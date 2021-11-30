@@ -5,14 +5,14 @@
 		"Driver": "com.mysql.cj.jdbc.Driver",
 		"Url" : "jdbc:mysql://localhost:3306/teamboard",
 		"user" : "root", 
-		"password" : "aA!12345"
+		"password" : "y10l10!8"
 	},
 	"LogDir" : "D:\\logs",
 	"css": {
 		"/board" : "board"
 	},
 	"js" : {
-		"/board": "board"
+		"/board": "board||comment"
 	},
 	"AddonHeader" : {
 		"*" : "common"		

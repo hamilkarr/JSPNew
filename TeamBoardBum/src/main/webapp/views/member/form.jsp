@@ -2,6 +2,8 @@
 <%@ page import="com.models.member.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
+String rootURL = (String)request.getAttribute("rootURL");
+
 Member member = null;
 if (request.getAttribute("member") != null) {
 	member = (Member)request.getAttribute("member");
@@ -18,9 +20,14 @@ if (request.getAttribute("socialMember") != null) {
 <c:set var="action" value="<%=action%>" />
 <c:set var="socialType" value="<%=socialType%>" />
 <c:set var="socialMember" value="<%=socialMember%>" />
+<c:set var="rootURL" value="<%=rootURL%>" />
+
+<!--임시로 css경로 적어둠  -->
+<link href='<%=rootURL%>/resources/css/member.css' rel='stylesheet' style='text/css' />
+
 <main>
-	<div class='join_box login_box'>
-		<div class='tit'>
+	<div class='joinbox loginbox'>
+		<div class='member_tit'>
 			<c:if test="${socialType != 'none'}">
 				<c:choose>
 					<c:when test="${socialType == 'naver'}">
@@ -47,7 +54,7 @@ if (request.getAttribute("socialMember") != null) {
 				<dd>
 					<c:choose>
 						<c:when test="${member == null}">
-							<input type="text" name="memId" value="${socialMember.memId}">
+							<input type="text" name="memId" value="${socialMember.memId}" placeholder="영문/숫자 조합 8~30자">
 						</c:when>
 						<c:otherwise>
 							<c:out value="${member.memId}" />
@@ -59,13 +66,13 @@ if (request.getAttribute("socialMember") != null) {
 			<dl>
 				<dt>비밀번호</dt>
 				<dd>
-					<input type="password" name="memPw">
+					<input type="password" name="memPw" placeholder="영문/숫자/특수문자 조합 8자이상">
 				</dd>
 			</dl>
 			<dl>
 				<dt>비밀번호 확인</dt>
 				<dd>
-					<input type="password" name="memPwRe">
+					<input type="password" name="memPwRe" >
 				</dd>
 			</dl>
 			<dl>
@@ -94,7 +101,7 @@ if (request.getAttribute("socialMember") != null) {
 					<input type="text" name="cellPhone" value="${member.cellPhone}">
 				</dd>
 			</dl>
-			<input type="reset" value="다시입력">
+			<input type="reset" value="새로 작성하기">
 			<c:choose>
 				<c:when test="${member == null}">
 					<input type="submit" value="회원가입">

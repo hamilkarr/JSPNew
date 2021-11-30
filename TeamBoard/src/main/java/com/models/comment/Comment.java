@@ -1,7 +1,9 @@
 package com.models.comment;
 
+import java.util.Locale;
 import java.sql.*;
 import com.models.*;
+import java.text.*;
 
 /** Comment bean 클래스 */
 public class Comment extends Dto<Comment> {
@@ -19,6 +21,21 @@ public class Comment extends Dto<Comment> {
 		this.postNm = postNm;
 		this.memId = memId;
 		this.content = content;
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd");
+			SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
+			
+			java.util.Date date = sdf.parse(regDt);
+			
+			String todayStr = new SimpleDateFormat("YYYY-MM-dd").format(new java.util.Date()).toString();
+			if (regDt.indexOf(todayStr) != -1) { // 오늘 작성된 게시글 
+				regDt = tf.format(date).toString();
+			} else {
+				regDt = df.format(date).toString();
+			}
+		} catch (ParseException e) {}
 		this.regDt = regDt;
 	}
 	

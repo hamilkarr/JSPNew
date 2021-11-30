@@ -66,7 +66,7 @@
 			>
 				<a class="nav_over" href="${rootURL}/kanban/list?status=progress">커뮤니티</a>
 				<ul class="show-bar">
-					<li><a href="#">플레이어 게시판</a></li>
+					<li><a href="${rootURL}/board/list">플레이어 게시판</a></li>
 					<li><a href="#">(준비중) 미디어 게시판</a></li>
 					<li><a href="#">(준비중) DUO/SQUAD 모집</a></li>
 				</ul>

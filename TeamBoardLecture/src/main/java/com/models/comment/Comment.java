@@ -1,10 +1,9 @@
 package com.models.comment;
 
+import java.util.Locale;
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import com.models.*;
+import java.text.*;
 
 /** Comment bean 클래스 */
 public class Comment extends Dto<Comment> {
@@ -13,8 +12,6 @@ public class Comment extends Dto<Comment> {
 	private String memId; // 댓글 작성 회원 아이디
 	private String content; // 댓글 내용
 	private String regDt; // 댓글 작성일시
-	
-
 
 	public Comment() {}
 
@@ -25,13 +22,20 @@ public class Comment extends Dto<Comment> {
 		this.memId = memId;
 		this.content = content;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yy.MM.dd HH:mm");
 		try {
-			regDt = sdf.format(sdf.parse(regDt));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-				
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+			SimpleDateFormat df = new SimpleDateFormat("yy.MM.dd");
+			SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
+			
+			java.util.Date date = sdf.parse(regDt);
+			
+			String todayStr = new SimpleDateFormat("YYYY-MM-dd").format(new java.util.Date()).toString();
+			if (regDt.indexOf(todayStr) != -1) { // 오늘 작성된 게시글 
+				regDt = tf.format(date).toString();
+			} else {
+				regDt = df.format(date).toString();
+			}
+		} catch (ParseException e) {}
 		this.regDt = regDt;
 	}
 	

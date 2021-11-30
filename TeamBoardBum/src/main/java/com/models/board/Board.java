@@ -13,16 +13,18 @@ public class Board extends Dto<Board> {
 	private String content;
 	private String memId;
 	private String regDt;
+	private int isNotice;
 	
 	public Board() {}
 
-	public Board(int postNm, String status, String postTitle, String content, String memId, String regDt) {
+	public Board(int postNm, String status, String postTitle, String content, String memId, String regDt, int isNotice) {
 		this.postNm = postNm;
 		this.status = status;
 		this.postTitle = postTitle;
 		this.content = content;
 		this.memId = memId;
 		this.regDt = regDt;
+		this.isNotice = isNotice;
 	}
 	
 	public Board(ResultSet rs) throws SQLException {
@@ -32,7 +34,8 @@ public class Board extends Dto<Board> {
 				rs.getString("postTitle"),
 				rs.getString("content"),
 				rs.getString("memId"),
-				rs.getString("regDt")
+				rs.getString("regDt"),
+				rs.getInt("isNotice")
 		);
 	}
 	
@@ -51,7 +54,7 @@ public class Board extends Dto<Board> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
+	
 	public String getPostTitle() {
 		return postTitle;
 	}
@@ -83,10 +86,17 @@ public class Board extends Dto<Board> {
 	public void setRegDt(String regDt) {
 		this.regDt = regDt;
 	}
+	
+	public int getIsNotice() {
+		return isNotice;
+	}
+	
+	public void setIsNotice(int isNotice) {
+		this.isNotice = isNotice;
+	}
 
 	@Override
 	public Board setResultSet(ResultSet rs) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		return new Board(rs);
 	}
 }

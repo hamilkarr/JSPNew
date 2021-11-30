@@ -1,22 +1,23 @@
-
 $(function() {
- 
 
     $(".box").mouseover(function () {
-        $(".nav_over").after("<div class='border_bottom'></div>")
-        $(this).children(".border_bottom").append("<div class='border_bottom_each'></div>")
-    });
+      const idx = $(this).index();
+      const boxW = $(this).width();
+      const offsetL = (boxW * (idx - 1)); // 해당 인덱스 번호까지의 너비
+        $(".inner-bar").addClass("on").stop().animate({'width':boxW, 'left': offsetL}, 230);
+        //transition 효과추가?
+      });
 
-    $(".box").mouseout(function () {
-        $("div").remove(".border_bottom");
+    $("nav").mouseout(function () {
+        $(".inner-bar").removeClass("on");
     });
 
     $(".show-bar").hide();
     $("nav").mouseover(function () {
         $(".show-bar").show();
-        // $(".show-bar").addClass( 'z-index_top' );
 
     });
+
     $("nav").mouseout(function () {
       $(".show-bar").hide();
     });

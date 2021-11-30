@@ -14,10 +14,11 @@ public class Board extends Dto<Board> {
 	private String memId;
 	private String regDt;
 	private int isNotice;
+	private int commentCnt;
 	
 	public Board() {}
 
-	public Board(int postNm, String status, String postTitle, String content, String memId, String regDt, int isNotice) {
+	public Board(int postNm, String status, String postTitle, String content, String memId, String regDt, int isNotice, int commentCnt) {
 		this.postNm = postNm;
 		this.status = status;
 		this.postTitle = postTitle;
@@ -25,6 +26,7 @@ public class Board extends Dto<Board> {
 		this.memId = memId;
 		this.regDt = regDt;
 		this.isNotice = isNotice;
+		this.commentCnt = commentCnt;
 	}
 	
 	public Board(ResultSet rs) throws SQLException {
@@ -35,7 +37,8 @@ public class Board extends Dto<Board> {
 				rs.getString("content"),
 				rs.getString("memId"),
 				rs.getString("regDt"),
-				rs.getInt("isNotice")
+				rs.getInt("isNotice"),
+				rs.getInt("commentCnt")
 		);
 	}
 	
@@ -93,6 +96,14 @@ public class Board extends Dto<Board> {
 	
 	public void setIsNotice(int isNotice) {
 		this.isNotice = isNotice;
+	}
+
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
 	}
 
 	@Override

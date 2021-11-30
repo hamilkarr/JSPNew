@@ -17,7 +17,7 @@
 		<c:choose>
 			<c:when test="${isLogin}">
 				<%-- <div class="profile">안녕하세요! <a href="${rootURL}/member/info">qwerasdfzx(아이디)</a>님</div> --%>
-				<div class="profile">안녕하세요! <a href="${rootURL}/member/info"> (<c:out value="${member.memId}" />)</a>님</div>
+				<div class="profile">안녕하세요! <a href="${rootURL}/member/info"><c:out value="${member.memId}" /></a>님</div>
 				<a class="islogin logout" href="${rootURL}/member/logout">
 					<span>로그아웃</span>
 				</a>
@@ -33,91 +33,109 @@
 		</c:choose>
 		</div>
 	</div>
-</header>
-
 <!--com/models/kanban/kanban.java-->
 <!--show-bar htrml 구조 변경? 드롭다운 문제, 해결해야함.-->
 <!-- class='on' 클릭했을때, 링크이동할때 색변함 ??
 	-> 게시판 목록 전체 | 일반 | 팁과 정보 에 적용 하면 될듯-->
-<nav>
-	<ul class='nav_list layout_width'>
-		<li class='box'
+	<nav>
+		<ul class='nav_list layout_width'>
+			<div class="inner-bar inner-bar-move"></div>
+ 
+			<li class='box'
+				<c:if test="${menu == 'work'}"> class='on'</c:if>
+			>
+				<a class="nav_over" href="${rootURL}/kanban/work">새소식</a>
+				<ul class="show-bar">
+					<li><a href="#">(준비중) 공지사항</a></li>
+					<li><a href="#">(준비중) GM소식</a></li>
+					<li><a href="#">(준비중) 이벤트</a></li>
+					<li><a href="#">(준비중) 업데이트</a></li>
+					<li><a href="#">(준비중) 대회소식</a></li>
+				</ul>
+			</li>
+			<li class='box'
+				<c:if test="${menu == 'list_ready'}"> class='on'</c:if>
+			>
+				<a class="nav_over" href="${rootURL}/kanban/list?status=ready">가이드</a>
+				<ul class="show-bar">
+					<li><a href="#">(준비중) 게임가이드</a></li>
+				</ul>
+			</li>
+			<li class='box'
+				<c:if test="${menu == 'list_progress'}"> class='on'</c:if>
+			>
+				<a class="nav_over" href="${rootURL}/kanban/list?status=progress">커뮤니티</a>
+				<ul class="show-bar">
+					<li><a href="${rootURL}/board/list">플레이어 게시판</a></li>
+					<li><a href="#">(준비중) 미디어 게시판</a></li>
+					<li><a href="#">(준비중) DUO/SQUAD 모집</a></li>
+				</ul>
+			</li>
+			<li class='box'
+				<c:if test="${menu == 'list_work'}"> class='on'</c:if>
+			>
+				<a class="nav_over" href="${rootURL}/kanban/list?status=done">SNS</a>
+				<ul class="show-bar">
+					<li><a href="#">(준비중) 디스코드</a></li>
+					<li><a href="#">(준비중) 페이스북</a></li>
+					<li><a href="#">(준비중) 유튜브</a></li>
+					<li><a href="#">(준비중) 톡채널</a></li>
+				</ul>
+			</li>
+			<li class='box'
 			<c:if test="${menu == 'work'}"> class='on'</c:if>
 		>
-			<a class="nav_over" href="${rootURL}/kanban/work">새소식</a>
+			<a class="nav_over" href="${rootURL}/kanban/work">랭킹</a>
 			<ul class="show-bar">
-				<li><a href="#">공지사항</a></li>
-				<li><a href="#">GM소식</a></li>
-				<li><a href="#">이벤트</a></li>
-				<li><a href="#">업데이트</a></li>
-				<li><a href="#">대회소식</a></li>
+				<li><a href="#">(준비중) 랭킹</a></li>
 			</ul>
 		</li>
 		<li class='box'
 			<c:if test="${menu == 'list_ready'}"> class='on'</c:if>
 		>
-			<a class="nav_over" href="${rootURL}/kanban/list?status=ready">가이드</a>
+			<a class="nav_over" href="${rootURL}/kanban/list?status=ready">상점</a>
 			<ul class="show-bar">
-				<li><a href="#">게임가이드</a></li>
+				<li><a href="#">(준비중) 게임구매</a></li>
 			</ul>
 		</li>
 		<li class='box'
 			<c:if test="${menu == 'list_progress'}"> class='on'</c:if>
 		>
-			<a class="nav_over" href="${rootURL}/kanban/list?status=progress">커뮤니티</a>
+			<a class="nav_over" href="${rootURL}/kanban/list?status=progress">자료실</a>
 			<ul class="show-bar">
-				<li><a href="#">플레이어 게시판</a></li>
-				<li><a href="#">미디어 게시판</a></li>
-				<li><a href="#">DUO/SQUAD 모집</a></li>
+				<li><a href="#">(준비중) 다운로드</a></li>
 			</ul>
 		</li>
 		<li class='box'
 			<c:if test="${menu == 'list_work'}"> class='on'</c:if>
 		>
-			<a class="nav_over" href="${rootURL}/kanban/list?status=done">SNS</a>
+			<a class="nav_over" href="${rootURL}/kanban/list?status=done">고객센터</a>
 			<ul class="show-bar">
-				<li><a href="#">디스코드</a></li>
-				<li><a href="#">페이스북</a></li>
-				<li><a href="#">유튜브</a></li>
-				<li><a href="#">톡채널</a></li>
+				<li><a href="#">(준비중) 고객센터</a></li>
+				<li><a href="#">(준비중) 이용제한</a></li>
+				<li><a href="#">(준비중) 이의신청</a></li>
+				<li><a href="#">(준비중) 보안센터</a></li>
 			</ul>
 		</li>
-		<li class='box'
-		<c:if test="${menu == 'work'}"> class='on'</c:if>
-	>
-		<a class="nav_over" href="${rootURL}/kanban/work">랭킹</a>
-		<ul class="show-bar">
-			<li><a href="#">랭킹</a></li>
 		</ul>
-	</li>
-	<li class='box'
-		<c:if test="${menu == 'list_ready'}"> class='on'</c:if>
-	>
-		<a class="nav_over" href="${rootURL}/kanban/list?status=ready">상점</a>
-		<ul class="show-bar">
-			<li><a href="#">게임구매</a></li>
-		</ul>
-	</li>
-	<li class='box'
-		<c:if test="${menu == 'list_progress'}"> class='on'</c:if>
-	>
-		<a class="nav_over" href="${rootURL}/kanban/list?status=progress">자료실</a>
-		<ul class="show-bar">
-			<li><a href="#">다운로드</a></li>
-		</ul>
-	</li>
-	<li class='box'
-		<c:if test="${menu == 'list_work'}"> class='on'</c:if>
-	>
-		<a class="nav_over" href="${rootURL}/kanban/list?status=done">고객센터</a>
-		<ul class="show-bar">
-			<li><a href="#">고객센터</a></li>
-			<li><a href="#">이용제한</a></li>
-			<li><a href="#">이의신청</a></li>
-			<li><a href="#">보안센터</a></li>
-		</ul>
-	</li>
-	</ul>
-</nav>
-
-
+	</nav>
+</header>
+<!-- 배너S -->
+<div class="swiper mySwiper">
+	<div class="swiper-wrapper">
+	  <div class="swiper-slide">
+		  <img src='${rootURL}/resources/css/banner/banner0.jpeg'>
+	  </div>
+	  <div class="swiper-slide">
+		  <img src='${rootURL}/resources/css/banner/banner1.jpeg'>
+	  </div>
+	  <div class="swiper-slide">
+		  <img src='${rootURL}/resources/css/banner/banner2.jpeg'>
+	  </div>
+	  <div class="swiper-slide">
+		  <img src='${rootURL}/resources/css/banner/banner3.jpeg'>
+	  </div>
+	</div>
+	<div class="swiper-pagination"></div>
+</div>
+<!-- 배너E -->
