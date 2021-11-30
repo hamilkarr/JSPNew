@@ -28,7 +28,7 @@ public class Config {
 	*  
 	*/
 	private Config() {
-		requestURI = request.getRequestURI();		
+		requestURI = request.getRequestURI();
 		String configPath = request.getServletContext().getRealPath(".");
 		configPath += File.separator + ".." + File.separator + "config" + File.separator + "config.json";
 		
@@ -75,11 +75,21 @@ public class Config {
 		return instance;
 	}
 	
+	public static Config getInstance(boolean isNew) {
+		if (instance == null || isNew) {
+			instance = new Config();
+		}
+		
+		return instance;
+	}
+	
 	public static void init(ServletRequest request) {
 		if (request instanceof HttpServletRequest) {
 			Config.request = (HttpServletRequest)request;
+			Config.requestURI = Config.request.getRequestURI();
 		}
 	}
+	
 	/**
 	 * 설정 조회 
 	 * 
@@ -119,7 +129,6 @@ public class Config {
 		
 		HashSet<String> list = new HashSet<>();
 		HashMap<String, String> css = (HashMap<String, String>)get("css");
-		System.out.println("css : " + css);
 		Iterator<String> ir = css.keySet().iterator();
 		while(ir.hasNext()) {
 			String URI = ir.next();
@@ -144,7 +153,6 @@ public class Config {
 		Iterator<String> ir = js.keySet().iterator();
 		while(ir.hasNext()) {
 			String URI = ir.next();
-			System.out.println("requestURI : " + requestURI);
 			if (requestURI.indexOf(URI) != -1) { // URI 포함되어 있다면 
 				StringTokenizer st = new StringTokenizer(js.get(URI), "||");
 				while(st.hasMoreTokens()) {

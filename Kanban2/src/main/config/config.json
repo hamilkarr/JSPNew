@@ -3,22 +3,22 @@
 	"PageTitle" : "사이트 기본제목",
 	"DB":  { 
 		"Driver": "com.mysql.cj.jdbc.Driver",
-		"Url" : "jdbc:mysql://localhost:3306/kanban2",
+		"Url" : "jdbc:mysql://localhost:3306/kanban",
 		"user" : "root", 
 		"password" : "aA!12345"
 	},
 	"LogDir" : "C:\\logs",
 	"css": {
-		"/kanban" : "kanban"
+		"/Kanban" : "kanban"
 	},
 	"js" : {
-		"/kanban" : "kanban"
+		"/kanban": "kanban"
 	},
 	"AddonHeader" : {
-		"*" : "common"
+		"*" : "common"		
 	},
 	"AddonFooter" : {
-		"*" : "common"
+		"*" : "common"			
 	},
 	"NaverLogin" : {
 		"clientId" : "69se08pd4zx2Ujls3TIT",

@@ -186,4 +186,37 @@ public class BoardDao {
 		}
 		return false;
 	}
+	
+	/** 댓글 등록
+	 * 
+	 * @param request
+	 * @return 등록된 댓글 등록 번호(
+	 * @throws Exception
+	 */
+	public int addComment(HttpServletRequest request)throws Exception {
+		
+		boolean isLogin = (Boolean)request.getAttribute("isLogin");
+		if (!isLogin) {
+			throw new Exception("댓글은 로그인 후 작성가능 합니다.");
+		}
+		
+		if (request.getParameter("postNm") == null) {
+			throw new Exception("잘못된 접근입니다.");			
+		}
+		
+		if (request.getParameter("content") ==  null) {
+			throw new Exception("댓글을 입력하세요");
+		}
+		
+		Member member = (Member)request.getAttribute("member");
+		String memId = member.getMemId();
+		String sql = "INSERT INTO boardcomment (postNm, memId, content) VALUES (?,?,?)";
+		ArrayList<DBField> bindings = new ArrayList<>();
+		bindings.add(DB.setBinding("Integer", request.getParameter("postNm")));
+		bindings.add(DB.setBinding("String", memId));
+		bindings.add(DB.setBinding("String", request.getParameter("content")));
+		
+		int commentNm = DB.e
+		int commentNm = DB.executeUpdate(sql, bindings);
+	}
 }
