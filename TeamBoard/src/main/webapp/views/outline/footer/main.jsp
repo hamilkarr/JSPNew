@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%-- <% String environment = (String)request.getAttribute("environment"); %> --%>
 	<%-- <iframe <%=environment.equals("production")?" class='dn'":""%>name="ifrmHidden" width="100%" height="500" frameborder="0"></iframe> --%>
-	<iframe name="ifrmHidden" width="100%" height="500" frameborder="0"></iframe>
+	<iframe name="ifrmHidden" width="100%" height="150" frameborder="0" style="visibility:hidden;"></iframe>
 	<!-- 사이트 하단 사이트맵&회사정보 -->
 	<footer>
 		<div class="layout_width">

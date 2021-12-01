@@ -2,6 +2,7 @@
 <%@ page  import="com.models.member.*" %>
 <%@ page import="com.models.board.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="layout_width">
     <h3>플레이어 게시판</h3>
@@ -28,7 +29,9 @@
                 </dl>     
                 <dl class="right">
                     <dt>조회수</dt>
-                    <dd>6</dd> 
+                    <dd>
+                    	<fmt:formatNumber value="${view.viewCnt}" />
+                    </dd> 
                 </dl>
             </div>
         </div>
@@ -37,6 +40,7 @@
             <a href="../board/list" class="btn_list"><i class="xi-bars xi-x"></i></a>
             <c:choose>
                 <c:when test="${isLogin && member.memId == view.memId}"> <!-- 본인 글일때 -->
+                	<a class="btn_write" href="delete?postNm=${view.postNm}" onclick="return confirm('정말 삭제하시겠습니까?');">삭제하기</a>
                     <a class="btn_write" href="edit?postNm=${view.postNm}">수정하기</a>
                 </c:when>	
                 <c:otherwise>

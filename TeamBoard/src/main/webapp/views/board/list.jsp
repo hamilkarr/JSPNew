@@ -1,11 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<%
-String rootURL = (String) request.getAttribute("rootURL");
-String pagingHtml = (String) request.getAttribute("pagingHtml");
-%>
-<c:set var="rootURL" value="<%=rootURL%>" />
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+ <%
+ 	String pagingHtml = (String)request.getAttribute("pagingHtml");
+ %>
 <!-- 게시판 목록S -->
 <div class="inner_box">
   <h3>게시판 목록</h3>
@@ -53,7 +51,12 @@ String pagingHtml = (String) request.getAttribute("pagingHtml");
             <a href="view?postNm=${item.postNm}">
             	<c:out value="${item.postTitle}" />
             	<c:if test="${item.commentCnt > 0}">
-            	<span class='comment_cnt'>[${item.commentCnt}]</span>
+            	<span class='comment_cnt'>
+            		[<fmt:formatNumber value="${item.commentCnt}" />]
+            	</span>
+            	</c:if>
+            	<c:if test="${item.isNew}">
+            		N
             	</c:if>
             </a>
           </td>
@@ -67,8 +70,8 @@ String pagingHtml = (String) request.getAttribute("pagingHtml");
 	        	</c:otherwise>
         	</c:choose>
           </td>
-          <td><c:out value="${item.regDt}" /></td>
-          <td>조회수</td>
+          <td><c:out value="${item.regDtSt}" /></td>
+          <td><fmt:formatNumber value="${item.viewCnt}" /></td>
       </c:forEach>
     </tbody>
   </table>

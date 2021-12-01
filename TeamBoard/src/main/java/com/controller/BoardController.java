@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import com.models.board.*;
 import com.models.comment.*;
 import com.models.member.*;
+import com.models.file.*;
 import com.core.*;
 
 import org.json.simple.*;
@@ -67,24 +68,11 @@ public class BoardController extends HttpServlet {
 	}
 
 	private void writeController(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		MemberDao memDao = MemberDao.getInstance();
-		boolean Login = memDao.isLogin(req);
-
-		try {
-			if (Login != true) {
-				throw new Exception("로그인후 이용하실수 있습니다.");
-			}
-
-			req.setAttribute("mode", "write");
-			RequestDispatcher rd = req.getRequestDispatcher("/views/board/write.jsp");
-			rd.include(req, res);
-		} catch (Exception e) {
-			out.printf("<script>alert('%s');parent.location.href='../';</script>", e.getMessage());
-		}
+		boolean Login = MemberDao.isLogin(req);
 
 		if (httpMethod.equals("POST")) { // 등록 처리
 			try {
-				if (req.getParameter("memId") == "") {
+				if (!Login) {
 					out.print("<script>parent.location.href='../';</script>");
 					throw new Exception("로그인을 해주세요!");
 				}
@@ -97,7 +85,19 @@ public class BoardController extends HttpServlet {
 					throw new Exception("작업등록 실패하였습니다.");
 				}
 			} catch (Exception e) {
-				out.printf("<script>alert('%s');</script>", e.getMessage());
+				CommonLib.msg(out, e);
+			}
+		} else {
+			try {
+				if (Login != true) {
+					throw new Exception("로그인후 이용하실수 있습니다.");
+				}
+				req.setAttribute("gid", System.currentTimeMillis());
+				req.setAttribute("mode", "write");
+				RequestDispatcher rd = req.getRequestDispatcher("/views/board/write.jsp");
+				rd.include(req, res);
+			} catch (Exception e) {
+				out.printf("<script>alert('%s');parent.location.href='../';</script>", e.getMessage());
 			}
 		}
 	}
@@ -124,40 +124,14 @@ public class BoardController extends HttpServlet {
 	}
 
 	private void editController(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		MemberDao memDao = MemberDao.getInstance();
 		BoardDao dao = BoardDao.getInstance();
-
-		try {
-			boolean Login = memDao.isLogin(req);
-			if (Login != true) {
-				throw new Exception("회원만 이용하실수 있습니다.");
-			}
-
-			int postNm = Integer.parseInt(req.getParameter("postNm"));
-
-			if (req.getParameter("postNm") == null) {
-				throw new Exception("잘못된 접근입니다.");
-			}
-
-			Board board = dao.get(postNm);
-			if (board == null) {
-				throw new Exception("게시글이 없습니다!");
-			}
-
-			req.setAttribute("mode", "edit");
-			req.setAttribute("board", board);
-
-			RequestDispatcher rd = req.getRequestDispatcher("/views/board/write.jsp");
-			rd.include(req, res);
-		} catch (Exception e) {
-			out.printf("<script>alert('%s');parent.location.href='../';</script>", e.getMessage());
-		}
-
+		boolean Login = MemberDao.isLogin(req);
+		
 		if (httpMethod.equals("POST")) {
 			try {
-				if (req.getParameter("memId") == "") {
-					out.print("<script>parent.location.href='../';</script>");
-					throw new Exception("로그인을 해주세요!");
+				if (!Login) {
+					out.print("<script>alert('로그인을 해주세요!');parent.location.href='../';</script>");
+					return;
 				}
 				boolean rs = dao.edit(req);
 				if (!rs) {
@@ -167,16 +141,43 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				out.printf("<script>alert('%s');</script>", e.getMessage());
 			}
+		} else {
+			try {
+				if (Login != true) {
+					throw new Exception("회원만 이용하실수 있습니다.");
+				}
+
+				int postNm = Integer.parseInt(req.getParameter("postNm"));
+
+				if (req.getParameter("postNm") == null) {
+					throw new Exception("잘못된 접근입니다.");
+				}
+
+				Board board = dao.get(postNm);
+				if (board == null) {
+					throw new Exception("게시글이 없습니다!");
+				}
+				
+				/** 첨부된 파일 목록 */
+				ArrayList<FileInfo> files = FileDao.getInstance().gets(board.getGid());
+				
+				req.setAttribute("mode", "edit");
+				req.setAttribute("board", board);
+				req.setAttribute("files", files);
+				
+				RequestDispatcher rd = req.getRequestDispatcher("/views/board/write.jsp");
+				rd.include(req, res);
+			} catch (Exception e) {
+				out.printf("<script>alert('%s');parent.location.href='../';</script>", e.getMessage());
+			}
 		}
 	}
 
 	public void deleteController(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		MemberDao memDao = MemberDao.getInstance();
 		BoardDao dao = BoardDao.getInstance();
-		boolean Login = memDao.isLogin(req);
 
 		try {
-			if (Login != true) {
+			if (!MemberDao.isLogin(req)) {
 				throw new Exception("회원만 이용하실수 있습니다.");
 			}
 
@@ -184,8 +185,7 @@ public class BoardController extends HttpServlet {
 				throw new Exception("게시글이 없습니다.");
 			}
 
-			int postNm = Integer.parseInt(req.getParameter("postNm"));
-			boolean rs = dao.delete(postNm);
+			boolean rs = dao.delete(req.getParameter("postNm"));
 			if (!rs) {
 				throw new Exception("삭제 실패하였습니다.");
 			}
@@ -202,6 +202,9 @@ public class BoardController extends HttpServlet {
 			if (req.getParameter("postNm") == null) {
 				throw new Exception("잘못된 접근입니다.");
 			}
+			
+			/** 게시글 조회수 업데이트 */
+			dao.updateViewCnt(postNm);
 			Board view = dao.get(postNm);
 			req.setAttribute("view", view);
 

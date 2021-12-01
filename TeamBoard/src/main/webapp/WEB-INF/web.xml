@@ -45,6 +45,10 @@
 		<servlet-name>File</servlet-name>
 		<url-pattern>/popup/upload</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>File</servlet-name>
+		<url-pattern>/file</url-pattern>
+	</servlet-mapping>
 
 	<error-page>
 		<error-code>404</error-code>

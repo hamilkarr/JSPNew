@@ -26,7 +26,7 @@ const comment = {
 	/** 수정 양식 로드 */
 	loadEditForm : function(e) {
 		const target = e.target;
-		const commentNm = target.dataset.commentNm;
+		const commentNm = target.dataset.commentnm;		
 		const xhr = new XMLHttpRequest();
 		const url = "../board/comment?mode=get_comment&commentNm=" + commentNm + "&outline=none";
 		const id = "comment_form_" + commentNm;
@@ -142,6 +142,24 @@ window.addEventListener("load", function() {
 	editList.forEach(function(el) {
 		el.addEventListener("click", comment.loadEditForm);
 	});
+	
+	/** 댓글 입력 글자수 제한 */
+	const commentEl = document.querySelector(".comment #content");
+	if (commentEl) {
+		commentEl.addEventListener("keyup", function(e) {
+			const target = e.target;
+			const content = target.value;
+			const charCnt = content.length;
+			if (charCnt > 200) {
+				target.value = content.substring(0, 200);
+			}
+			const caret = document.querySelector(".comment .caret");
+			if (caret) {
+				const bytes = target.value.length * 3;
+				caret.innerText = bytes.toLocaleString(); 
+			}
+		});
+	}
 });
 
 
