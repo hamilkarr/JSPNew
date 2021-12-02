@@ -23,7 +23,7 @@ if (request.getAttribute("socialMember") != null) {
 <c:set var="rootURL" value="<%=rootURL%>" />
 
 <!--임시로 css경로 적어둠  -->
-<link href='<%=rootURL%>/resources/css/member.css' rel='stylesheet' style='text/css' />
+<link href='<%=rootURL%>/resources/css/member.css' rel='stylesheet' type='text/css' />
 
 <main>
 	<div class='joinbox loginbox'>
