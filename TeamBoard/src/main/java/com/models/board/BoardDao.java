@@ -55,47 +55,6 @@ public class BoardDao {
 		
 		return rs;
 	}
-		
-		/*
-		int num = 0;
-		try (Connection conn = DB.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-			request.setCharacterEncoding("UTF-8");
-			String gid = request.getParameter("gid");
-			String status = request.getParameter("status");
-			String postTitle = request.getParameter("postTitle");
-			String content = request.getParameter("content");
-			String memId = member.getMemId();
-			int isNotice = 0;
-			if (request.getParameter("isNotice") != null) {
-				isNotice = Integer.valueOf(request.getParameter("isNotice"));
-			}
-
-			pstmt.setLong(1, Long.valueOf(gid));
-			pstmt.setString(2, status);
-			pstmt.setString(3, postTitle);
-			pstmt.setString(4, content);
-			pstmt.setString(5, memId);
-			pstmt.setInt(6, isNotice);
-
-			int result = pstmt.executeUpdate();
-			if (result > 0) {
-				ResultSet rs = pstmt.getGeneratedKeys();
-				if (rs.next()) {
-					num = rs.getInt(1);
-				}
-				rs.close();
-				
-				FileDao.getInstance().updateFinish(gid);
-			}
-		} catch (IOException | SQLException | ClassNotFoundException e) {
-			Logger.log(e);
-		}
-
-		return num;
-		*/
-		
-
 
 	public int getTotal() {
 		int total = 0;
@@ -117,25 +76,30 @@ public class BoardDao {
 	}
 
 	public ArrayList<Board> getList(int page, int limit) {
-		ArrayList<Board> list = new ArrayList<Board>();
 		page = (page <= 0) ? 1 : page;
 		limit = (limit <= 0) ? 15 : limit;
 
 		int offset = (page - 1) * limit;		
-		String sql = "SELECT * FROM board ORDER BY isNotice DESC, regDt DESC LIMIT ?,?";
-		try (Connection conn = DB.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-
-			pstmt.setInt(1, offset);
-			pstmt.setInt(2, limit);
-			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
-				list.add(new Board(rs));
-			}
-			rs.close();
-
-		} catch (SQLException | ClassNotFoundException e) {
-			Logger.log(e);
+		
+		ArrayList<DBField> bindings = new ArrayList<>();
+		
+		HttpServletRequest request = Req.get();
+		StringBuilder sb = new StringBuilder();
+		
+		// "SELECT * FROM board WHERE isNotic = 1 UNION ALL"
+		sb.append("SELECT * FROM board WHERE isNotice = 1 UNION SELECT * FROM board");
+		if (request.getParameter("status") != null) {
+			sb.append(" WHERE status = ?");
+			bindings.add(DB.setBinding("String", request.getParameter("status")));
 		}
+		sb.append(" ORDER BY isNotice DESC, regDt DESC LIMIT ?,?");
+		String sql = sb.toString();
+		
+		bindings.add(DB.setBinding("Integer", String.valueOf(offset)));
+		bindings.add(DB.setBinding("Integer", String.valueOf(limit)));
+		
+		ArrayList<Board> list = DB.executeQuery(sql, bindings, new Board());
+		
 		return list;
 	}
 

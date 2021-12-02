@@ -9,9 +9,13 @@
   <h3>게시판 목록</h3>
   <div class="bord_tit">
     <ul class="tit_list">
-      <li><a href="#">전체</a></li>
-      <li class="tit_link"><a href="#">일반</a></li>
-      <li class="tit_link"><a href="#">팁과 정보</a></li>
+      <li><a href="${rootURL}/board/list">전체</a></li>
+      <li class="tit_link">
+      	<a href="${rootURL}/board/list?status=normal">일반</a>
+      </li>
+      <li class="tit_link">
+      	<a href="${rootURL}/board/list?status=tip">팁과 정보</a>
+      </li>
     </ul>
   </div>
   <table class="board_table">

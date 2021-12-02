@@ -1,7 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	String status = request.getParameter("status");
+	String status = request.getParameter("status"); //이거 어디서 오지?
+	
 %>
 <c:set var="status" value="<%=status%>" />
 <c:if test="${status != null}">
