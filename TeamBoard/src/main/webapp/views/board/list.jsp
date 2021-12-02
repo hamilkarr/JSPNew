@@ -5,6 +5,7 @@
 String pagingHtml = (String)request.getAttribute("pagingHtml");
 String skey= request.getParameter("skey");
 String sopt = request.getParameter("sopt");
+String total = (String)request.getAttribute("total");
 %>
 <c:set var="skey" value="<%=skey%>" />
  
@@ -25,7 +26,7 @@ String sopt = request.getParameter("sopt");
 <!-- 검색 결과 박스. 평소에는 숨김 -->	
   <c:if test="${skey != null}" > <!-- c:if 조건식에 문제가 있는듯... -->
 	  <div class="search_resultBox">
-	  	<em><%=skey%></em>" 에 대한 " <em> "${list.size();}" </em> "개의 게시글이 검색되었습니다. "
+	  	<em><%=skey%></em>" 에 대한 " <em>${total} <%-- "${list.size();}" --%> </em> "개의 게시글이 검색되었습니다. "
 	  	<a href="../board/list" class="link_back">돌아가기</a>
 	  </div>
   </c:if>
@@ -101,10 +102,7 @@ String sopt = request.getParameter("sopt");
     <%=pagingHtml%>
     <button class="write_btn" onclick="location.href='write'">글쓰기</button>
     <form name="searchForm" method="get" action="?" >
-    	<select name="sopt">
-    		<%-- <option value="postTitle"<%= sopt.equals("postTitle")?" selected":""%>>제목 </option>
-    		<option value="postTitle_content"<%= sopt.equals("postTitle_content")?" selected":""%> >제목 + 본문</option>
-    		<option value="memId"<%=sopt.equals("memId")?" selected":""%>>작성자</option> --%>
+    	<select name="sopt">    	
     		<option value="postTitle"${sopt.equals("postTitle")?" selected":""}>제목 </option>
     		<option value="postTitle_content"${sopt.equals("postTitle_content")?" selected":""}>제목 + 본문</option>
     		<option value="memId"${sopt.equals("memId")?" selected":""}>작성자</option>

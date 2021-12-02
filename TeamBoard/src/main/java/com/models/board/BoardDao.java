@@ -56,6 +56,7 @@ public class BoardDao {
 		return rs;
 	}
 
+	/*
 	public int getTotal() {
 		int total = 0;
 
@@ -74,41 +75,57 @@ public class BoardDao {
 
 		return total;
 	}
+	*/
 	
-	/*
-	public ArrayList<Board> getSearch(String sopt, String skey) {
+	public int getTotal() {
+		int total = 0;
+		
 		ArrayList<DBField> bindings = new ArrayList<>();
-		StringBuilder sb = new StringBuilder();
 		
-		sb.append("SELECT * FROM board");
-		if (sopt != null && !sopt.equals("")) {
-			sb.append(" WHERE ?");
-			bindings.add(DB.setBinding("String", sopt));
-		}
-		if (skey != null && !skey.equals("") ) {
-			sb.append(" LIKE %?");
-			sb.append(skey.trim());
-			sb.append("% ORDER BY regDT DESC");			
-		}
-		String sql = sb.toString();
+		HttpServletRequest request = Req.get();
 		
+		/** 검색 조건 처리 S */
+		ArrayList<String> arrWhere = new ArrayList<>();
+		if (request.getParameter("status") != null) {
+			arrWhere.add(" status = ? ");
+			bindings.add(DB.setBinding("String", request.getParameter("status")));
+		}
+		
+		String sopt = request.getParameter("sopt");
+		String skey = request.getParameter("skey");
+		if (sopt != null && skey != null && !skey.trim().equals("")) {
+			String field = null;
+			switch(sopt) {
+				case "postTitle_content":
+					field = "CONCAT(postTitle,content)";
+					break;
+				default : 
+					field = sopt;
+			}
+			arrWhere.add(field + " LIKE ?");
+			skey = "%" + skey + "%";
+			bindings.add(DB.setBinding("String", skey));
+		}
+		
+		StringBuilder sb = new StringBuilder();		
+		sb.append("SELECT COUNT(*) cnt from board");
+		
+		if (arrWhere.size() > 0) {
+			sb.append(" WHERE ");
+			boolean isFirst = true;
+			for(String addWhere : arrWhere) {
+				if (!isFirst) sb.append(" AND ");
+				sb.append(addWhere);
+				isFirst = false;
+			}
+		}		
+		
+		String sql = sb.toString();		
 		ArrayList<Board> list = DB.executeQuery(sql, bindings, new Board());
 		
-		return list;
-	}
-	
-	public ArrayList<Board> getSearch(String sopt) {
-		return getSearch(sopt, "");
-	}
-	
-	public ArrayList<Board> getSearch(HttpServletRequest request) {
-		String sopt = "";
-		if (request.getParameter("sopt") != null) {
-			sopt = (String)request.getParameter("sopt");
-		}
-		return getSearch(sopt);
-	}
-	*/
+		total = list.size();
+		return total;
+	}	
 
 	public ArrayList<Board> getList(int page, int limit) {
 		page = (page <= 0) ? 1 : page;
