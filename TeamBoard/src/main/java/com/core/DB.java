@@ -143,8 +143,11 @@ public class DB {
 					sb.append(" AND ");
 				}
 				sb.append(field);
-				sb.append("= ?");
-				
+				if (field.toUpperCase().indexOf("LIKE") != -1) {
+					sb.append(" ?");
+				} else {
+					sb.append("= ?");
+				}
 				isFirst = false;
 			}
 		} // endif 

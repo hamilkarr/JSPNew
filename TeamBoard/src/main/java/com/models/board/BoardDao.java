@@ -78,16 +78,13 @@ public class BoardDao {
 	*/
 	
 	public int getTotal() {
-		int total = 0;
-		
-		ArrayList<DBField> bindings = new ArrayList<>();
-		
 		HttpServletRequest request = Req.get();
 		
-		/** 검색 조건 처리 S */
-		ArrayList<String> arrWhere = new ArrayList<>();
+		String[] fields = null;
+		ArrayList<DBField> bindings = new ArrayList<>();
+		StringBuilder sb = new StringBuilder();
 		if (request.getParameter("status") != null) {
-			arrWhere.add(" status = ? ");
+			sb.append("status");
 			bindings.add(DB.setBinding("String", request.getParameter("status")));
 		}
 		
@@ -102,28 +99,19 @@ public class BoardDao {
 				default : 
 					field = sopt;
 			}
-			arrWhere.add(field + " LIKE ?");
-			skey = "%" + skey + "%";
+			
+			field += " LIKE";
+			if (sb.length() > 0) sb.append("/");
+			sb.append(field);
 			bindings.add(DB.setBinding("String", skey));
 		}
 		
-		StringBuilder sb = new StringBuilder();		
-		sb.append("SELECT COUNT(*) cnt from board");
-		
-		if (arrWhere.size() > 0) {
-			sb.append(" WHERE ");
-			boolean isFirst = true;
-			for(String addWhere : arrWhere) {
-				if (!isFirst) sb.append(" AND ");
-				sb.append(addWhere);
-				isFirst = false;
-			}
-		}		
-		
-		String sql = sb.toString();		
-		ArrayList<Board> list = DB.executeQuery(sql, bindings, new Board());
-		
-		total = list.size();
+		if (sb.length() > 0) {
+			fields = sb.toString().split("/");
+			
+		}
+		int total = DB.getCount("board", fields, bindings);
+		System.out.println("total : " + total);
 		return total;
 	}	
 

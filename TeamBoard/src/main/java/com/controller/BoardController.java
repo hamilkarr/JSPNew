@@ -111,7 +111,7 @@ public class BoardController extends HttpServlet {
 			//int searchCount = list.size();
 
 			int total = dao.getTotal();
-		
+			System.out.println("total : " + total);
 			Pagination pagination = new Pagination(request, 1000);
 			String pagingHtml = pagination.getPageHtml();
 			
@@ -123,8 +123,8 @@ public class BoardController extends HttpServlet {
 			out.printf("<script>alert('%s');history.back();</script>", e.getMessage());
 		}
 
-		RequestDispatcher rd = request.getRequestDispatcher("/views/board/list.jsp");
-		rd.include(request, response);
+		//RequestDispatcher rd = request.getRequestDispatcher("/views/board/list.jsp");
+		//rd.include(request, response);
 	}
 
 	private void editController(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
