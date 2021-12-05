@@ -1,0 +1,248 @@
+/* 배너 */
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-top: 90px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 1.0588235294117647rem;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+}
+
+/* 게시판 */
+.inner_box{
+	width: 1090px;
+    margin: 0 auto;
+    padding-bottom: 200px;
+}
+
+/* 게시판 목록 tit */
+h3 {
+    padding-top: 50px;
+    margin-bottom: 8px;
+    font-size: 2.6470588235294117rem;
+    font-weight: normal;
+}
+
+.bord_tit {
+	border-top: 3px solid #000000;
+}
+
+/* 게시판 구분 tit */
+
+.tit_list{
+	overflow: hidden;
+	height: 70px;
+	padding-top: 20px;
+	padding-left: 0px;
+}
+
+.tit_list li {
+	float: left;  
+    text-decoration: none;
+    padding-right: 2px;
+}
+
+.tit_list li a {
+	color: #e89407;
+}
+
+.tit_link{
+	padding-left: 38px;
+}
+
+.tit_link::before {
+	content: '';
+	float: left;
+	width: 1px;
+	height: 20px;
+	margin: 3px 0 0 -20px;
+	background : #e6e5e5;
+}
+
+/* 아이콘 부분  */
+.xi-naver-square {
+	color : #e58300;
+}
+.ico_board_tier{
+	display: inline-block;
+    position: relative;
+    top: 6px;
+    width: 28px;
+    height: 28px;
+	background: url(https://t1.kakaocdn.net/gamepub/pub/battlegrounds/images/icon-rank-board.png) no-repeat;
+}
+.ico_board_tier.silver {
+    background-position:right -60px;
+}
+.ico_board_tier.gold {
+	background-position:right -90px;
+}
+.ico_board_tier.platinum {
+    background-position:right -120px;
+}
+
+/* 게시판 목록 table */
+.board_table{
+	width: 100%;
+	text-align: center;
+	color: #252525;
+	margin-bottom: 20px;
+	border-collapse: collapse;
+}
+
+.table_tit th {
+	padding: 25px 0;
+	font-size: 0.9411764705882353rem;
+	font-weight: normal;
+	color: #ffffff;
+	background-color: #252525;
+	letter-spacing: 2px;
+}
+
+.table_tit .th_tit {
+	width:450px;
+}
+
+.tr_list td {
+	padding: 20px 0;
+	border-bottom: 1px solid #d8d8d8;
+}
+
+.comment_cnt {
+	color: #f19a09;
+}
+
+/** 공지사항 */
+.tr_list.notice td { 
+	background : #f5f5f5;
+}
+
+.board_bottom {
+	padding-top: 30px 0 30px;
+	text-align: center;
+}
+
+.page {
+	background-color: #252525;
+	color: #ffffff;
+}
+
+.write_btn {
+	float : right;
+	top: 20px;
+	line-height: 40px;
+	width: 170px;
+	height: 50px;
+	background-color: #f19a09;
+	border: 0;
+	color: #fff;
+    font-size: 0.8823529411764706rem;
+    cursor: pointer;
+}
+
+.write_btn:hover {
+	background-color: #e18100;
+}
+
+/* 페이지네이션 */
+ul.pagination {
+    text-align: center;
+}
+
+li.page {
+	 display: inline-block;
+	 background-color: #fff;
+}
+
+li.page a{
+	float: left;
+ 	padding: 8px 16px;
+ 	text-decoration: none;
+}
+
+li.page a:hover{
+	background-color: #ddd;
+}
+
+/* 검색창 */
+form.wrap_search {
+    width: 540px;
+    padding-top: 80px;
+    margin: 0 auto;
+}
+
+select.search {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 178px;
+    height: 38px;
+    border: 1px solid #dfdfdf;
+}
+
+input.search_box {
+	width: 300px;
+    height: 38px;
+    padding: 6px 54px 6px 12px;
+    font-size: 16px;
+    line-height: 37px;
+    border: 1px solid #dfdfdf;
+}
+
+button.search_btn {
+    background: #fff;
+    border: 0;
+    font-size: 1.5rem;
+}
+
+i.xi-search {
+    position: relative;
+    top: 3px;
+    right: 40px;
+    color: #858283;
+}
+
+/* 검색했을때 나오는 결과창 */
+.search_resultBox {
+    padding: 21px 0 23px;
+    margin-bottom : 20px;
+    border: 1px solid #d8d8d8;
+    text-align: center;
+}
+
+em.sw {
+    font-weight: normal;
+    font-style: normal;
+    color: #f19a09;
+}
+
+a.link_back {
+    text-decoration: underline;
+    font-size: 0.85rem;
+    font-weight: bold;
+}

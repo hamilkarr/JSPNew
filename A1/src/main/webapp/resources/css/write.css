@@ -1,0 +1,93 @@
+/**공통**/
+
+* {
+  	box-sizing: border-box;
+  	font-family: "Noto Sans KR", sans-serif;
+}
+
+/** 작성 board/write.jsp */
+.writebox {
+	width: 1200px;
+	height: auto;
+	margin: 0 auto;
+}
+
+.category_box {
+    margin-top: 32px;
+}
+
+
+.category_box .select_btn {
+    display: block;
+    padding: 9px 15px 9px 15px;
+    font-size: 0.95rem;
+    border: 1px solid #dfdfdf;
+    cursor: pointer;
+}
+
+
+.addImage {
+	margin-top: 10px;
+    cursor: pointer;
+    border: 1px solid #dfdfdf;
+    font-size: 0.95rem;
+    padding: 6px 8px;
+    float: left;
+    width: calc(20%/2 );
+    text-align: center;
+}
+
+.text_box input[type="text"] {
+	display: block;
+	font-size:0.9rem;
+	border: 1px solid  #dfdfdf;
+	padding: 12px 12px; 
+	width: 1200px;
+	margin: 10px 0;
+}
+
+.file_box {
+	font-size: 0.8rem;
+	border: 1px solid  #dfdfdf;
+    width: auto;
+	height: 26px;
+	padding: 2px 8px;
+	margin: 10px 0 0 130px;
+}
+
+.writebox input[type="submit"] {
+  	padding:5px 10px;
+  	cursor: pointer;
+   	font-size: 0.95rem;
+    text-decoration: none;
+   	margin-top:30px;
+	float: right;
+	color: #ffffff;
+	background-color: #e89407;
+	border: none; 
+	width: 150px;
+    height: 50px;
+}
+
+.writebox input[type="submit"]:hover {
+	background-color: #e18100;
+}
+
+.btn_list {
+	cursor: pointer;
+	padding:5px 10px;
+	border: none;
+	font-size: 0.95rem;
+	color: #ffffff;
+	background-color: #000000;
+	margin:30px 0 0 880px;
+	float: left;
+	width: 150px;
+    height: 50px;
+    text-align:center;
+    line-height: 38px;
+}
+
+.btn_list:hover {
+	background-color: #2e2e2e;
+}

@@ -1,10 +1,14 @@
 /* 게시글 상단 */
+.view_head {
+    font-size: 0.88rem;
+}
 .head_tit {
     height: 70px;
     background-color: black;
     color: white;
     line-height: 68px;
     padding-left: 30px;
+    font-weight: 700;
 }
 
 .info_head, .info_head dl {
@@ -15,12 +19,16 @@
     background-color: #f2f2f2;
     height: 70px;
     padding: 21px 30px 19px;
+    line-height: 1.647rem;
 }
 
-.info_head dt,
-.info_head dd {
-    line-height: 1.7rem;
+span.ico_board_tier {
+    margin-right: 3px;
 }
+
+.info_head .left a:hover {
+    text-decoration: underline;
+} 
 
 .info_head .right_f {
     margin-left: auto;
@@ -42,11 +50,12 @@
 }
 
 /* 본문 */
-.view_content {
+.view_content { 
     overflow: hidden;
     word-break: break-all;
     border-bottom: 1px solid #d9dbde;
-    padding: 50px 50px;
+    padding: 50px 30px;
+    font-size: 0.9rem;
 }
 
 .view_btns {
@@ -54,6 +63,11 @@
     justify-content: space-between;
     padding: 20px 0 70px;
     align-items: center;
+}
+
+.view_btns .del_cnt {
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 .view_btns .btn_list {
@@ -69,7 +83,7 @@
   	cursor: pointer;
    	line-height: 38px;
     text-align: center;
-   	font-size:1rem;
+    font-size: 0.941rem;
     color: #ffffff;
     background-color: #f19a09;
     height: 50px;
@@ -130,6 +144,7 @@
     position: absolute;
     left: 45px;
     top: 35px;
+    font-size: 0.88rem;
 }
 
 .form_cmt .cmt_submit {
@@ -137,7 +152,7 @@
     background-color: black;
     font-size: 1.12rem;
     color: white;
-    font-weight: bold;
+    font-weight: 700;
     border: 0;
     outline: 0;
     cursor: pointer;
@@ -150,30 +165,28 @@
 .list_cmt {
     display: flex;
     padding: 35px 0 38px;
+    font-size: 0.85em;
+    min-height: 140px;
+    border-bottom: 1px solid #cecece;
 }
 .list_cmt .user_cmt {
     display: flex;
     padding: 0 15px 0 25px;
 }
 
-.list_cmt .user_cmt div {
-    padding-left: 5px;
+.list_cmt .user_cmt span {
+    padding-left: 7px;
+    line-height: 26px;
+    font-weight: 500;
 }
 
 .ico_board_tier {
-background: url(https://t1.kakaocdn.net/gamepub/pub/battlegrounds/images/icon-rank-board.png) no-repeat;
+    background: url(https://t1.kakaocdn.net/gamepub/pub/battlegrounds/images/icon-rank-board.png) no-repeat;
 }
 
 .list_cmt .left_cmt {
     position: relative;
-    min-height: 60px;
-    width: 25%;
-}
-
-.list_cmt .date_cmt {
-    position: absolute;
-    left: 60px;
-    top: 35px;
+    width: 22%;
 }
 
 .border_cmt {
@@ -183,8 +196,48 @@ background: url(https://t1.kakaocdn.net/gamepub/pub/battlegrounds/images/icon-ra
 }
 
 .list_cmt .right_cmt {
+    width: 73%;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.right_cmt .text_cmt {
     overflow: hidden;
     word-break: break-all;
-    padding: 0 20px;
-    width: 70%;
+    color: #787a82;
+}
+
+.btns_cmt .date_cmt {
+    display: inline-block;
+    padding-right: 20px;
+    color: #787a82;
+}
+
+.list_cmt .btns_cmt {
+    display: flex;
+    padding-top: 20px;
+}
+
+.btns_cmt .edit_comment {
+    border: 0;
+    outline: 0; 
+    background-color: white;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.btns_cmt .del_cmt,
+.btns_cmt .edit_comment {
+    border: 1px solid #787a82;
+    color: #787a82;
+    width: 36px;
+    height: 22px;
+    font-size: 0.75rem;
+    text-align: center;
+    line-height: 1.176rem;
+    display: inline-block;
+}
+
+.list_cmt .btns_cmt {
+    margin-bottom: 10px;
 }

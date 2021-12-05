@@ -2,7 +2,6 @@
 <%@ page import="com.models.member.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-String rootURL = (String)request.getAttribute("rootURL");
 
 Member member = null;
 if (request.getAttribute("member") != null) {
@@ -20,10 +19,9 @@ if (request.getAttribute("socialMember") != null) {
 <c:set var="action" value="<%=action%>" />
 <c:set var="socialType" value="<%=socialType%>" />
 <c:set var="socialMember" value="<%=socialMember%>" />
-<c:set var="rootURL" value="<%=rootURL%>" />
 
 <!--임시로 css경로 적어둠  -->
-<link href='<%=rootURL%>/resources/css/member.css' rel='stylesheet' type='text/css' />
+<link href='${rootURL}/resources/css/member.css' rel='stylesheet' style='text/css' />
 
 <main>
 	<div class='joinbox loginbox'>
@@ -50,8 +48,8 @@ if (request.getAttribute("socialMember") != null) {
 		</div>
 		<form name='frmJoin' id='frmJoin' method="post" action="${action}" target="ifrmHidden" autocomplete="off">
 			<dl>
-				<dt>아이디</dt>
-				<dd>
+				<dt class="cg_id">아이디</dt>
+				<dd class="cg_id">
 					<c:choose>
 						<c:when test="${member == null}">
 							<input type="text" name="memId" value="${socialMember.memId}" placeholder="영문/숫자 조합 8~30자">

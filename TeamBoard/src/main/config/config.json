@@ -3,9 +3,9 @@
 	"PageTitle" : "배틀그라운드 클론 게시판",
 	"DB":  { 
 		"Driver": "com.mysql.cj.jdbc.Driver",
-		"Url" : "jdbc:mysql://localhost:3306/teamboard",
-		"user" : "root", 
-		"password" : "aA!12345"
+		"Url" : "jdbc:mysql://hamilkarr2.cafe24.com:3306/hamilkarr2",
+		"user" : "hamilkarr2", 
+		"password" : "aA!13579"
 	},
 	"LogDir" : "C:\\logs",
 	"css": {

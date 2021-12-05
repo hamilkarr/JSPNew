@@ -16,8 +16,7 @@
 		<div class='inner layout_width'>
 		<c:choose>
 			<c:when test="${isLogin}">
-				<%-- <div class="profile">안녕하세요! <a href="${rootURL}/member/info">qwerasdfzx(아이디)</a>님</div> --%>
-				<div class="profile">안녕하세요! <a href="${rootURL}/member/info"> (<c:out value="${member.memId}" />)</a>님</div>
+				<div class="profile">안녕하세요! <a href="${rootURL}/member/info"> <c:out value="${member.memId}" /></a>님</div>
 				<a class="islogin logout" href="${rootURL}/member/logout">
 					<span>로그아웃</span>
 				</a>
@@ -41,80 +40,64 @@
 		<ul class='nav_list layout_width'>
 			<div class="inner-bar inner-bar-move"></div>
  
-			<li class='box'
-				<c:if test="${menu == 'work'}"> class='on'</c:if>
-			>
+			<li class='box'>
 				<a class="nav_over" href="${rootURL}/kanban/work">새소식</a>
 				<ul class="show-bar">
-					<li><a href="#">(준비중) 공지사항</a></li>
-					<li><a href="#">(준비중) GM소식</a></li>
-					<li><a href="#">(준비중) 이벤트</a></li>
-					<li><a href="#">(준비중) 업데이트</a></li>
-					<li><a href="#">(준비중) 대회소식</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
 				</ul>
 			</li>
-			<li class='box'
-				<c:if test="${menu == 'list_ready'}"> class='on'</c:if>
-			>
+			<li class='box'>
 				<a class="nav_over" href="${rootURL}/kanban/list?status=ready">가이드</a>
 				<ul class="show-bar">
-					<li><a href="#">(준비중) 게임가이드</a></li>
+					<li><a href="#">준비중</a></li>
 				</ul>
 			</li>
-			<li class='box'
-				<c:if test="${menu == 'list_progress'}"> class='on'</c:if>
-			>
+			<li class='box'>
 				<a class="nav_over" href="${rootURL}/kanban/list?status=progress">커뮤니티</a>
 				<ul class="show-bar">
 					<li><a href="${rootURL}/board/list">플레이어 게시판</a></li>
-					<li><a href="#">(준비중) 미디어 게시판</a></li>
-					<li><a href="#">(준비중) DUO/SQUAD 모집</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#"></a></li>
 				</ul>
 			</li>
-			<li class='box'
-				<c:if test="${menu == 'list_work'}"> class='on'</c:if>
-			>
+			<li class='box'>
 				<a class="nav_over" href="${rootURL}/kanban/list?status=done">SNS</a>
 				<ul class="show-bar">
-					<li><a href="#">(준비중) 디스코드</a></li>
-					<li><a href="#">(준비중) 페이스북</a></li>
-					<li><a href="#">(준비중) 유튜브</a></li>
-					<li><a href="#">(준비중) 톡채널</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
+					<li><a href="#">준비중</a></li>
 				</ul>
 			</li>
-			<li class='box'
-			<c:if test="${menu == 'work'}"> class='on'</c:if>
-		>
+			<li class='box'>
 			<a class="nav_over" href="${rootURL}/kanban/work">랭킹</a>
 			<ul class="show-bar">
-				<li><a href="#">(준비중) 랭킹</a></li>
+				<li><a href="#">준비중</a></li>
 			</ul>
 		</li>
-		<li class='box'
-			<c:if test="${menu == 'list_ready'}"> class='on'</c:if>
-		>
+		<li class='box'>
 			<a class="nav_over" href="${rootURL}/kanban/list?status=ready">상점</a>
 			<ul class="show-bar">
-				<li><a href="#">(준비중) 게임구매</a></li>
+				<li><a href="#">준비중</a></li>
 			</ul>
 		</li>
-		<li class='box'
-			<c:if test="${menu == 'list_progress'}"> class='on'</c:if>
-		>
+		<li class='box'>
 			<a class="nav_over" href="${rootURL}/kanban/list?status=progress">자료실</a>
 			<ul class="show-bar">
-				<li><a href="#">(준비중) 다운로드</a></li>
+				<li><a href="#">준비중</a></li>
 			</ul>
 		</li>
-		<li class='box'
-			<c:if test="${menu == 'list_work'}"> class='on'</c:if>
-		>
+		<li class='box'>
 			<a class="nav_over" href="${rootURL}/kanban/list?status=done">고객센터</a>
 			<ul class="show-bar">
-				<li><a href="#">(준비중) 고객센터</a></li>
-				<li><a href="#">(준비중) 이용제한</a></li>
-				<li><a href="#">(준비중) 이의신청</a></li>
-				<li><a href="#">(준비중) 보안센터</a></li>
+				<li><a href="#">준비중</a></li>
+				<li><a href="#">준비중</a></li>
+				<li><a href="#">준비중</a></li>
+				<li><a href="#">준비중</a></li>
 			</ul>
 		</li>
 		</ul>

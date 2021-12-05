@@ -4,24 +4,20 @@
   	font-family: "Noto Sans KR", sans-serif;
 }
 
-html {
-	font-size: 13px; color: black;
-}
-
-a{
-	text-decoration: none;
-	color:black;
-}
 
 /** 공통 member title */
 
 .member_tit {
-	font-size: 30px;
+	font-size: 1.77rem;
 	font-weight: bold;
 	text-align: center;
 	padding-bottom: 15px;
 	margin-bottom: 25px;
 	border-bottom: 1px solid gray;
+}
+
+dd, dt .cg_id{
+	margin-bottom:12px;
 }
 
 /** 헤더 list와 로그인박스가 겹침! */
@@ -52,7 +48,7 @@ a{
 	width: 100%; 
 	height: 55px;
 	display: block;
-	font-size: 20px;
+	font-size: 1.2rem;
 	font-weight: bold;
 	color: #ffffff;
 	background-color: #e89407;
@@ -93,7 +89,7 @@ a{
     flex-basis: 100%;
     align-items: center; 
     color: #a1a1a1;
-    font-size: 14px;
+    font-size: 0.85rem;
     margin: 8px 0px;
 }
 
@@ -103,7 +99,7 @@ a{
     flex-grow: 1;
     background: #a1a1a1;
     height: 1px;
-    font-size: 0px;
+    font-size: 0rem;
     line-height: 0px;
     margin: 0px 16px;
 }
@@ -119,13 +115,13 @@ a{
 
 .joinbox {
 	width: 550px; 
-	height: 750px;
+	height: auto;
 }
 
 .joinbox input[type='reset'] {
 	height: 36px;
 	float: right;
-	font-size: 15px;
+	font-size: 0.9rem;
 	color: #ffffff;
 	background-color: black;
 	border: none; 

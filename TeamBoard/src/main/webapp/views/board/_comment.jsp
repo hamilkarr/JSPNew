@@ -37,8 +37,24 @@
             <div class="list_cmt" id="comment_${item.commentNm}">
                 <div class="left_cmt">
                     <div class="user_cmt">
-                        <span class="ico_board_tier silver"></span>
-                        <div><c:out value="${item.memId}" /></div> <!-- a 태그 아이디 정보 팝업?(list처럼)  -->
+                    <c:choose>
+	                    <c:when test="${item.memLv == 'admin'}">
+	                        <span class="ico_board_tier master"></span>
+	                       	<c:out value="관리자"/>
+	                     </c:when>
+	                     <c:when test="${item.memLv == 'platinum'}">
+	                        <span class="ico_board_tier platinum"></span>
+	                       	<c:out value="${item.memId}" />
+	                     </c:when>
+	                     <c:when test="${item.memLv == 'gold'}">
+	                        <span class="ico_board_tier gold"></span>
+	                       	<c:out value="${item.memId}" />
+	                     </c:when>
+	                     <c:otherwise>
+					      		<span class="ico_board_tier silver"></span>
+					      		<c:out value="${item.memId}"/>
+					       </c:otherwise>
+                    </c:choose>
                     </div>
                     <div class="date_cmt">${item.regDt}</div> <!-- dto -->
                 </div>
