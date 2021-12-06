@@ -22,13 +22,22 @@
     line-height: 1.647rem;
 }
 
+.info_head .profile_popup,
+.user_cmt .profile_popup {
+	display:flex;
+}
+
+.profile_popup .ico_board_tier {
+	top:5px;
+}
+
 span.ico_board_tier {
     margin-right: 3px;
 }
 
-.info_head .left a:hover {
-    text-decoration: underline;
-} 
+.user_id {
+	line-height: 34px;
+}
 
 .info_head .right_f {
     margin-left: auto;

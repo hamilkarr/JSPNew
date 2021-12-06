@@ -41,19 +41,19 @@
 	                    <c:choose>
 	                    <c:when test="${item.memLv == 'admin'}">
 	                        <span class="ico_board_tier master"></span>
-	                       	<c:out value="관리자"/>
+	                       	<div class="user_id"><c:out value="관리자"/></div>
 	                     </c:when>
 	                     <c:when test="${item.memLv == 'platinum'}">
 	                        <span class="ico_board_tier platinum"></span>
-	                       	<c:out value="${item.memId}" />
+	                       	<div class="user_id"><c:out value="${item.memId}" /></div>
 	                     </c:when>
 	                     <c:when test="${item.memLv == 'gold'}">
 	                        <span class="ico_board_tier gold"></span>
-	                       	<c:out value="${item.memId}" />
+	                       	<div class="user_id"><c:out value="${item.memId}" /></div>
 	                     </c:when>
 	                     <c:otherwise>
 					      		<span class="ico_board_tier silver"></span>
-					      		<c:out value="${item.memId}"/>
+					      		<div class="user_id"><c:out value="${item.memId}"/></div>
 					       </c:otherwise>
                     </c:choose>
                     </span>

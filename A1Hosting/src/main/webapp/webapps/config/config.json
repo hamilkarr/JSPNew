@@ -1,0 +1,33 @@
+{ 
+	"Environment" : "production",
+	"PageTitle" : "배틀그라운드 클론 게시판",
+	"DB":  { 
+		"Driver": "com.mysql.cj.jdbc.Driver",
+		"Url" : "jdbc:mysql://localhost/hamilkarr2",
+		"user" : "hamilkarr2", 
+		"password" : "aA!13579"
+	},
+	"LogDir" : "/hamilkarr2/tomcat/webapps/logs",
+	"css": {
+		"/board" : "board"
+	},
+	"js" : {
+		"/board": "board"
+	},
+	"AddonHeader" : {
+		"*" : "common"		
+	},
+	"AddonFooter" : {
+		"*" : "common"			
+	},
+	"NaverLogin" : {
+		"clientId" : "69se08pd4zx2Ujls3TIT",
+		"secret" : "A26Y07GMmo",
+		"callbackURL" : "http://hamilkarr2.cafe24.com/member/naver_login"
+	},
+	"KakaoLogin" : {
+		"clientId" : "2abc62bcbaa56703660a6046071200fa",
+		"adimin" : "3403a941a72fda87879567909b8928e5",
+		"redirectURI" : "http://hamilkarr2.cafe24.com/member/kakao_login"
+	}	
+ }

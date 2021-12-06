@@ -7,17 +7,18 @@ String skey= request.getParameter("skey");
 String sopt = request.getParameter("sopt");
 %>
 <c:set var="skey" value="<%=skey%>" />
+<c:set var="sopt" value="<%=sopt%>" />
  
 <!-- 게시판 목록S -->
 <div class="inner_box">
   <h3>플레이어 게시판</h3>
   <div class="bord_tit">
     <ul class="tit_list">
-      <li><a href="${rootURL}/board/list">전체</a></li>
-      <li class="tit_link">
+      <li id="total" class="on"><a href="${rootURL}/board/list">전체</a></li>
+      <li id="normal" class="tit_link">
       	<a href="${rootURL}/board/list?status=normal">일반</a>
       </li>
-      <li class="tit_link">
+      <li id="tip" class="tit_link">
       	<a href="${rootURL}/board/list?status=tip">팁과 정보</a>
       </li>
     </ul>
@@ -65,7 +66,7 @@ String sopt = request.getParameter("sopt");
           </td>
           <td>
           <!-- 글 제목 -->
-            <a href="view?postNm=${item.postNm}">
+            <a class="postNm" href="view?postNm=${item.postNm}">
             	<c:out value="${item.postTitle}" />
             	<c:if test="${item.commentCnt > 0}">
             	<span class='comment_cnt'>

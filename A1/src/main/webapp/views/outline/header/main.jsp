@@ -28,7 +28,6 @@
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/header.css${version}" />
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/footer.css${version}" />
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/view.css${version}" />
-		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/profile.css">
 		<c:forEach var="css" items="${addCss}">
 		<link rel="stylesheet" type="text/css" href="${rootURL}/resources/css/${css}.css${version}" />
 		</c:forEach>
@@ -39,6 +38,7 @@
 		<script type="text/javascript" src="${rootURL}/resources/js/header.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/banner.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/view.js${version}"></script>
+		<script type="text/javascript" src="${rootURL}/resources/js/list.js${version}"></script>
 		<script type="text/javascript" src="${rootURL}/resources/js/comment.js${version}"></script>
 		<script src="<%=rootURL%>/resources/js/ckeditor/ckeditor.js"></script>
 		<c:forEach var="script" items="${addScripts}">

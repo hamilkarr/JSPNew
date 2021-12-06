@@ -2,10 +2,12 @@
 <script type="text/html" id="tpl_profile_popup">
 <div id='popup_profile'>
 	<i class='xi-close remove'></i>
-	<dl>
-		<li><h1>#memId<h1></li>
-		<li>#memLv</li>
-		<li><span class="ico_board_tier #memLv"></span>
+	<dl class="popup_font">
+		<li class="popup_line"><h1 class="popup_id">#memId 님<h1></li>
+		<li class="popup_lv">
+            <i class="ico_board #memLv"></i>
+            #memLv            
+        </li>		
 	</dl>
 </div>
 </script>

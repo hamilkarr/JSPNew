@@ -315,12 +315,13 @@ public class BoardDao {
 			ArrayList<DBField> bindings = new ArrayList<>();
 			bindings.add(DB.setBinding("Integer", String.valueOf(postNm)));
 			bindings.add(DB.setBinding("String", String.valueOf(browserId)));
-			
+			DB.setIsLogging(false);
 			DB.executeUpdate(sql, bindings);
 			
 			sql = "UPDATE board a SET a.viewCnt = (SELECT COUNT(*) FROM boardview b WHERE a.postNm = b.postNm) WHERE a.postNm = ?";
 			bindings = new ArrayList<DBField>();
 			bindings.add(DB.setBinding("Integer", String.valueOf(postNm)));
+			DB.setIsLogging(true);
 			DB.executeUpdate(sql, bindings);
 			
 		} catch (Exception e) {}

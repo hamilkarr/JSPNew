@@ -1,0 +1,303 @@
+/* 게시글 상단 */
+.view_head {
+    font-size: 0.88rem;
+}
+.head_tit {
+    height: 70px;
+    background-color: black;
+    color: white;
+    line-height: 68px;
+    padding-left: 30px;
+    font-weight: 700;
+}
+
+.info_head, .info_head dl {
+    display: flex;
+}
+.info_head {
+    color: #787878;
+    background-color: #f2f2f2;
+    height: 70px;
+    padding: 21px 30px 19px;
+    line-height: 1.647rem;
+}
+
+.info_head .profile_popup,
+.user_cmt .profile_popup {
+	display:flex;
+}
+
+.profile_popup .ico_board_tier {
+	top:5px;
+}
+
+span.ico_board_tier {
+    margin-right: 3px;
+}
+
+.user_id {
+	line-height: 34px;
+}
+
+.info_head .right_f {
+    margin-left: auto;
+}
+
+.info_head .right {
+    margin-left: 25px;
+}
+
+.info_head dt:after {
+    content: "";
+    width: 1px;
+    height: 1rem;
+    display: inline-block;
+    background-color: #cecece;
+    vertical-align: middle;
+    margin: 0 13px 2px;
+
+}
+
+/* 본문 */
+.view_content { 
+    overflow: hidden;
+    word-break: break-all;
+    border-bottom: 1px solid #d9dbde;
+    padding: 50px 30px;
+    font-size: 0.9rem;
+}
+
+.view_btns {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 70px;
+    align-items: center;
+}
+
+.view_btns .del_cnt {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.view_btns .btn_list {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #d9dbde;
+    text-align: center;
+    line-height: 48px;
+}
+
+.view_btns .btn_write{
+  	padding:5px 10px;
+  	cursor: pointer;
+   	line-height: 38px;
+    text-align: center;
+    font-size: 0.941rem;
+    color: #ffffff;
+    background-color: #f19a09;
+    height: 50px;
+    width: 150px;
+}
+
+.view_btns .btn_write:hover {
+    background-color: #de7f00;
+}
+
+/* 댓글 창 */
+.tit_cmt .num_cmt span {
+    font-size: 1.12rem;
+    font-weight: bold;
+}
+
+.tit_cmt .num_cmt span:last-child {
+    color: #f19a09;
+}
+
+.byte_info {
+    font-size: 0.82rem;
+    vertical-align: bottom;
+}
+
+.byte_info span:first-child {
+    color: #f19a09;
+}
+
+.comment .tit_cmt {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment .form_cmt {
+    padding: 25px;
+    margin-top: 12px;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.form_cmt .cmt_box {
+    width: 84%;
+    height: 90px;
+    padding: 11px 15px;
+    border: 1px solid #c3c3c3;
+    resize: none;
+    left: 0;
+}
+
+.form_cmt .cmt_box:focus-visible,
+.edit_text:focus-visible {
+    outline: 1.4px solid black;
+    border-radius: 2px;
+}
+
+.form_cmt .refer_cmt {
+    position: absolute;
+    left: 45px;
+    top: 35px;
+    font-size: 0.88rem;
+}
+
+.form_cmt .cmt_submit {
+    width: 15%;
+    background-color: black;
+    font-size: 1.12rem;
+    color: white;
+    font-weight: 700;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+}
+
+.form_cmt .cmt_submit:hover {   
+    background-color: #f19a09;
+}
+
+.list_cmt {
+    display: flex;
+    padding: 35px 0 38px;
+    font-size: 0.85em;
+    min-height: 140px;
+    border-bottom: 1px solid #cecece;
+}
+.list_cmt .user_cmt {
+    display: flex;
+    padding: 0 15px 0 25px;
+    height: 30px;
+}
+
+.user_cmt .ico_board_tier {
+    line-height: 26px;
+    font-weight: 500;
+    width: 30px;
+}
+
+.user_cmt .memid {
+    line-height: 28px;
+    font-weight: 500;
+}
+
+.ico_board_tier {
+    background: url(https://t1.kakaocdn.net/gamepub/pub/battlegrounds/images/icon-rank-board.png) no-repeat;
+}
+
+.list_cmt .left_cmt {
+    position: relative;
+    width: 22%;
+}
+
+.border_cmt {
+    width: 1px;
+    background-color: #cecece;
+    margin: 0 13px 2px;
+}
+
+.list_cmt .right_cmt {
+    width: 73%;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.right_cmt .text_cmt {
+    overflow: hidden;
+    word-break: break-all;
+    color: #787a82;
+}
+
+.btns_cmt .date_cmt {
+    display: inline-block;
+    padding-right: 20px;
+    color: #787a82;
+}
+
+.list_cmt .btns_cmt {
+    display: flex;
+    padding-top: 20px;
+}
+
+.btns_cmt .edit_comment {
+    border: 0;
+    outline: 0; 
+    background-color: white;
+    padding: 0;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.btns_cmt .del_cmt,
+.btns_cmt .edit_comment {
+    border: 1px solid #787a82;
+    color: #787a82;
+    width: 36px;
+    height: 22px;
+    font-size: 0.75rem;
+    text-align: center;
+    line-height: 1.176rem;
+    display: inline-block;
+}
+
+.btns_cmt .del_cmt:hover,
+.btns_cmt .edit_comment:hover {
+    background-color: #787a82;
+    color: white;
+}
+
+/* js에서 추가되는 댓글 수정창 */
+.edit_text {
+    width: 100%;
+    height: 90px;
+    padding: 11px 15px;
+    border: 1px solid #c3c3c3;
+    resize: none;
+}
+
+.edit_btns {
+    display: flex;
+    justify-content:flex-end;
+    margin-top: 5px;
+}
+
+.edit_btns .cancel {
+    margin-left: 5px;
+}
+
+.edit_btns .cancel,
+.edit_btns .edit {
+    border: 1px solid #787a82;
+    color: #787a82;
+    width: 36px;
+    height: 22px;
+    font-size: 0.75rem;
+    text-align: center;
+    line-height: 1.176rem;
+    display: inline-block;
+    outline: 0; 
+    background-color: white;
+    padding: 0;
+    cursor: pointer;
+}
+
+.edit_btns .cancel:hover,
+.edit_btns .edit:hover {
+    background-color: #787a82;
+    color: white;
+}
